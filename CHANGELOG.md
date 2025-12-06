@@ -21,7 +21,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Writes empty segment markers to maintain file structure consistency
 
 ### Changed
+- **BREAKING:** Renamed `add_line_numbers` → `add_line_index` for terminology clarity
+  - Line indices (0001, 0002, ...) are PERMANENT IDENTIFIERS
+  - They don't change when /segment markers are added
+  - This distinguishes them from file line numbers which do change
 - Enhanced `code_write_segment` input schema (supports both old and new modes)
+- Updated all tool descriptions to clarify "line index" vs "line number"
 
 ---
 

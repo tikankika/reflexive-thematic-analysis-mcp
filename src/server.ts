@@ -10,7 +10,7 @@
  * - SEGMENT: Semantic coding unit (variable size) marked with /segment
  *
  * Tools:
- * - add_line_numbers: Add line numbers to transcript (prep tool)
+ * - add_line_index: Add permanent line indices to transcript (prep tool)
  * - code_start: Initialize coding session (returns first chunk)
  * - code_read_next: Read next chunk for coding
  * - code_write_segment: Write codes for semantic segments
@@ -25,7 +25,7 @@ import {
   ListToolsRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
 
-import { addLineNumbers } from './tools/add_line_numbers.js';
+import { addLineIndex } from './tools/add_line_index.js';
 import { codeStart } from './tools/code_start.js';
 import { codeReadNext } from './tools/code_read_next.js';
 import { codeWriteSegment } from './tools/code_write_segment.js';
@@ -62,9 +62,9 @@ class Phase1CodingServer {
     this.server.setRequestHandler(ListToolsRequestSchema, async () => ({
       tools: [
         {
-          name: 'add_line_numbers',
+          name: 'add_line_index',
           description:
-            'Add line numbers to transcript file. Prepares file for coding by adding permanent 4-digit line numbers (0001, 0002, ...). Run this BEFORE code_start if you want to reference specific lines during coding.',
+            'Add permanent line indices to transcript file. Prepares file for coding by adding permanent 4-digit line indices (0001, 0002, ...). These indices are PERMANENT IDENTIFIERS that stay fixed even when /segment markers are added. Run this BEFORE code_start if you want to reference specific lines during coding.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -77,7 +77,7 @@ class Phase1CodingServer {
                 properties: {
                   digits: {
                     type: 'number',
-                    description: 'Number of digits for line numbers (default: 4)',
+                    description: 'Number of digits for line indices (default: 4)',
                   },
                 },
               },
@@ -153,12 +153,12 @@ class Phase1CodingServer {
                     start_line: {
                       type: 'string',
                       description:
-                        'Starting line number in 4-digit format (e.g., "0030")',
+                        'Starting line index in 4-digit format (e.g., "0030"). This is the permanent line identifier added by add_line_index, NOT the file line number.',
                     },
                     end_line: {
                       type: 'string',
                       description:
-                        'Ending line number in 4-digit format, inclusive (e.g., "0034")',
+                        'Ending line index in 4-digit format, inclusive (e.g., "0034"). This is the permanent line identifier added by add_line_index, NOT the file line number.',
                     },
                     codes: {
                       type: 'array',
@@ -218,8 +218,8 @@ class Phase1CodingServer {
         let result: any;
 
         switch (name) {
-          case 'add_line_numbers':
-            result = await addLineNumbers(args as any);
+          case 'add_line_index':
+            result = await addLineIndex(args as any);
             break;
 
           case 'code_start':
@@ -286,7 +286,7 @@ class Phase1CodingServer {
 
     // Log to stderr (stdout is used for MCP protocol)
     console.error('Phase 1 Coding MCP Server running...');
-    console.error('Tools: add_line_numbers, code_start, code_read_next, code_write_segment, code_skip_chunk, code_status');
+    console.error('Tools: add_line_index, code_start, code_read_next, code_write_segment, code_skip_chunk, code_status');
   }
 }
 

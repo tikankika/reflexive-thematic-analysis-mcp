@@ -64,7 +64,7 @@ In Claude Desktop:
 You: "What MCP tools do you have available?"
 
 Claude should list:
-- add_line_numbers
+- add_line_index
 - code_start
 - code_read_next
 - code_write_segment
@@ -607,9 +607,9 @@ Claude: [Identifies 2 exchanges, proposes codes, writes segments]
 
 ### Tips for Granular Coding
 
-#### Tip 1: Use Line Numbers
+#### Tip 1: Use Line Indices
 
-If you used `add_line_numbers` tool, Claude can reference exact lines:
+If you used `add_line_index` tool, Claude can reference exact lines by their permanent indices (0001, 0002, ...):
 
 ```
 You: "Code lines 0234-0245 with #teacher_frustration__lins2"

@@ -69,9 +69,43 @@ Server handles ONLY file operations. Coding methodology (RTA, GT, IPA, etc.) liv
   - Retry logic for filesystem errors
 
 - **Quality of Life**:
+  - ✅ `code_skip_chunk()` - Skip current chunk without coding (COMPLETED)
   - `code_undo()` - Remove last coded segment
-  - `code_skip()` - Skip current segment without coding
   - Progress percentage in all tool outputs
+
+- **Coding Log (Audit Trail)** 📝:
+  - **Problem**: When system crashes or sessions pause, no history of what was coded
+  - **Solution**: Persistent coding log for crash recovery and session continuity
+
+  **Design Questions to Resolve**:
+  1. **Format**: JSON array, Markdown append, or SQLite?
+     - Recommendation: Markdown append (human-readable, git-friendly)
+  2. **Location**:
+     - Same file (after STATUS)? → Keeps everything in one place
+     - Separate `.log` file (test_6.md → test_6_coding.log)? → Cleaner separation
+     - Hidden `.meta` folder? → Harder to access
+     - Recommendation: Separate `.log` file in same directory
+  3. **Content per entry**:
+     ```markdown
+     ## 2025-12-06 22:15:00 - code_write_segment
+     - Chunk: 2
+     - Line indices: 0123-0134
+     - Codes written: 2
+       - #skillnad_information_kunskap__lins1
+       - #elever_förstår_inte__lins1
+     - Session ID: abc123
+     ```
+  4. **Retention**: Keep full history or auto-cleanup old entries?
+  5. **Read access**: New tool `code_log_view()` or just manual file read?
+
+  **Use Cases**:
+  - Crash recovery: "What was the last thing I coded before crash?"
+  - Multi-session: "What did I code yesterday?"
+  - Debugging: "Why is my STATUS showing 3 segments but I only remember 2?"
+  - Audit trail: "Show me all codes added to this transcript with timestamps"
+
+  **Implementation Priority**: HIGH (critical for production use)
+  **Target**: v0.2.1 (quick follow-up to v0.2.0)
 
 **Success Criteria**:
 - Code 5000+ line transcripts without performance degradation
