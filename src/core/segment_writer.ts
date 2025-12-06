@@ -1,10 +1,10 @@
 import { promises as fs } from 'fs';
 import {
-  SegmentWriteResult,
+  ChunkWriteResult,
   CodeSegmentInput,
   ParsedCodeSegment,
   MultiSegmentWriteResult
-} from '../types/segment.js';
+} from '../types/chunk.js';
 
 /**
  * SegmentWriter - Writes coded segments to transcript files
@@ -38,7 +38,7 @@ export class SegmentWriter {
     startLine: number,
     endLine: number,
     codes: string[]
-  ): Promise<SegmentWriteResult> {
+  ): Promise<ChunkWriteResult> {
     try {
       // Read entire file
       const content = await fs.readFile(filePath, 'utf-8');
@@ -71,11 +71,11 @@ export class SegmentWriter {
       const newEndLine = startLine + codedSegment.length - 1;
 
       return {
-        segmentNumber: Math.floor(startLine / 80) + 1,  // Approximate
+        chunkNumber: Math.floor(startLine / 80) + 1,  // Approximate
         startLine,
         endLine: newEndLine,
         codesWritten: codes.length,
-        nextSegmentReady: newEndLine + 1 < lines.length
+        nextChunkReady: newEndLine + 1 < lines.length
       };
     } catch (error) {
       throw new Error(`Failed to write segment to ${filePath}: ${error}`);

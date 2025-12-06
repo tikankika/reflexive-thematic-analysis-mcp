@@ -1,8 +1,13 @@
 /**
- * Segment of transcript to be coded
+ * Chunk of transcript to be coded
+ *
+ * A chunk is a technical reading unit (typically 60-100 lines) used to
+ * process large transcripts in manageable pieces. This is different from
+ * a semantic "segment" (marked with /segment in output) which is a
+ * meaningful coding unit of variable size.
  */
-export interface Segment {
-  /** Segment number (1-indexed) */
+export interface Chunk {
+  /** Chunk number (1-indexed) */
   number: number;
 
   /** Starting line number (0-indexed in file) */
@@ -11,43 +16,62 @@ export interface Segment {
   /** Ending line number (0-indexed in file) */
   endLine: number;
 
-  /** Raw text content of segment */
+  /** Raw text content of chunk */
   text: string;
 }
 
 /**
- * Configuration for segment size
+ * Configuration for chunk size
  */
-export interface SegmentConfig {
-  /** Minimum lines per segment (default: 60) */
+export interface ChunkConfig {
+  /** Minimum lines per chunk (default: 60) */
   minLines?: number;
 
-  /** Maximum lines per segment (default: 100) */
+  /** Maximum lines per chunk (default: 100) */
   maxLines?: number;
 
-  /** Default segment size (default: 80) */
+  /** Default chunk size (default: 80) */
   defaultSize?: number;
 }
 
 /**
- * Result of writing a coded segment
+ * Result of writing a coded chunk
  */
-export interface SegmentWriteResult {
-  /** Segment number that was written */
-  segmentNumber: number;
+export interface ChunkWriteResult {
+  /** Chunk number that was written */
+  chunkNumber: number;
 
-  /** Starting line where segment was written */
+  /** Starting line where chunk was written */
   startLine: number;
 
-  /** Ending line where segment was written */
+  /** Ending line where chunk was written */
   endLine: number;
 
   /** Number of codes written */
   codesWritten: number;
 
-  /** Whether next segment is ready to code */
-  nextSegmentReady: boolean;
+  /** Whether next chunk is ready to code */
+  nextChunkReady: boolean;
 }
+
+// ============================================================================
+// Backwards Compatibility
+// ============================================================================
+
+/**
+ * @deprecated Use Chunk instead
+ */
+export type Segment = Chunk;
+
+/**
+ * @deprecated Use ChunkConfig instead
+ */
+export type SegmentConfig = ChunkConfig;
+
+/**
+ * @deprecated Use ChunkWriteResult instead
+ */
+export type SegmentWriteResult = ChunkWriteResult;
 
 // ============================================================================
 // Multi-Segment API Types (v0.2.0)

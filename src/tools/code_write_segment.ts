@@ -1,6 +1,6 @@
 import { SegmentWriter } from '../core/segment_writer.js';
 import { StatusManager } from '../core/status_manager.js';
-import { CodeSegmentInput } from '../types/segment.js';
+import { CodeSegmentInput } from '../types/chunk.js';
 
 /**
  * code_write_segment - Write codes for segment(s)
@@ -150,9 +150,9 @@ async function writeLegacyMode(
   const updatedStatus = await statusManager.read(file_path);
 
   return {
-    segment_written: result.segmentNumber,
+    segment_written: result.chunkNumber,
     codes_written: result.codesWritten,
-    next_segment_ready: result.nextSegmentReady,
+    next_segment_ready: result.nextChunkReady,
     progress: `${updatedStatus.codedSegments}/${Math.ceil(status.totalLines / segmentSize)} (${updatedStatus.progress})`
   };
 }

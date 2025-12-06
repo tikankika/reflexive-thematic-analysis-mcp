@@ -1,15 +1,19 @@
 import { promises as fs } from 'fs';
-import { Segment } from '../types/segment.js';
+import { Chunk } from '../types/chunk.js';
 
 /**
- * SegmentReader - Reads transcript segments from files
+ * ChunkReader - Reads transcript chunks from files
+ *
+ * A chunk is a technical reading unit (typically 60-100 lines) used to
+ * process large transcripts in manageable pieces. This is different from
+ * a semantic "segment" (marked with /segment in output).
  *
  * Responsibilities:
  * - Count total lines in transcript
- * - Read specific line ranges (segments)
+ * - Read specific line ranges (chunks)
  * - Return raw text without interpretation
  */
-export class SegmentReader {
+export class ChunkReader {
   /**
    * Count total number of lines in a file
    * Excludes STATUS frontmatter if present
@@ -29,18 +33,18 @@ export class SegmentReader {
   }
 
   /**
-   * Read a segment of lines from file
+   * Read a chunk of lines from file
    *
    * @param filePath - Path to transcript file
    * @param startLine - Starting line (0-indexed)
    * @param size - Number of lines to read
-   * @returns Segment with raw text
+   * @returns Chunk with raw text
    */
-  async readSegment(
+  async readChunk(
     filePath: string,
     startLine: number,
     size: number
-  ): Promise<Segment> {
+  ): Promise<Chunk> {
     try {
       const content = await fs.readFile(filePath, 'utf-8');
       const allLines = content.split('\n');
@@ -48,21 +52,21 @@ export class SegmentReader {
       // Calculate end line (don't go past end of file)
       const endLine = Math.min(startLine + size, allLines.length);
 
-      // Extract segment lines
-      const segmentLines = allLines.slice(startLine, endLine);
-      const text = segmentLines.join('\n');
+      // Extract chunk lines
+      const chunkLines = allLines.slice(startLine, endLine);
+      const text = chunkLines.join('\n');
 
-      // Calculate segment number (approximate, 1-indexed)
-      const segmentNumber = Math.floor(startLine / size) + 1;
+      // Calculate chunk number (approximate, 1-indexed)
+      const chunkNumber = Math.floor(startLine / size) + 1;
 
       return {
-        number: segmentNumber,
+        number: chunkNumber,
         startLine,
         endLine: endLine - 1,  // Make end line inclusive
         text
       };
     } catch (error) {
-      throw new Error(`Failed to read segment from ${filePath}: ${error}`);
+      throw new Error(`Failed to read chunk from ${filePath}: ${error}`);
     }
   }
 

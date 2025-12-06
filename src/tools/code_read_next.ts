@@ -1,17 +1,21 @@
-import { SegmentReader } from '../core/segment_reader.js';
+import { ChunkReader } from '../core/chunk_reader.js';
 import { StatusManager } from '../core/status_manager.js';
 
 /**
- * code_read_next - Read next segment to code
+ * code_read_next - Read next chunk to code
  *
- * Reads STATUS and returns next uncoded segment
+ * Reads STATUS and returns next uncoded chunk for coding.
+ *
+ * Note: A "chunk" is a technical reading unit (60-100 lines) used to process
+ * large transcripts in pieces. You will mark semantic "segments" with
+ * /segment markers when coding within each chunk.
  *
  * Input:
  *   file_path: string - Path to transcript file
  *
  * Output:
  *   {
- *     segment: {
+ *     chunk: {
  *       number: number,
  *       lines: string (e.g., "81-160"),
  *       text: string
@@ -24,7 +28,7 @@ export async function codeReadNext(args: {
 }): Promise<any> {
   const { file_path } = args;
 
-  const reader = new SegmentReader();
+  const reader = new ChunkReader();
   const statusManager = new StatusManager();
 
   // Check if file exists
@@ -36,38 +40,38 @@ export async function codeReadNext(args: {
   // Read STATUS
   const status = await statusManager.read(file_path);
 
-  // Check if all segments are coded
+  // Check if all chunks are coded
   if (status.nextSegmentStart > status.totalLines) {
     return {
       status: 'complete',
-      message: 'All segments have been coded',
+      message: 'All chunks have been coded',
       progress: status.progress
     };
   }
 
-  // Calculate segment size
-  const segmentSize = 80;  // TODO: Get from STATUS or config
+  // Calculate chunk size
+  const chunkSize = 80;  // TODO: Get from STATUS or config
 
-  // Calculate how many content lines to read (might be less than segmentSize at end)
+  // Calculate how many content lines to read (might be less than chunkSize at end)
   const remainingContentLines = status.totalLines - status.lastCodedLine;
-  const contentLinesToRead = Math.min(segmentSize, remainingContentLines);
+  const contentLinesToRead = Math.min(chunkSize, remainingContentLines);
 
-  // Read from the FILE position right after the last coded segment
+  // Read from the FILE position right after the last coded chunk
   const fileStartLine = status.lastFilePosition + 1;
 
-  // Read next segment
-  const segment = await reader.readSegment(
+  // Read next chunk
+  const chunk = await reader.readChunk(
     file_path,
     fileStartLine,
     contentLinesToRead
   );
 
   return {
-    segment: {
-      number: segment.number,
+    chunk: {
+      number: chunk.number,
       lines: `${status.nextSegmentStart}-${status.nextSegmentStart + contentLinesToRead - 1}`,  // Content lines for display
-      text: segment.text
+      text: chunk.text
     },
-    progress: `${status.codedSegments}/${Math.ceil(status.totalLines / segmentSize)} (${status.progress})`
+    progress: `${status.codedSegments}/${Math.ceil(status.totalLines / chunkSize)} (${status.progress})`
   };
 }

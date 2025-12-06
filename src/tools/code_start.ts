@@ -1,22 +1,27 @@
-import { SegmentReader } from '../core/segment_reader.js';
+import { ChunkReader } from '../core/chunk_reader.js';
 import { StatusManager } from '../core/status_manager.js';
 
 /**
  * code_start - Initialize coding session
  *
- * Creates STATUS frontmatter and returns first segment
+ * Creates STATUS frontmatter and returns first chunk for coding
+ *
+ * Note: A "chunk" is a technical reading unit (60-100 lines) used to process
+ * large transcripts in pieces. You will mark semantic "segments" with
+ * /segment markers when coding within each chunk.
  *
  * Input:
  *   file_path: string - Path to transcript file
  *   config?: {
- *     segment_size?: number - Lines per segment (default: 80)
+ *     chunk_size?: number - Lines per chunk (default: 80)
+ *     segment_size?: number - (deprecated, use chunk_size)
  *   }
  *
  * Output:
  *   {
  *     status: "ready",
  *     total_lines: number,
- *     segment: {
+ *     chunk: {
  *       number: number,
  *       lines: string (e.g., "1-80"),
  *       text: string
@@ -26,13 +31,15 @@ import { StatusManager } from '../core/status_manager.js';
 export async function codeStart(args: {
   file_path: string;
   config?: {
-    segment_size?: number;
+    chunk_size?: number;
+    segment_size?: number;  // Backwards compatibility
   };
 }): Promise<any> {
   const { file_path, config } = args;
-  const segmentSize = config?.segment_size || 80;
+  // Support both chunk_size (new) and segment_size (backwards compat)
+  const chunkSize = config?.chunk_size || config?.segment_size || 80;
 
-  const reader = new SegmentReader();
+  const reader = new ChunkReader();
   const statusManager = new StatusManager();
 
   // Check if file exists
@@ -53,22 +60,22 @@ export async function codeStart(args: {
   const totalLines = await reader.countLines(file_path);
 
   // Create STATUS
-  await statusManager.create(file_path, totalLines, segmentSize);
+  await statusManager.create(file_path, totalLines, chunkSize);
 
   // Find where actual content starts (after STATUS frontmatter)
   const contentStart = await reader.getContentStartLine(file_path);
 
-  // Read first segment starting from actual content
-  const segment = await reader.readSegment(file_path, contentStart, segmentSize);
+  // Read first chunk starting from actual content
+  const chunk = await reader.readChunk(file_path, contentStart, chunkSize);
 
   return {
     status: 'ready',
     total_lines: totalLines,
-    estimated_segments: Math.ceil(totalLines / segmentSize),
-    segment: {
-      number: segment.number,
-      lines: `${segment.startLine + 1}-${segment.endLine + 1}`,  // 1-indexed for display
-      text: segment.text
+    estimated_chunks: Math.ceil(totalLines / chunkSize),
+    chunk: {
+      number: chunk.number,
+      lines: `${chunk.startLine + 1}-${chunk.endLine + 1}`,  // 1-indexed for display
+      text: chunk.text
     }
   };
 }

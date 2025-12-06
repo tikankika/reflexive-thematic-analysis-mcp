@@ -6,10 +6,16 @@ MCP (Model Context Protocol) Server for AI-Augmented Reflexive Thematic Analysis
 **Status:** Private Development
 
 ## Features
+- 📖 Chunk-based reading for large transcripts (60-100 lines per chunk)
+- 🔍 Segment-based coding for semantic meaning units (variable size)
 - 🔧 Multi-segment API for granular qualitative coding
 - 📊 STATUS tracking via YAML frontmatter
 - 🔄 Backwards compatible with v0.1.0
 - 📖 Complete documentation in `/docs`
+
+## Terminology
+- **CHUNK**: Technical reading unit (60-100 lines) used to process large files
+- **SEGMENT**: Semantic coding unit (variable size) marked with `/segment` markers
 
 ## Documentation
 - [User Guide](./docs/USER_GUIDE.md) - Step-by-step workflow
