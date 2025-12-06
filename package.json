@@ -1,0 +1,35 @@
+{
+  "name": "mcp-rta-server",
+  "version": "0.2.0",
+  "description": "MCP Server for AI-Augmented Reflexive Thematic Analysis (RTA) - Memory-optimized workflow for qualitative coding",
+  "main": "dist/server.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "start": "node dist/server.js",
+    "dev": "tsc && node dist/server.js",
+    "test": "echo \"Tests coming soon\" && exit 0"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "rta",
+    "reflexive-thematic-analysis",
+    "qualitative-research",
+    "ai-augmented",
+    "braun-clarke"
+  ],
+  "author": "Niklas Karlsson",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^0.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
