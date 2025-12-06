@@ -70,7 +70,6 @@ Server handles ONLY file operations. Coding methodology (RTA, GT, IPA, etc.) liv
 
 - **Quality of Life**:
   - ✅ `code_skip_chunk()` - Skip current chunk without coding (COMPLETED)
-  - `code_undo()` - Remove last coded segment
   - Progress percentage in all tool outputs
 
 - **Coding Log (Audit Trail)** 📝:
@@ -106,6 +105,64 @@ Server handles ONLY file operations. Coding methodology (RTA, GT, IPA, etc.) liv
 
   **Implementation Priority**: HIGH (critical for production use)
   **Target**: v0.2.1 (quick follow-up to v0.2.0)
+
+- **Code Management Tools (Error Recovery)** 🔧:
+  - **Problem**: When coding errors occur (wrong segments, buggy indexing, duplicate markers), no way to fix without manual file editing
+  - **Solution**: Tools to remove, undo, and clean up coding mistakes
+
+  **Tools to Implement**:
+
+  1. **`code_delete_segment(start_index, end_index)`** - Delete specific segment
+     - Removes /segment markers and all codes between start_index and end_index
+     - Updates STATUS to reflect removal
+     - **Use Case**: "I coded the wrong segment, delete segment 0123-0134"
+     - **Validation**: Check that segment exists and has markers before deleting
+
+  2. **`code_undo()`** - Undo last coding operation
+     - Removes most recent segment added to file
+     - Rolls back STATUS to previous state
+     - **Use Case**: "I just coded segment with wrong codes, undo it"
+     - **Requires**: Coding log to know what to undo
+     - **Limitation**: Only works if coding log exists (v0.2.1+)
+
+  3. **`code_clear_all()`** - Remove ALL coding from file
+     - Strips all /segment markers
+     - Removes all codes (lines starting with #)
+     - Removes /slut_segment markers
+     - Resets STATUS to uncoded state
+     - **Preserves**: Line indices (0001, 0002, ...)
+     - **Use Case**: "Start over, file is corrupted with bad segments"
+     - **Safety**: Requires confirmation parameter `{confirm: true}` to prevent accidents
+     - **Creates backup**: Auto-backup before clearing
+
+  4. **`code_verify(fix=false)`** - Check and optionally fix file integrity
+     - Validates all /segment and /slut_segment markers are paired
+     - Checks for duplicate markers or orphaned codes
+     - Verifies STATUS matches actual coded segments in file
+     - **Without fix**: Reports issues without making changes
+     - **With fix=true**: Auto-corrects STATUS based on actual file content
+       - Counts actual /segment markers in file
+       - Updates Last-coded-line, Last-file-position, Progress
+       - **Use Case**: "File manually cleaned, STATUS out of sync - fix it"
+     - **Use Case**: "Something looks wrong, check file integrity"
+
+  5. **`code_reset_status()`** - Reset STATUS to uncoded state
+     - Resets STATUS to initial state (Last-coded-line: 0, Progress: 0/N)
+     - Does NOT modify file content (preserves any existing segments/codes)
+     - **Use Case**: "File manually cleaned, need fresh start with STATUS"
+     - **Use Case**: "Testing - reset STATUS without touching file"
+     - **Difference from code_clear_all**:
+       - `code_reset_status()` → Only changes STATUS
+       - `code_clear_all()` → Removes all coding + resets STATUS
+
+  **Design Decisions**:
+  - All deletion tools create automatic backups before modification
+  - All tools update STATUS after changes
+  - All tools append to coding log (if enabled)
+  - Clear operations require explicit confirmation to prevent accidents
+
+  **Implementation Priority**: HIGH (discovered during testing - critical for reliable workflows)
+  **Target**: v0.2.1 (parallel to coding log feature)
 
 **Success Criteria**:
 - Code 5000+ line transcripts without performance degradation

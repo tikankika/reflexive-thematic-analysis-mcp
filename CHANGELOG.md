@@ -28,6 +28,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Enhanced `code_write_segment` input schema (supports both old and new modes)
 - Updated all tool descriptions to clarify "line index" vs "line number"
 
+### Planned (v0.2.1)
+- **Coding Log**: Audit trail for crash recovery and multi-session support
+- **Code Management Tools**: Error recovery features
+  - `code_delete_segment()` - Remove specific segments
+  - `code_undo()` - Undo last operation
+  - `code_clear_all()` - Reset file to uncoded state (preserves indices)
+  - `code_verify(fix=true)` - Check file integrity and optionally auto-fix STATUS
+  - `code_reset_status()` - Reset STATUS without modifying file content
+
 ---
 
 ## [0.1.0] - 2025-12-05
