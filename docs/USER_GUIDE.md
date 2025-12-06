@@ -64,9 +64,11 @@ In Claude Desktop:
 You: "What MCP tools do you have available?"
 
 Claude should list:
+- add_line_numbers
 - code_start
 - code_read_next
 - code_write_segment
+- code_skip_chunk
 - code_status
 ```
 
@@ -305,6 +307,50 @@ Claude: [Uses code_status]
 → "5/19 segments (26%) complete"
 ```
 
+### Task: Skip Non-Codeable Chunks
+
+**When to skip:**
+- Chunk contains only facilitator talk (not to be coded per methodology)
+- Meta-organizational content
+- Technical setup or introductions
+
+**Workflow:**
+
+```
+You: "Skip this chunk, it's only facilitator talk"
+
+Claude: [Uses code_skip_chunk tool]
+→ Chunk marked as processed (no codes)
+→ Progress updates (e.g., 1/9 → 2/9)
+→ Next chunk ready to read
+```
+
+**What happens:**
+1. Server writes `/segment` marker around content
+2. Server adds NO codes (empty)
+3. Server updates STATUS
+4. You can continue with `code_read_next`
+
+**Alternative (manual):**
+```
+You: "Use code_skip_chunk on /path/to/transcript.md"
+
+Claude: [Calls tool directly]
+        ✅ Chunk 1 skipped (0 codes)
+        Progress: 1/9 (11%)
+```
+
+**File result:**
+```markdown
+/segment
+0001 [Facilitator content...]
+0080 [End of chunk]
+
+/slut_segment
+```
+
+Note: Empty segment (no codes between text and `/slut_segment`)
+
 ---
 
 ## Troubleshooting
@@ -356,6 +402,29 @@ Run `code_start` first.
 - Codes start with `#`
 - Format: `#description_suffix`
 - In-vivo: `#"expression"_suffix`
+
+### Problem: code_read_next returns same chunk repeatedly
+
+**Cause:** Current chunk not yet coded or skipped.
+
+**Behavior:**
+`code_read_next` requires you to process the current chunk before moving forward.
+
+**Solution:**
+- Either code the chunk with `code_write_segment`, OR
+- Skip the chunk with `code_skip_chunk` (if no codeable content)
+
+**Example:**
+```
+You: "read next"
+Claude: [Returns chunk 1 again because chunk 1 not processed]
+
+You: "skip this chunk"
+Claude: [Uses code_skip_chunk]
+
+You: "read next"
+Claude: [NOW returns chunk 2]
+```
 
 ---
 

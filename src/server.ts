@@ -14,6 +14,7 @@
  * - code_start: Initialize coding session (returns first chunk)
  * - code_read_next: Read next chunk for coding
  * - code_write_segment: Write codes for semantic segments
+ * - code_skip_chunk: Skip chunk without coding (for non-codeable content)
  * - code_status: Show progress
  */
 
@@ -28,6 +29,7 @@ import { addLineNumbers } from './tools/add_line_numbers.js';
 import { codeStart } from './tools/code_start.js';
 import { codeReadNext } from './tools/code_read_next.js';
 import { codeWriteSegment } from './tools/code_write_segment.js';
+import { codeSkipChunk } from './tools/code_skip_chunk.js';
 import { codeStatus } from './tools/code_status.js';
 
 /**
@@ -176,6 +178,21 @@ class Phase1CodingServer {
           },
         },
         {
+          name: 'code_skip_chunk',
+          description:
+            'Skip current chunk without coding. Use when chunk contains no codeable content (e.g., facilitator-only talk, meta-organizational content). Marks chunk as processed and advances to next chunk. Updates STATUS and returns progress.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              file_path: {
+                type: 'string',
+                description: 'Path to transcript file',
+              },
+            },
+            required: ['file_path'],
+          },
+        },
+        {
           name: 'code_status',
           description:
             'Show coding progress. Returns current STATUS including segments coded, lines remaining, and progress percentage.',
@@ -215,6 +232,10 @@ class Phase1CodingServer {
 
           case 'code_write_segment':
             result = await codeWriteSegment(args as any);
+            break;
+
+          case 'code_skip_chunk':
+            result = await codeSkipChunk(args as any);
             break;
 
           case 'code_status':
@@ -265,7 +286,7 @@ class Phase1CodingServer {
 
     // Log to stderr (stdout is used for MCP protocol)
     console.error('Phase 1 Coding MCP Server running...');
-    console.error('Tools: add_line_numbers, code_start, code_read_next, code_write_segment, code_status');
+    console.error('Tools: add_line_numbers, code_start, code_read_next, code_write_segment, code_skip_chunk, code_status');
   }
 }
 

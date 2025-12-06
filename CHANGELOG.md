@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Granular coding support for specific line ranges
   - Auto-sorting and overlap validation
   - Backwards compatible with v0.1.0 single-segment API
+- `code_skip_chunk` tool for skipping chunks without codeable content
+  - Useful for facilitator-only chunks or meta-organizational content
+  - Maintains STATUS tracking and progress
+  - Writes empty segment markers to maintain file structure consistency
 
 ### Changed
 - Enhanced `code_write_segment` input schema (supports both old and new modes)
