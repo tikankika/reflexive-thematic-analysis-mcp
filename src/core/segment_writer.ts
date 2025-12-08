@@ -152,29 +152,61 @@ export class SegmentWriter {
   // ==========================================================================
 
   /**
-   * Parse 4-digit line number to 0-indexed position
+   * Check if a line is metadata (not transcript content)
    *
-   * @param lineStr - Line number string (e.g., "0030")
-   * @returns 0-indexed line position (e.g., 29)
-   * @throws Error if format is invalid or number < 1
+   * Metadata lines should be skipped during line index validation because
+   * they don't have (and shouldn't have) line index prefixes.
+   *
+   * @param line - Line to check
+   * @returns True if line is metadata
    * @private
    */
-  private parseLineNumber(lineStr: string): number {
+  private isMetadataLine(line: string): boolean {
+    const trimmed = line.trim();
+    return (
+      trimmed === '' ||                           // Empty line
+      trimmed.startsWith('#') ||                  // Code line
+      trimmed.startsWith('/') ||                  // Segment marker
+      trimmed.startsWith('---') ||                // STATUS delimiter
+      trimmed.includes('CODING-STATUS') ||        // STATUS header
+      trimmed.match(/^\s+[\w-]+:/) !== null       // STATUS field (indented key:value)
+    );
+  }
+
+  /**
+   * Find line by permanent line index (e.g., "0028")
+   *
+   * Searches through file for line that starts with the given index prefix.
+   * This correctly handles line indices added by add_line_index tool.
+   *
+   * @param lineIndex - Line index string (e.g., "0030")
+   * @param lines - Array of file lines to search through
+   * @returns 0-indexed array position where line with this index is found
+   * @throws Error if format is invalid or index not found
+   * @private
+   */
+  private findLineByIndex(lineIndex: string, lines: string[]): number {
     // Validate 4-digit format
-    if (!/^\d{4}$/.test(lineStr)) {
+    if (!/^\d{4}$/.test(lineIndex)) {
       throw new Error(
-        `Invalid line number format: "${lineStr}". Expected 4-digit format (e.g., "0030")`
+        `Invalid line index format: "${lineIndex}". Expected 4-digit format (e.g., "0030")`
       );
     }
 
-    const parsed = parseInt(lineStr, 10);
+    // Search for line that starts with this index
+    // Line format: "0030 [SPEAKER_05]: text..." or "0030 text..."
+    const prefix = lineIndex + ' ';
 
-    if (parsed < 1) {
-      throw new Error(`Line number must be >= 1, got: "${lineStr}"`);
+    for (let i = 0; i < lines.length; i++) {
+      if (lines[i].startsWith(prefix)) {
+        return i;
+      }
     }
 
-    // Convert to 0-indexed
-    return parsed - 1;
+    throw new Error(
+      `Line index ${lineIndex} not found in file. ` +
+        `Make sure file has line indices added with add_line_index tool.`
+    );
   }
 
   /**
@@ -206,14 +238,14 @@ export class SegmentWriter {
    * Validate and parse multi-segment input
    *
    * @param segments - Array of segment inputs from user
-   * @param totalFileLines - Total lines in file
+   * @param lines - Array of all file lines (to search for line indices)
    * @returns Parsed and sorted segments
    * @throws Error if validation fails
    * @private
    */
   private validateMultiSegmentInput(
     segments: CodeSegmentInput[],
-    totalFileLines: number
+    lines: string[]
   ): ParsedCodeSegment[] {
     if (!segments || segments.length === 0) {
       throw new Error('segments array cannot be empty');
@@ -232,22 +264,15 @@ export class SegmentWriter {
         );
       }
 
-      // Parse line numbers
-      const startLine = this.parseLineNumber(seg.start_line);
-      const endLine = this.parseLineNumber(seg.end_line);
+      // Find actual line positions by searching for line indices
+      const startLine = this.findLineByIndex(seg.start_line, lines);
+      const endLine = this.findLineByIndex(seg.end_line, lines);
 
       // Validate range
       if (startLine > endLine) {
         throw new Error(
-          `Segment ${i + 1}: start_line (${seg.start_line}) > end_line (${seg.end_line})`
-        );
-      }
-
-      // Validate bounds
-      if (startLine < 0 || endLine >= totalFileLines) {
-        throw new Error(
-          `Segment ${i + 1}: lines ${seg.start_line}-${seg.end_line} out of bounds ` +
-          `(file has ${totalFileLines} lines, valid range: 0001-${String(totalFileLines).padStart(4, '0')})`
+          `Segment ${i + 1}: start_line (${seg.start_line}) > end_line (${seg.end_line}). ` +
+          `Line index ${seg.start_line} appears after ${seg.end_line} in file.`
         );
       }
 
@@ -339,8 +364,8 @@ export class SegmentWriter {
       const content = await fs.readFile(filePath, 'utf-8');
       const lines = content.split('\n');
 
-      // 2. Validate and parse segments
-      const parsedSegments = this.validateMultiSegmentInput(segments, lines.length);
+      // 2. Validate and parse segments (now searches for line indices in file)
+      const parsedSegments = this.validateMultiSegmentInput(segments, lines);
 
       // 3. Build all coded segments (but don't insert yet)
       const insertedSegments = parsedSegments.map(seg => ({
@@ -370,7 +395,42 @@ export class SegmentWriter {
       await fs.writeFile(filePath, modifiedLines.join('\n'), 'utf-8');
 
       // 6. Calculate results
-      const maxCodedLine = Math.max(...parsedSegments.map(s => s.endLine));
+      // Extract maximum INDEX NUMBER from coded segments (not file line!)
+      // IMPORTANT: Read from ORIGINAL lines (before insertion) since seg.endLine
+      // refers to original positions, not positions after insertion
+      const maxCodedIndex = Math.max(
+        ...parsedSegments.map(seg => {
+          const lastLineText = lines[seg.endLine];
+
+          // Skip validation for metadata lines (codes, markers, empty lines)
+          if (this.isMetadataLine(lastLineText)) {
+            // Search backwards for the last transcript line with index
+            for (let i = seg.endLine - 1; i >= seg.startLine; i--) {
+              const candidateLine = lines[i];
+              if (!this.isMetadataLine(candidateLine)) {
+                const indexMatch = candidateLine.match(/^(\d{4})\s/);
+                if (indexMatch) {
+                  return parseInt(indexMatch[1], 10);
+                }
+              }
+            }
+            throw new Error(
+              `Segment ending at line ${seg.endLine} contains no transcript lines with line index. ` +
+              `This should not happen - check segment boundaries.`
+            );
+          }
+
+          const indexMatch = lastLineText.match(/^(\d{4})\s/);
+          if (!indexMatch) {
+            throw new Error(
+              `Line at position ${seg.endLine} does not have line index prefix. ` +
+              `Expected format: "0001 text...". Got: "${lastLineText.substring(0, 50)}"`
+            );
+          }
+          return parseInt(indexMatch[1], 10);
+        })
+      );
+
       const totalCodesWritten = parsedSegments.reduce(
         (sum, s) => sum + s.codes.length,
         0
@@ -384,7 +444,7 @@ export class SegmentWriter {
       return {
         segments_written: parsedSegments.length,
         total_codes_written: totalCodesWritten,
-        max_coded_line: maxCodedLine + 1, // Convert to 1-indexed for display
+        max_coded_index: maxCodedIndex, // Index number, not file line!
         lastFilePosition,
         next_segment_ready: nextSegmentReady,
         progress: '' // Will be set by caller (tool layer)
