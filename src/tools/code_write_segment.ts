@@ -1,3 +1,4 @@
+import { promises as fs } from 'fs';
 import { SegmentWriter } from '../core/segment_writer.js';
 import { StatusManager } from '../core/status_manager.js';
 import { CodeSegmentInput } from '../types/chunk.js';
@@ -80,10 +81,10 @@ async function writeMultiSegmentMode(
   const status = await statusManager.read(file_path);
   const segmentSize = 80; // TODO: Get from STATUS or config
 
-  // Update STATUS with max coded line and last file position
+  // Update STATUS with max coded INDEX (not file line!) and last file position
   await statusManager.update(
     file_path,
-    result.max_coded_line,
+    result.max_coded_index,
     result.lastFilePosition,
     segmentSize
   );
@@ -140,11 +141,19 @@ async function writeLegacyMode(
   // Write segment (v0.1.0 API)
   const result = await writer.writeSegment(file_path, fileStartLine, fileEndLine, codes);
 
-  // Update STATUS with CONTENT line count and FILE position
-  const newLastCodedLine = status.lastCodedLine + contentLinesToCode;
+  // Extract actual index number from last coded line
+  const content = await fs.readFile(file_path, 'utf-8');
+  const lines = content.split('\n');
+  const lastCodedLineText = lines[result.endLine];
+  const indexMatch = lastCodedLineText.match(/^(\d{4})\s/);
+  const actualCodedIndex = indexMatch
+    ? parseInt(indexMatch[1], 10)
+    : status.lastCodedLine + contentLinesToCode;
+
+  // Update STATUS with INDEX number (not file line!) and FILE position
   const newLastFilePosition = result.endLine;
 
-  await statusManager.update(file_path, newLastCodedLine, newLastFilePosition, segmentSize);
+  await statusManager.update(file_path, actualCodedIndex, newLastFilePosition, segmentSize);
 
   // Read updated STATUS for progress
   const updatedStatus = await statusManager.read(file_path);

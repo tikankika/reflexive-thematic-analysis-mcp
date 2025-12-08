@@ -137,8 +137,8 @@ export interface MultiSegmentWriteResult {
   /** Total codes written across all segments */
   total_codes_written: number;
 
-  /** Max content line number coded (1-indexed, for STATUS) */
-  max_coded_line: number;
+  /** Highest INDEX NUMBER coded (e.g., 464 from "0464 text..."), for STATUS */
+  max_coded_index: number;
 
   /** File position after last segment (0-indexed, for STATUS) */
   lastFilePosition: number;

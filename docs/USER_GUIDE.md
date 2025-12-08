@@ -428,6 +428,109 @@ Claude: [NOW returns chunk 2]
 
 ---
 
+## Error Recovery
+
+The MCP server provides tools to fix coding errors and STATUS inconsistencies.
+
+### Reset STATUS After Manual File Cleanup
+
+If you manually removed segments from file but STATUS is out of sync:
+
+**Example:**
+```
+You: "Reset STATUS for test_6.md"
+
+Claude: [Uses code_reset_status]
+→ STATUS reset to 0/9 (0%)
+→ File content unchanged
+```
+
+**What it does:**
+- Resets Last-coded-line to 0
+- Resets Progress to 0/N
+- Keeps file content intact (doesn't remove any segments)
+- Use when you manually cleaned file but STATUS still shows progress
+
+### Verify and Fix STATUS
+
+Check if STATUS matches actual file content:
+
+**Example:**
+```
+You: "Verify STATUS for test_6.md and fix if needed"
+
+Claude: [Uses code_verify with fix: true]
+→ Found 2 issues
+→ STATUS auto-corrected
+→ Now shows correct progress
+```
+
+**What it does:**
+- Counts actual /segment markers in file
+- Compares to STATUS coded segments count
+- If fix=true: Auto-corrects STATUS based on actual content
+- If fix=false: Only reports issues without fixing
+
+**When to use:**
+- STATUS shows wrong progress
+- After manual file edits
+- Before continuing coding session if unsure
+
+### Delete Incorrectly Coded Segment
+
+Remove a specific segment by line index range:
+
+**Example:**
+```
+You: "Delete segment 0123-0134 from test_6.md"
+
+Claude: [Uses code_delete_segment]
+→ Segment removed
+→ 3 codes deleted
+→ Progress updated to 2/9
+```
+
+**What it does:**
+- Finds segment containing the specified line indices
+- Removes entire /segment block (markers, content, codes)
+- Updates STATUS to reflect removal
+- Other segments remain intact
+
+### Start Over Completely
+
+Remove all coding and start fresh:
+
+**Example:**
+```
+You: "Clear all coding from test_6.md"
+
+Claude: [Uses code_clear_all with confirm: true]
+→ Backup created: test_6_BEFORE_CLEAR_2025-12-06T22-15-00.md
+→ 5 segments removed
+→ 12 codes deleted
+→ STATUS reset to 0/9
+```
+
+**What it does:**
+- Creates automatic backup with timestamp
+- Removes ALL /segment blocks from file
+- Removes ALL codes
+- Resets STATUS to uncoded state
+- Preserves line indices (0001, 0002, ...)
+- Preserves transcript text
+
+**Safety:**
+- Requires explicit `confirm: true` parameter
+- Always creates backup before clearing
+- Cannot be undone (except by restoring backup)
+
+**When to use:**
+- File has corrupted segments
+- Want to start coding from beginning
+- Need clean slate with same transcript
+
+---
+
 ## Tips & Best Practices
 
 ### Tip 1: Keep Coding Manual Uploaded

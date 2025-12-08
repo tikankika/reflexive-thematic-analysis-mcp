@@ -30,6 +30,10 @@ import { codeStart } from './tools/code_start.js';
 import { codeReadNext } from './tools/code_read_next.js';
 import { codeWriteSegment } from './tools/code_write_segment.js';
 import { codeSkipChunk } from './tools/code_skip_chunk.js';
+import { codeResetStatus } from './tools/code_reset_status.js';
+import { codeVerify } from './tools/code_verify.js';
+import { codeClearAll } from './tools/code_clear_all.js';
+import { codeDeleteSegment } from './tools/code_delete_segment.js';
 import { codeStatus } from './tools/code_status.js';
 
 /**
@@ -193,6 +197,83 @@ class Phase1CodingServer {
           },
         },
         {
+          name: 'code_reset_status',
+          description:
+            'Reset STATUS to uncoded state without modifying file content. Use when file was manually cleaned but STATUS is out of sync. Resets Last-coded-line to 0 and Progress to 0/N.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              file_path: {
+                type: 'string',
+                description: 'Path to transcript file',
+              },
+            },
+            required: ['file_path'],
+          },
+        },
+        {
+          name: 'code_verify',
+          description:
+            'Verify STATUS matches actual file content. Counts /segment markers and compares to STATUS. With fix=true, auto-corrects STATUS based on actual segments found. Use to diagnose and fix STATUS inconsistencies.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              file_path: {
+                type: 'string',
+                description: 'Path to transcript file',
+              },
+              fix: {
+                type: 'boolean',
+                description:
+                  'Auto-fix STATUS if inconsistencies found (default: false)',
+              },
+            },
+            required: ['file_path'],
+          },
+        },
+        {
+          name: 'code_clear_all',
+          description:
+            'Remove ALL coding from file (segments, markers, codes). Preserves line indices and transcript content. Creates automatic backup. Requires confirm: true for safety. Resets STATUS to uncoded state. Use to start over from scratch.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              file_path: {
+                type: 'string',
+                description: 'Path to transcript file',
+              },
+              confirm: {
+                type: 'boolean',
+                description: 'REQUIRED: Must be true to proceed (safety check)',
+              },
+            },
+            required: ['file_path', 'confirm'],
+          },
+        },
+        {
+          name: 'code_delete_segment',
+          description:
+            'Delete specific segment by line index range. Removes /segment markers, content, and codes for the specified range. Updates STATUS. Use when a specific segment was coded incorrectly.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              file_path: {
+                type: 'string',
+                description: 'Path to transcript file',
+              },
+              start_index: {
+                type: 'string',
+                description: 'Starting line index (e.g., "0123")',
+              },
+              end_index: {
+                type: 'string',
+                description: 'Ending line index (e.g., "0134")',
+              },
+            },
+            required: ['file_path', 'start_index', 'end_index'],
+          },
+        },
+        {
           name: 'code_status',
           description:
             'Show coding progress. Returns current STATUS including segments coded, lines remaining, and progress percentage.',
@@ -236,6 +317,22 @@ class Phase1CodingServer {
 
           case 'code_skip_chunk':
             result = await codeSkipChunk(args as any);
+            break;
+
+          case 'code_reset_status':
+            result = await codeResetStatus(args as any);
+            break;
+
+          case 'code_verify':
+            result = await codeVerify(args as any);
+            break;
+
+          case 'code_clear_all':
+            result = await codeClearAll(args as any);
+            break;
+
+          case 'code_delete_segment':
+            result = await codeDeleteSegment(args as any);
             break;
 
           case 'code_status':
@@ -286,7 +383,9 @@ class Phase1CodingServer {
 
     // Log to stderr (stdout is used for MCP protocol)
     console.error('Phase 1 Coding MCP Server running...');
-    console.error('Tools: add_line_index, code_start, code_read_next, code_write_segment, code_skip_chunk, code_status');
+    console.error(
+      'Tools: add_line_index, code_start, code_read_next, code_write_segment, code_skip_chunk, code_reset_status, code_verify, code_clear_all, code_delete_segment, code_status'
+    );
   }
 }
 
