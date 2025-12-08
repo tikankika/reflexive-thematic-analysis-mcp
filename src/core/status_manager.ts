@@ -53,6 +53,7 @@ export class StatusManager {
         'CODING-STATUS': {
           'File': fileName,
           'Total-lines': totalLines,
+          'Current-file-lines': totalLines + 9,  // Initial: content + 9 STATUS header lines
           'Last-coded-line': 0,
           'Last-file-position': 8,  // STATUS frontmatter is 9 lines (0-8)
           'Next-segment': `1-${Math.min(segmentSize, totalLines)}`,
@@ -116,7 +117,12 @@ export class StatusManager {
       const nextStart = lastCodedLine + 1;
       const nextEnd = Math.min(nextStart + segmentSize - 1, totalLines);
 
+      // Count actual file lines (grows as segments are added)
+      const lines = content.split('\n');
+      const currentFileLines = lines.length;
+
       // Update fields
+      rawStatus['CODING-STATUS']['Current-file-lines'] = currentFileLines;
       rawStatus['CODING-STATUS']['Last-coded-line'] = lastCodedLine;
       rawStatus['CODING-STATUS']['Last-file-position'] = lastFilePosition;
       rawStatus['CODING-STATUS']['Next-segment'] = `${nextStart}-${nextEnd}`;
@@ -147,7 +153,7 @@ export class StatusManager {
   }
 
   /**
-   * Parse STATUS from file content
+   * Parse STATUS from file content (handles inline comments)
    * @private
    */
   private parseStatus(content: string): RawStatus {
@@ -169,15 +175,22 @@ export class StatusManager {
       }
 
       if (inStatus && line.includes(':')) {
-        const [key, ...valueParts] = line.split(':');
+        // Remove inline comments (# ...) before parsing
+        const lineWithoutComment = line.split('#')[0];
+        const [key, ...valueParts] = lineWithoutComment.split(':');
         const trimmedKey = key.trim();
         const value = valueParts.join(':').trim();
 
+        if (!value) continue; // Skip empty values
+
         // Parse value type
-        if (value.match(/^\d+$/)) {
-          status['CODING-STATUS'][trimmedKey] = parseInt(value, 10);
+        // Handle "3/18 (23%)" format - extract just "3/18"
+        const cleanValue = value.replace(/\s*\(.*?\)\s*$/, '').trim();
+
+        if (cleanValue.match(/^\d+$/)) {
+          status['CODING-STATUS'][trimmedKey] = parseInt(cleanValue, 10);
         } else {
-          status['CODING-STATUS'][trimmedKey] = value;
+          status['CODING-STATUS'][trimmedKey] = cleanValue;
         }
       }
     }
@@ -186,19 +199,25 @@ export class StatusManager {
   }
 
   /**
-   * Serialize STATUS to YAML
+   * Serialize STATUS to YAML with inline comments
    * @private
    */
   private serializeStatus(status: RawStatus): string {
     const s = status['CODING-STATUS'];
+
+    // Calculate percentage for Progress display
+    const [codedSegs, totalSegs] = s.Progress.split('/').map(n => parseInt(n, 10));
+    const percent = Math.round((codedSegs / totalSegs) * 100);
+
     return `---
 CODING-STATUS:
   File: ${s.File}
-  Total-lines: ${s['Total-lines']}
-  Last-coded-line: ${s['Last-coded-line']}
-  Last-file-position: ${s['Last-file-position']}
-  Next-segment: ${s['Next-segment']}
-  Progress: ${s.Progress}
+  Total-lines: ${s['Total-lines']}                       # Original transcript lines (unchanged)
+  Current-file-lines: ${s['Current-file-lines']}          # Actual file size after coding
+  Last-coded-line: ${s['Last-coded-line']}                # Last transcript line index coded
+  Last-file-position: ${s['Last-file-position']}          # Physical file line position
+  Next-segment: ${s['Next-segment']}                      # Next transcript indices to code
+  Progress: ${s.Progress} (${percent}%)                   # Segments coded / total
   Date: ${s.Date}
 ---`;
   }
@@ -223,10 +242,12 @@ CODING-STATUS:
     return {
       file: s.File,
       totalLines: s['Total-lines'],
+      currentFileLines: s['Current-file-lines'] || s['Total-lines'], // Fallback for old STATUS
       lastCodedLine: s['Last-coded-line'],
       lastFilePosition: s['Last-file-position'],
       nextSegmentStart: parseInt(nextStart, 10),
       codedSegments: parseInt(coded, 10),
+      totalSegments: parseInt(total, 10),
       progress: `${Math.round((parseInt(coded, 10) / parseInt(total, 10)) * 100)}%`,
       date: s.Date
     };
