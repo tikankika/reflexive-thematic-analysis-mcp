@@ -29,10 +29,12 @@ MCP (Model Context Protocol) Server for AI-Augmented Reflexive Thematic Analysis
 - **SEGMENT**: Semantic coding unit (variable size) marked with `/segment` markers
 
 ## Documentation
+- [Vision](./VISION.md) - Project purpose and goals
+- [Roadmap](./docs/ROADMAP.md) - Development timeline and planned features
 - [User Guide](./docs/USER_GUIDE.md) - Step-by-step workflow
 - [API Reference](./docs/API.md) - Tool specifications
 - [Design Docs](./docs/design/) - Architecture decisions
-- [Roadmap](./docs/ROADMAP.md) - Future plans
+- [RFCs](./docs/rfcs/) - Request for Comments for major features
 
 ## Installation
 ```bash
