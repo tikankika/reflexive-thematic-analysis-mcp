@@ -38,3 +38,6 @@ coverage/
 tmp/
 temp/
 *.tmp
+
+# Development ideas (work in progress, not for version control)
+docs/development_ideas/
