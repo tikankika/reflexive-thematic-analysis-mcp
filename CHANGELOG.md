@@ -122,7 +122,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **code_undo()**: Undo last coding operation (requires Coding Log)
 - **add_line_index validation**: Prevent re-indexing already-coded files
 
-### Planned (v0.3.0) - Phase 2 Reflexive Analysis
+### Planned (v0.3.0) - Phase 2 Reflexive Analysis + Advanced STATUS
 - **Reflexive Analysis Tools** (RFC 001)
   - 6 new MCP tools for segment-by-segment reflexive analysis
   - `reflective_start` - Initialize reflexive session, load first segment
@@ -137,6 +137,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Follows RTA iterative methodology (Braun & Clarke, 2006, 2019)
   - Code revision updates both transcript file and notes JSON
   - Session persistence across Claude Desktop restarts
+
+- **Advanced STATUS Management** (RFC 002 - Long-term)
+  - Atomic STATUS updates (no partial state)
+  - Auto-recovery from STATUS desynchronization
+  - Enhanced error messages with visual displays
+  - Pre-flight validation before all operations
+  - Architectural improvements to prevent issues found in v0.2.1 production use
 
 ---
 
