@@ -172,10 +172,59 @@ Server handles ONLY file operations. Coding methodology (RTA, GT, IPA, etc.) liv
 
 ---
 
-### 📋 v0.3.0 - Code Management Tools
+### 📋 v0.2.2 - STATUS Management & Workflow Improvements
+
+**Target**: Q1 2026
+**Goal**: Fix critical STATUS tracking bugs discovered during production use
+**Based on**: RFC 002 (ULF 2025-12-07 real-world usage analysis)
+
+**Critical Fixes** (RFC 002):
+
+- **STATUS Synchronization**:
+  - **Problem**: `last_coded_line` exceeds `total_lines`, causing false "complete" signals
+  - **Solution**: Validation check before `code_read_next`
+  - **Impact**: Prevents lost work context mid-session
+  - **Discovered**: ULF 2025-12-07 session (2 out of 5 files affected)
+
+- **Segment Count Accuracy**:
+  - **Problem**: STATUS count differs from actual `/segment` markers in file
+  - **Solution**: Trust `code_verify` as authoritative, warn on mismatch
+  - **Impact**: Accurate progress tracking
+  - **Discovered**: ULF 2025-12-07 session (3 out of 5 files affected)
+
+- **code_reset_status Safety**:
+  - **Problem**: Tool is dangerous - erases progress tracking without warning
+  - **Solution**: Add prominent warnings and suggest alternatives
+  - **Impact**: Prevents accidental data loss
+  - **Recommendation**: Rarely use this tool
+
+- **Batch Write Pre-validation**:
+  - **Problem**: Overlapping segments caught late, entire batch fails
+  - **Solution**: Pre-flight validation before submission
+  - **Impact**: Better error messages, fewer failed writes
+  - **Error rate**: ~5% in production (1 per 20 batch writes)
+
+**Best Practices Documentation**:
+- Workflow patterns from real usage (8-10 segments per batch)
+- Error recovery procedures (use `code_verify fix=true`)
+- Tool safety hierarchy (safe vs dangerous tools)
+
+**Success Criteria**:
+- STATUS stays synchronized during long sessions
+- No false "complete" signals
+- Clear warnings on dangerous tools
+- User can trust progress indicators
+
+**References**:
+- [RFC 002: Workflow & State Management](docs/rfcs/002-workflow-state-management.md)
+- Real-world evidence: ULF 2025-12-07 coding session (37,092 lines)
+
+---
+
+### 📋 v0.3.0 - Code Management + Advanced STATUS Features
 
 **Target**: Q2 2026
-**Goal**: Built-in tools for code review and consolidation
+**Goal**: Code review tools AND architectural STATUS improvements
 
 **Features**:
 - **Code Extraction**:
@@ -193,8 +242,29 @@ Server handles ONLY file operations. Coding methodology (RTA, GT, IPA, etc.) liv
   - Code frequency analysis
   - Segment coverage metrics (coded vs uncoded)
 
+- **Advanced STATUS Management** ⭐ NEW (RFC 002):
+  - **Atomic STATUS Updates**:
+    - STATUS updates atomic with file writes
+    - No partial state - always reflects reality
+    - Auto-rollback on failed writes
+
+  - **Auto-recovery**:
+    - Detect STATUS desync automatically
+    - Offer to fix with detailed diff
+    - "STATUS says X, file contains Y - fix?"
+
+  - **Enhanced Error Messages**:
+    - Visual display of overlapping segments
+    - Suggest corrections automatically
+    - Show boundary conflicts clearly
+
+  - **Pre-flight Validation**:
+    - Validate STATE before operations
+    - Warn if `last_coded_line > total_lines`
+    - Auto-suggest recovery path
+
 **Use Case**:
-Quality control and code consolidation during reflexive review.
+Quality control, code consolidation, AND reliable STATUS tracking.
 
 **Note**: These tools are methodology-agnostic - they work with any coding approach.
 
@@ -341,6 +411,43 @@ Maintains audit trail of researcher's interpretive process (important for qualit
 
 **Core Philosophy**:
 This is a **file handler**, not an analysis tool. Researcher authority and methodological integrity are non-negotiable.
+
+---
+
+## Lessons Learned from Production Use
+
+### ULF 2025-12-07 Coding Session (RFC 002)
+
+**Scale**: 5 transcripts, multi-day session, 37,092 lines of chat history
+
+**Critical Discoveries**:
+
+1. **STATUS tracking fragile** - 15-20% of troubleshooting time
+   - `last_coded_line` can exceed `total_lines`
+   - Segment counts diverge from reality
+   - `code_reset_status` dangerous without warnings
+
+2. **Batch writing efficient** - 8-10 segments per call works well
+   - ~5% error rate (overlapping segments)
+   - Pre-validation would prevent most errors
+
+3. **Tool usage patterns**:
+   - 70% `code_read_next` + `code_write_segment` (core workflow)
+   - 20% `code_verify` + `code_status` (management/debugging)
+   - 0% `code_skip_chunk`, `code_delete_segment` (unused/undiscovered)
+
+4. **code_verify more reliable than STATUS**:
+   - Counts actual `/segment` markers
+   - Should be authoritative source
+   - STATUS display may lag reality
+
+**Impact on Roadmap**:
+- v0.2.2 added for critical STATUS fixes (based on RFC 002)
+- v0.3.0 expanded with long-term STATUS architecture improvements
+- Best practices documented for future users
+
+**References**:
+- [RFC 002: Workflow & State Management](docs/rfcs/002-workflow-state-management.md)
 
 ---
 
