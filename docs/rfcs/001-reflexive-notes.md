@@ -35,7 +35,9 @@ After Phase 1 coding (segment identification + systematic coding), researchers n
 ## Proposed Solution
 
 ### Core Concept
-Create MCP tools to present **one segment at a time** to Claude Desktop, enabling systematic reflexive note-taking without data volume constraints.
+Create MCP tools to present **one segment at a time** to Claude Desktop, enabling:
+1. Systematic reflexive note-taking without data volume constraints
+2. **Iterative code revision** during reflexive analysis (following RTA methodology)
 
 ### Architecture Decision
 
@@ -111,16 +113,49 @@ reflective_next(file_path: string): {
 ```
 **Purpose:** Return next unanalyzed segment
 
-#### 5. `reflective_status`
+#### 5. `reflective_revise_codes`
+```typescript
+reflective_revise_codes(
+  file_path: string,
+  segment_index: number,
+  action: "add" | "remove" | "replace",
+  codes: string[]
+): {
+  success: boolean,
+  updated_codes: string[],
+  segment_marked_revised: boolean
+}
+```
+**Purpose:** Revise codes during reflexive analysis (add/remove/replace)
+
+**Actions:**
+- `"add"` - Add new codes to existing codes
+- `"remove"` - Remove specific codes from segment
+- `"replace"` - Replace all codes with new set
+
+**Example:**
+```typescript
+// Add missed code during reflexive review
+reflective_revise_codes(file, 5, "add", ["#implicit_bias__lins2"])
+
+// Remove incorrect code
+reflective_revise_codes(file, 5, "remove", ["#wrong_code__lins1"])
+
+// Complete recoding
+reflective_revise_codes(file, 5, "replace", ["#new1__lins1", "#new2__lins2"])
+```
+
+#### 6. `reflective_status`
 ```typescript
 reflective_status(file_path: string): {
   total_segments: number,
   analyzed: number,
   remaining: number,
-  progress_percent: number
+  progress_percent: number,
+  segments_with_revisions: number
 }
 ```
-**Purpose:** Check analysis progress
+**Purpose:** Check analysis progress and code revision statistics
 
 ---
 
@@ -147,16 +182,27 @@ reflective_status(file_path: string): {
         "#kontrollbehov__lins2"
       ],
       "reflexive_note": "Central theme emerging: teachers' uncertainty about detecting AI use. Links to broader control/trust issues.",
-      "analyzed_at": "2025-12-10T14:35:00Z"
+      "analyzed_at": "2025-12-10T14:35:00Z",
+      "codes_revised": false
     },
     {
       "index": 2,
       "line_range": "0035-0042",
       "codes": [
-        "#de_som_förmår_använda_det_kommer_längre__lins1"
+        "#de_som_förmår_använda_det_kommer_längre__lins1",
+        "#equity_concern__lins3"
       ],
-      "reflexive_note": "Meritocratic framing - those who master AI have advantage. Potential equity concern.",
-      "analyzed_at": "2025-12-10T14:42:00Z"
+      "reflexive_note": "Meritocratic framing - those who master AI have advantage. Potential equity concern. Added equity code during reflexive review.",
+      "analyzed_at": "2025-12-10T14:42:00Z",
+      "codes_revised": true,
+      "revision_history": [
+        {
+          "action": "add",
+          "codes": ["#equity_concern__lins3"],
+          "timestamp": "2025-12-10T14:43:00Z",
+          "note": "Missed during Phase 1 - clear equity theme"
+        }
+      ]
     }
   ]
 }
@@ -170,9 +216,11 @@ reflective_status(file_path: string): {
 - `src/tools/reflective_start.ts`
 - `src/tools/reflective_read_segment.ts`
 - `src/tools/reflective_write_note.ts`
+- `src/tools/reflective_revise_codes.ts` ← NEW - Code revision capability
 - `src/tools/reflective_next.ts`
 - `src/tools/reflective_status.ts`
 - `src/core/segment_reader.ts` - Parse coded transcripts, extract segments
+- `src/core/segment_reviser.ts` ← NEW - Update codes in transcript file
 - `src/core/note_manager.ts` - Read/write reflexive notes JSON
 - `src/types/reflexive.ts` - Type definitions for reflexive analysis
 
@@ -220,6 +268,32 @@ Researcher: "yes"
 
 Claude calls: reflective_next(file)
 
+Claude: "Segment 2 of 47 (lines 0035-0042):
+─────────────────────────────────────
+0035 [SPEAKER]: De som förmår använda det kommer längre...
+
+Current codes:
+#de_som_förmår_använda_det_kommer_längre__lins1
+─────────────────────────────────────"
+
+Researcher: "Wait - this is about equity. Add #equity_concern__lins3"
+
+Claude calls: reflective_revise_codes(file, 2, "add", ["#equity_concern__lins3"])
+
+Claude: "✅ Code added. Updated codes:
+- #de_som_förmår_använda_det_kommer_längre__lins1
+- #equity_concern__lins3 (ADDED)
+
+Segment marked as revised. Your reflexive note?"
+
+Researcher: "Meritocratic framing creates equity concern..."
+
+Claude calls: reflective_write_note(file, 2, "...")
+
+Claude: "✅ Note saved. Progress: 2/47 (4%) - 1 segment revised
+
+Next?"
+
 [Process repeats for all 47 segments]
 ```
 
@@ -265,49 +339,62 @@ Claude calls: reflective_next(file)
 ## Open Questions
 
 1. **Note format:** Plain text or markdown support?
-   - **Proposal:** Support markdown for rich formatting (bold, lists, links)
+   - **Decision:** Support markdown for rich formatting (bold, lists, links)
 
 2. **Edit capability:** Can notes be edited after creation?
-   - **Proposal:** Yes - `reflective_write_note` overwrites existing note
+   - **Decision:** Yes - `reflective_write_note` overwrites existing note
 
-3. **Multi-researcher:** Track researcher ID in notes?
-   - **Proposal:** Not in v1 - add metadata.researcher field for future
+3. **Code revision scope:** Full freedom or limited to add-only?
+   - **Decision:** Full freedom (add/remove/replace) - researcher controls iteration
 
-4. **Re-coding impact:** What if transcript re-coded after notes exist?
-   - **Proposal:** Warning message, don't auto-delete notes (researcher decision)
+4. **Revision history:** Track all code changes?
+   - **Decision:** Yes - store revision_history array with action, codes, timestamp, note
 
-5. **Export format:** Need notes in other formats (CSV, Word)?
-   - **Proposal:** Not in v1 - JSON sufficient for Phase 2 theme work
+5. **Multi-researcher:** Track researcher ID in notes?
+   - **Decision:** Not in v1 - add metadata.researcher field for future
+
+6. **Re-coding impact:** What if transcript re-coded after notes exist?
+   - **Decision:** Warning message, don't auto-delete notes (researcher decision)
+
+7. **Large revisions:** Warn if >50% of codes removed?
+   - **Decision:** Yes - warning message but allow action
+
+8. **Export format:** Need notes in other formats (CSV, Word)?
+   - **Decision:** Not in v1 - JSON sufficient for Phase 2 theme work
 
 ---
 
 ## Success Criteria
 
-- [x] Can load coded transcript with `/segment` markers
-- [x] Can extract all segments into list
-- [x] Can read one segment at a time (< 20 lines of text)
-- [x] Can write reflexive note per segment
-- [x] Can track progress (X of Y segments analyzed)
-- [x] Can resume session across Claude Desktop restarts
-- [x] Notes saved in structured JSON format
-- [x] Notes include segment metadata (line range, codes)
-- [x] No data volume issues in Claude Desktop
+- [ ] Can load coded transcript with `/segment` markers
+- [ ] Can extract all segments into list
+- [ ] Can read one segment at a time (< 20 lines of text)
+- [ ] Can write reflexive note per segment
+- [ ] **Can revise codes during reflexive analysis (add/remove/replace)**
+- [ ] **Transcript file updated when codes revised**
+- [ ] **Revision history tracked in notes JSON**
+- [ ] Can track progress (X of Y segments analyzed + revision count)
+- [ ] Can resume session across Claude Desktop restarts
+- [ ] Notes saved in structured JSON format
+- [ ] Notes include segment metadata (line range, codes)
+- [ ] No data volume issues in Claude Desktop
 
 ---
 
 ## Timeline
 
-- **RFC review:** 0.5 days (self-review + documentation)
-- **Implementation:** 3-5 days
+- **RFC review:** 0.5 days (self-review + documentation) ✅ DONE
+- **Implementation:** 4-6 days (updated for code revision feature)
   - Day 1: Segment reader + basic types
-  - Day 2: Note manager + storage
-  - Day 3: MCP tools implementation
-  - Day 4: Testing with real data
-  - Day 5: Documentation + polish
+  - Day 2: Note manager + storage + revision tracking
+  - Day 3: MCP tools implementation (read/write/next/status)
+  - Day 4: Code revision tool + segment updater
+  - Day 5: Testing with real data
+  - Day 6: Documentation + polish
 - **Testing:** 1 day (with ULF 2025-12-07 data)
 - **Documentation:** 0.5 days (API docs + user guide)
 
-**Total:** ~5-7 days
+**Total:** ~6-8 days (extended from 5-7 days for code revision capability)
 
 ---
 
@@ -315,19 +402,26 @@ Claude calls: reflective_next(file)
 
 ### Unit Tests
 - Segment extraction from coded transcript
-- JSON storage read/write
+- JSON storage read/write (including revision history)
 - Progress tracking calculation
+- **Code revision logic (add/remove/replace)**
+- **Transcript file updating with new codes**
 
 ### Integration Tests
 - Full workflow: start → read → write → next → status
+- **Code revision workflow: read → revise → write note → next**
 - Resume session from existing notes file
 - Handle missing/malformed data gracefully
+- **Verify revision history tracking**
 
 ### Manual Testing
 - Test with real transcript: `Ai_fokusgrupp_ne_traff_1_rec_1.md`
 - Test with large transcript (1500+ lines)
 - Test session persistence (restart Claude Desktop)
 - Test note editing (overwrite existing)
+- **Test code revision: add, remove, replace actions**
+- **Verify transcript file updated correctly**
+- **Test large revision warning (>50% codes removed)**
 
 ---
 
@@ -351,10 +445,34 @@ Claude calls: reflective_next(file)
 
 ---
 
+## Rationale for Code Revision Feature
+
+### Methodological Justification
+Reflexive Thematic Analysis (Braun & Clarke, 2006, 2019) is explicitly iterative:
+- Researchers revisit data multiple times
+- Codes evolve as understanding deepens
+- "Living with the data" requires flexibility to revise
+
+### Practical Benefits
+1. **Efficiency:** Fix errors when discovered, not in separate pass
+2. **Natural workflow:** Researchers will want to revise when they see issues
+3. **Quality:** Better codes → better themes in Phase 3
+4. **Transparency:** Revision history provides audit trail
+
+### Implementation Approach
+- Code revision updates BOTH transcript file AND notes JSON
+- Revision history tracked for methodological transparency
+- Warning for large revisions (>50% removal) but researcher decides
+- Full freedom: add, remove, or replace codes
+
+---
+
 ## Approval
 
-- [ ] Self-review completed
-- [ ] RFC committed to git
+- [x] Self-review completed
+- [x] RFC committed to git (initial version)
+- [x] RFC updated with code revision feature
+- [ ] RFC revision committed
 - [ ] Implementation can begin
 
-**Next step:** Commit this RFC, then start implementation with `src/core/segment_reader.ts`
+**Next step:** Commit updated RFC, then start implementation with `src/core/segment_reader.ts`
