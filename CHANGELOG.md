@@ -112,6 +112,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - ✅ **Resolved**: Added `isMetadataLine()` helper and fixed validation logic (see Fixed section)
 
 ### Planned (v0.2.2)
+- **STATUS Management Improvements** (RFC 002)
+  - Validation check before `code_read_next` (prevent false "complete" signals)
+  - Enhanced warnings for `code_reset_status` (dangerous tool)
+  - Pre-validation for batch segment writes (detect overlaps before submission)
+  - Best practices documentation (workflow patterns from real usage)
+  - See [RFC 002: Workflow & State Management](docs/rfcs/002-workflow-state-management.md)
 - **Coding Log**: Audit trail for crash recovery and multi-session support
 - **code_undo()**: Undo last coding operation (requires Coding Log)
 - **add_line_index validation**: Prevent re-indexing already-coded files
@@ -153,6 +159,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## Design Documents
+## Design Documents & RFCs
 
+### Design Documents
 - [#001: Multi-Segment API](docs/design/001-multi-segment-api.md) - Granular segment coding feature
+
+### RFCs (Request for Comments)
+- [RFC 001: Reflexive Note Feature](docs/rfcs/001-reflexive-notes.md) - Phase 2 reflexive analysis tools
+- [RFC 002: Workflow & State Management](docs/rfcs/002-workflow-state-management.md) - STATUS bugs, tool patterns, error recovery (based on ULF 2025-12-07 real-world usage)
