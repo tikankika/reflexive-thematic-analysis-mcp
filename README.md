@@ -6,12 +6,23 @@ MCP (Model Context Protocol) Server for AI-Augmented Reflexive Thematic Analysis
 **Status:** Private Development
 
 ## Features
+
+### Phase 1: Coding (Current - v0.2.0)
 - 📖 Chunk-based reading for large transcripts (60-100 lines per chunk)
 - 🔍 Segment-based coding for semantic meaning units (variable size)
 - 🔧 Multi-segment API for granular qualitative coding
 - 📊 STATUS tracking via YAML frontmatter
 - 🔄 Backwards compatible with v0.1.0
 - 📖 Complete documentation in `/docs`
+
+### Phase 2: Reflexive Analysis (Planned - v0.3.0)
+- 🔁 Segment-by-segment reflexive note-taking
+- ✏️ Code revision during reflexive review (add/remove/replace)
+- 📈 Progress tracking with revision statistics
+- 💾 Session persistence across Claude Desktop restarts
+- 📝 Revision history for methodological transparency
+- 🎯 Addresses Claude Desktop data volume constraints
+- 📚 Follows iterative RTA methodology (Braun & Clarke)
 
 ## Terminology
 - **CHUNK**: Technical reading unit (60-100 lines) used to process large files
