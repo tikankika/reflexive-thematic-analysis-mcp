@@ -1,0 +1,154 @@
+/**
+ * project_setup - Create RTA project structure and configuration
+ *
+ * Creates project folder with:
+ * - rta_config.yaml (from template)
+ * - methodology/ (copied from repo)
+ * - project_state.json
+ *
+ * NOTE: This tool does NOT require init() to be called first.
+ * It is a setup tool that prepares the project structure.
+ */
+
+import { promises as fs } from 'fs';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
+import * as yaml from 'js-yaml';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+export interface ProjectSetupInput {
+  project_name: string;
+  output_path: string;
+  researcher: string;
+  transcripts: string[];
+}
+
+export interface ProjectSetupOutput {
+  success: boolean;
+  project_path: string;
+  config_path: string;
+  files_created: string[];
+  message: string;
+  next_step: string;
+}
+
+/**
+ * Recursively copy a directory
+ */
+async function copyDirectory(src: string, dest: string): Promise<void> {
+  await fs.mkdir(dest, { recursive: true });
+
+  let entries;
+  try {
+    entries = await fs.readdir(src, { withFileTypes: true });
+  } catch (error) {
+    // Source directory doesn't exist - skip
+    console.error(`[project_setup] Source directory not found: ${src}`);
+    return;
+  }
+
+  for (const entry of entries) {
+    const srcPath = join(src, entry.name);
+    const destPath = join(dest, entry.name);
+
+    if (entry.isDirectory()) {
+      await copyDirectory(srcPath, destPath);
+    } else {
+      await fs.copyFile(srcPath, destPath);
+    }
+  }
+}
+
+export async function projectSetup(
+  input: ProjectSetupInput
+): Promise<ProjectSetupOutput> {
+  const { project_name, output_path, researcher, transcripts } = input;
+
+  // Validate input
+  if (!project_name || project_name.trim() === '') {
+    throw new Error('project_name is required');
+  }
+  if (!output_path || output_path.trim() === '') {
+    throw new Error('output_path is required');
+  }
+  if (!researcher || researcher.trim() === '') {
+    throw new Error('researcher is required');
+  }
+  if (!transcripts || !Array.isArray(transcripts)) {
+    throw new Error('transcripts must be an array');
+  }
+
+  // 1. Create project directory
+  const projectPath = join(output_path, project_name);
+  await fs.mkdir(projectPath, { recursive: true });
+
+  const filesCreated: string[] = [];
+
+  // 2. Copy methodology/ from repo to project
+  const repoMethodology = join(__dirname, '../../methodology');
+  const projectMethodology = join(projectPath, 'methodology');
+
+  try {
+    await copyDirectory(repoMethodology, projectMethodology);
+    filesCreated.push('methodology/');
+  } catch (error) {
+    console.error('[project_setup] Failed to copy methodology:', error);
+    // Create empty methodology folder
+    await fs.mkdir(projectMethodology, { recursive: true });
+    filesCreated.push('methodology/ (empty - source not found)');
+  }
+
+  // 3. Load and customize template
+  const templatePath = join(__dirname, '../../templates/rta_config.yaml');
+  let template: string;
+
+  try {
+    template = await fs.readFile(templatePath, 'utf-8');
+  } catch (error) {
+    throw new Error(`Template not found at ${templatePath}. Run from repo root.`);
+  }
+
+  const now = new Date().toISOString();
+  const configContent = template
+    .replace(/\{\{PROJECT_NAME\}\}/g, project_name)
+    .replace(/\{\{RESEARCHER\}\}/g, researcher)
+    .replace(/\{\{CREATED\}\}/g, now);
+
+  // Parse and add transcripts
+  const configObj = yaml.load(configContent) as any;
+  configObj.transcripts = transcripts.map((path) => ({
+    path,
+    status: 'pending',
+    current_phase: null,
+  }));
+
+  const configPath = join(projectPath, 'rta_config.yaml');
+  await fs.writeFile(configPath, yaml.dump(configObj, { indent: 2 }));
+  filesCreated.push('rta_config.yaml');
+
+  // 4. Create project_state.json
+  const projectState = {
+    version: '1.0',
+    project_name,
+    created: now,
+    last_updated: now,
+    current_phase: null,
+    phases: {},
+  };
+
+  const statePath = join(projectPath, 'project_state.json');
+  await fs.writeFile(statePath, JSON.stringify(projectState, null, 2));
+  filesCreated.push('project_state.json');
+
+  return {
+    success: true,
+    project_path: projectPath,
+    config_path: configPath,
+    files_created: filesCreated,
+    message: `Project '${project_name}' created with ${transcripts.length} transcript(s)`,
+    next_step:
+      'Call init() to get critical instructions, then use methodology_load or phase2a-coding:code_start to begin',
+  };
+}

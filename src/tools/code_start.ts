@@ -1,10 +1,15 @@
 import { ChunkReader } from '../core/chunk_reader.js';
 import { StatusManager } from '../core/status_manager.js';
+import { sessionState } from '../core/session_state.js';
+import { MethodologyLoader } from '../core/methodology_loader.js';
 
 /**
- * code_start - Initialize coding session
+ * code_start - Initialize coding session (Phase 2a: Initial Coding)
  *
- * Creates STATUS frontmatter and returns first chunk for coding
+ * Creates STATUS frontmatter and returns first chunk for coding.
+ * Also loads Phase 2a methodology if not disabled.
+ *
+ * CRITICAL: Requires init() to be called first.
  *
  * Note: A "chunk" is a technical reading unit (60-100 lines) used to process
  * large transcripts in pieces. You will mark semantic "segments" with
@@ -15,26 +20,30 @@ import { StatusManager } from '../core/status_manager.js';
  *   config?: {
  *     chunk_size?: number - Lines per chunk (default: 80)
  *     segment_size?: number - (deprecated, use chunk_size)
+ *     load_methodology?: boolean - Load methodology in response (default: true)
  *   }
  *
  * Output:
  *   {
  *     status: "ready",
  *     total_lines: number,
- *     chunk: {
- *       number: number,
- *       lines: string (e.g., "1-80"),
- *       text: string
- *     }
+ *     chunk: {...},
+ *     methodology?: string,
+ *     coding_manual?: string,
+ *     instructions: string
  *   }
  */
 export async function codeStart(args: {
   file_path: string;
   config?: {
     chunk_size?: number;
-    segment_size?: number;  // Backwards compatibility
+    segment_size?: number; // Backwards compatibility
+    load_methodology?: boolean;
   };
 }): Promise<any> {
+  // CRITICAL: Require init first
+  sessionState.requireInit();
+
   const { file_path, config } = args;
   // Support both chunk_size (new) and segment_size (backwards compat)
   const chunkSize = config?.chunk_size || config?.segment_size || 80;
@@ -68,14 +77,44 @@ export async function codeStart(args: {
   // Read first chunk starting from actual content
   const chunk = await reader.readChunk(file_path, contentStart, chunkSize);
 
+  // Load methodology if requested (default: true)
+  let methodology: string | undefined;
+  let codingManual: string | undefined;
+
+  if (config?.load_methodology !== false) {
+    const loader = new MethodologyLoader();
+
+    try {
+      methodology = await loader.loadPhase2a();
+    } catch (error) {
+      console.error('[code_start] Failed to load Phase 2a methodology:', error);
+    }
+
+    try {
+      codingManual = await loader.loadDocument('coding_manual.md');
+    } catch (error) {
+      console.error('[code_start] Failed to load coding manual:', error);
+    }
+  }
+
   return {
     status: 'ready',
     total_lines: totalLines,
     estimated_chunks: Math.ceil(totalLines / chunkSize),
     chunk: {
       number: chunk.number,
-      lines: `${chunk.startLine + 1}-${chunk.endLine + 1}`,  // 1-indexed for display
-      text: chunk.text
-    }
+      lines: `${chunk.startLine + 1}-${chunk.endLine + 1}`, // 1-indexed for display
+      text: chunk.text,
+    },
+    // Include methodology if loaded
+    methodology,
+    coding_manual: codingManual,
+    instructions: `
+KRITISKT: Läs methodology och coding_manual innan du föreslår koder.
+- Forskaren har tolkningsauktoritet
+- Kodformat: #kod__lins1
+- In vivo: #"uttryck"__lins1
+- Latent: #LATENT_tolkning__lins1
+    `.trim(),
   };
 }

@@ -1,9 +1,108 @@
 # Changelog
 
-All notable changes to Phase 1 Coding MCP Server will be documented in this file.
+All notable changes to Qualitative Analysis RTA (Braun & Clarke) will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+---
+
+## [0.3.0] - 2026-01-11
+
+### MAJOR: Methodology Separation Architecture (RFC-003, RFC-005, RFC-006)
+
+This release implements a complete architectural overhaul to separate methodology from MCP code,
+enabling Claude Desktop to receive methodology directly from the MCP server without requiring
+manual upload to Project Knowledge.
+
+### Added
+
+#### New Core Tools (no prefix)
+- **`init`** - CALL FIRST! Returns critical instructions for using RTA tools
+  - Marks session as initialized (required before other tools)
+  - Returns available tools, critical rules, RTA phases status
+  - Checks methodology file availability
+- **`project_setup`** - Create new RTA project structure
+  - Creates project folder with `rta_config.yaml`, `methodology/`, `project_state.json`
+  - Copies methodology from repo to project location
+  - Configures transcripts for analysis
+- **`methodology_load`** - Load methodology documents for any phase
+  - Progressive loading (one document at a time)
+  - Reads from `rta_config.yaml` or uses repo defaults
+  - Requires init() first
+
+#### New Core Components
+- **`src/core/methodology_loader.ts`** - Loads RTA methodology documents
+  - Phase-specific loading (loadPhase1, loadPhase2a, loadPhase2b, etc.)
+  - Epistemology loading
+  - Fallback support when files missing
+  - Availability checking
+- **`src/core/session_state.ts`** - Singleton for init enforcement
+  - Tracks if init() was called
+  - `requireInit()` throws error if init not called
+  - Stores config path and current phase
+- **`src/core/project_config.ts`** - Reads/manages `rta_config.yaml`
+  - Phase document configuration
+  - Transcript tracking
+  - State management
+
+#### New Directory Structure
+- **`methodology/`** (root level) - All methodology documents
+  - `rta_overview.md` - NEW: RTA introduction and overview
+  - `coding_manual.md` - Coding guidelines (DISRUPTIV_INTEGRATED version)
+  - `lenses_operationalized.md` - Three analytical lenses
+  - `phase1_familiarization.md` through `phase6_producing_report.md`
+  - `phase2b_critical_review.md` - NEW: Critical review methodology
+  - `fallback-summary.md` - NEW: Condensed fallback
+  - `epistemology/` - Epistemological guides (4 files)
+- **`templates/`** - Project templates
+  - `rta_config.yaml` - Project configuration template
+- **`docs/mcp-usage/`** - MCP usage documentation
+  - `init-instructions.md` - Critical instructions for Claude
+
+#### Enhanced code_start
+- Now requires `init()` to be called first (init enforcement)
+- Automatically loads Phase 2a methodology in response
+- Includes coding manual in response
+- New `load_methodology` config option (default: true)
+
+### Changed
+
+#### Project Rename (RFC-006)
+- **Package**: `mcp-rta-server` → `mcp-qualitative-analysis-rta`
+- **Server name**: `phase2-coding-server` → `qualitative-analysis-rta-server`
+- **Server class**: `Phase2CodingServer` → `QualitativeAnalysisRTAServer`
+
+#### Tool Naming Convention (RFC-003)
+- **Core tools** (no prefix): `init`, `project_setup`, `add_line_index`, `methodology_load`
+- **Phase 2a tools** (prefix `phase2a-coding:`):
+  - `phase2a-coding:code_start`
+  - `phase2a-coding:code_read_next`
+  - `phase2a-coding:code_write_segment`
+  - `phase2a-coding:code_skip_chunk`
+  - `phase2a-coding:code_status`
+  - `phase2a-coding:code_verify`
+  - `phase2a-coding:code_reset_status`
+  - `phase2a-coding:code_clear_all`
+  - `phase2a-coding:code_delete_segment`
+
+#### Dependencies
+- Added `js-yaml` for YAML parsing
+- Added `@types/js-yaml` for TypeScript support
+
+### Removed
+- `docs/rfcs/RFC-003-critical-review.md` (deprecated, replaced by RFC-003-methodology-separation-architecture.md)
+
+### Documentation
+- Updated `ROADMAP.md` with v0.3.0 completion status
+- Updated `README.md` with new project name and description
+- All RFCs updated: MPC_RTA → qualitative-analysis-rta
+
+### RFCs Implemented
+- [RFC-003: Methodology Separation Architecture](docs/rfcs/RFC-003-methodology-separation-architecture.md)
+- [RFC-004: Phase 2 Terminology Alignment](docs/rfcs/RFC-004-phase2-terminology-alignment.md)
+- [RFC-005: Implementation Plan](docs/rfcs/RFC-005-implementation-plan-methodology-separation.md)
+- [RFC-006: Rename to qualitative-analysis-rta](docs/rfcs/RFC-006-rename-to-qualitative-analysis-rta.md)
 
 ---
 
@@ -26,6 +125,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `code_delete_segment(start_index, end_index)` - Remove specific segments
 
 ### Changed
+- **BREAKING:** Renamed server and tools from `phase1-coding` → `phase2-coding` (2026-01-11)
+  - Aligns with Braun & Clarke RTA terminology: Phase 2 = Initial Coding
+  - Server class: `Phase1CodingServer` → `Phase2CodingServer`
+  - Server name: `phase1-coding-server` → `phase2-coding-server`
+  - Requires update to Claude Desktop config for tool prefix change
+  - See: [RFC-004-phase2-terminology-alignment.md](/docs/rfcs/RFC-004-phase2-terminology-alignment.md)
 - **BREAKING:** Renamed `add_line_numbers` → `add_line_index` for terminology clarity
   - Line indices (0001, 0002, ...) are PERMANENT IDENTIFIERS
   - They don't change when /segment markers are added
@@ -122,7 +227,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **code_undo()**: Undo last coding operation (requires Coding Log)
 - **add_line_index validation**: Prevent re-indexing already-coded files
 
-### Planned (v0.3.0) - Phase 2 Reflexive Analysis + Advanced STATUS
+### Planned (v0.3.0) - Phase 2b: Critical Review of Semi-Automated Coding + Advanced STATUS
 - **Reflexive Analysis Tools** (RFC 001)
   - 6 new MCP tools for segment-by-segment reflexive analysis
   - `reflective_start` - Initialize reflexive session, load first segment

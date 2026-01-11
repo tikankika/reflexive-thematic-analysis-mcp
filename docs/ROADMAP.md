@@ -1,6 +1,15 @@
-# Phase 1 Coding MCP Server - Development Roadmap
+# Qualitative Analysis RTA - Development Roadmap (Braun & Clarke RTA)
 
-This document outlines the planned development phases for the Phase 1 Coding MCP Server.
+This document outlines the planned development phases for the Phase 2 Coding MCP Server.
+
+> **✅ TERMINOLOGI-UPPDATERING (2026-01-11)**
+> 
+> MCP-verktygen har bytt namn från `phase1-coding:*` till `phase2-coding:*` för att matcha Braun & Clarke's RTA terminologi.
+> - Phase 1 = Familiarization (läsa, förstå data)
+> - Phase 2 = Initial Coding (det vi gör)
+> - Phase 2b = Critical Review (planerad)
+> 
+> Se: [RFC-004-phase2-terminology-alignment.md](/docs/rfcs/RFC-004-phase2-terminology-alignment.md)
 
 ---
 
@@ -221,52 +230,209 @@ Server handles ONLY file operations. Coding methodology (RTA, GT, IPA, etc.) liv
 
 ---
 
-### 📋 v0.3.0 - Code Management + Advanced STATUS Features
+### 📋 v0.3.0 - Methodology Separation Architecture + Phase 2b Foundation
 
-**Target**: Q2 2026
-**Goal**: Code review tools AND architectural STATUS improvements
+**Target**: Q1 2026  
+**Goal**: Separera metodologi från MCP-kod, implementera init enforcement, förbered Phase 2b  
+**Based on**: RFC-003 (Methodology Separation), RFC-005 (Implementation Plan)
 
-**Features**:
-- **Code Extraction**:
-  - `code_list()` - List all codes in file with frequency
-  - `code_search(code)` - Find all segments containing a specific code
-  - `code_export()` - Export codes to JSON/CSV for analysis
+**✅ COMPLETED: Tool Renaming (2026-01-11)**
 
-- **Code Operations**:
-  - `code_rename(old_code, new_code)` - Rename code throughout file
-  - `code_merge(codes[], new_code)` - Merge similar codes
-  - `code_remove(code)` - Remove code from all segments
+| Old name | New name | Status |
+|----------|----------|--------|
+| `phase1-coding:*` | `phase2-coding:*` | ✅ Done |
 
-- **Statistics**:
-  - Total codes per segment
-  - Code frequency analysis
-  - Segment coverage metrics (coded vs uncoded)
+See: [RFC-004-phase2-terminology-alignment.md](/docs/rfcs/RFC-004-phase2-terminology-alignment.md)
 
-- **Advanced STATUS Management** ⭐ NEW (RFC 002):
-  - **Atomic STATUS Updates**:
-    - STATUS updates atomic with file writes
-    - No partial state - always reflects reality
-    - Auto-rollback on failed writes
+---
 
-  - **Auto-recovery**:
-    - Detect STATUS desync automatically
-    - Offer to fix with detailed diff
-    - "STATUS says X, file contains Y - fix?"
+#### 🆕 NEW: Methodology Separation Architecture (RFC-003)
 
-  - **Enhanced Error Messages**:
-    - Visual display of overlapping segments
-    - Suggest corrections automatically
-    - Show boundary conflicts clearly
+**Problem solved**: Metodologi måste idag manuellt laddas upp till Claude Project Knowledge.
 
-  - **Pre-flight Validation**:
-    - Validate STATE before operations
-    - Warn if `last_coded_line > total_lines`
-    - Auto-suggest recovery path
+**Solution**: MCP laddar metodologi direkt från filsystem.
 
-**Use Case**:
-Quality control, code consolidation, AND reliable STATUS tracking.
+**New Directory Structure**:
+```
+qualitative-analysis-rta/
+├── templates/
+│   └── rta_config.yaml          # Mall för projektkonfiguration
+├── methodology/                  # 🆕 NY TOPPNIVÅ-MAPP
+│   ├── rta_overview.md
+│   ├── coding_manual.md
+│   ├── phase1_familiarization.md
+│   ├── phase2a_initial_coding.md
+│   ├── phase2b_critical_review.md
+│   ├── phase3_generating_themes.md
+│   └── epistemology/
+└── src/
+    ├── core/
+    │   ├── session_state.ts         # 🆕 Init enforcement
+    │   ├── methodology_loader.ts    # 🆕 Laddar metodologi
+    │   └── project_config.ts        # 🆕 Läser rta_config.yaml
+    └── tools/
+        ├── init.ts                  # 🆕 Core tool
+        ├── project_setup.ts         # 🆕 Core tool
+        └── methodology_load.ts      # 🆕 Core tool
+```
 
-**Note**: These tools are methodology-agnostic - they work with any coding approach.
+---
+
+#### 🆕 NEW: Tool Naming Convention (RFC-003)
+
+**Core tools (no prefix)**:
+| Tool | Syfte | Kräver init? |
+|------|-------|-------------|
+| `init` | Session-start instruktioner | ❌ Nej (ÄR init) |
+| `project_setup` | Skapa projektstruktur | ❌ Nej |
+| `add_line_index` | Förbered transkript | ❌ Nej |
+| `methodology_load` | Ladda metodologi (generisk) | ✅ Ja |
+
+**Phase-specific tools (with prefix)**:
+| Prefix | Fas | Tools |
+|--------|-----|-------|
+| `phase2a-coding:` | Initial Coding | code_start, code_read_next, code_write_segment, ... |
+| `phase2b-review:` | Critical Review | start, next (FRAMTIDA) |
+| `phase3-themes:` | Theme Generation | start (FRAMTIDA) |
+
+---
+
+#### 🆕 NEW: Init Enforcement (RFC-003)
+
+**Problem**: Claude följer inte alltid "CALL THIS FIRST!" instruktioner.
+
+**Solution**: Hård enforcement via SessionState - tools VÄGRAR köra utan init.
+
+```
+Claude anropar: phase2a-coding:code_start
+       ↓
+Tool: 🛑 STOPP! Du MÅSTE anropa 'init' först.
+       ↓
+Claude anropar: init()
+       ↓
+Tool: ✅ Instruktioner + availableTools
+       ↓
+Claude anropar: phase2a-coding:code_start
+       ↓
+Tool: ✅ Chunk + methodology
+```
+
+---
+
+#### 🆕 NEW: Project Setup Tool (RFC-003)
+
+```typescript
+project_setup({
+  project_name: "AI_Teachers_Focus_Groups",
+  output_path: "/Users/.../Nextcloud/Analysis",
+  researcher: "Niklas Karlsson",
+  transcripts: ["NE_traff_1.md", "BSG_traff_1.md"]
+})
+```
+
+**Skapar**:
+- `rta_config.yaml` (från template)
+- `methodology/` (kopierad från repo)
+- `project_state.json`
+
+---
+
+#### Implementation Checklist (RFC-005 STEG 0-8)
+
+**STEG -1: Rename projekt (RFC-006) ⭐ GÖR FÖRST**
+- [ ] Uppdatera `package.json` - name: "mcp-qualitative-analysis-rta"
+- [ ] Uppdatera `src/server.ts` - server name
+- [ ] Uppdatera `README.md` - titel och beskrivning
+- [ ] Uppdatera `ROADMAP.md` - alla MPC_RTA referenser
+- [ ] Uppdatera `RFC-003`, `RFC-005` - alla MPC_RTA referenser
+- [ ] Verifiera: `npm run build`
+
+**See**: [RFC-006-rename-to-qualitative-analysis-rta.md](/docs/rfcs/RFC-006-rename-to-qualitative-analysis-rta.md)
+
+**STEG 0: Project Setup Infrastructure (1 tim)**
+- [ ] Skapa `templates/` mapp
+- [ ] Skapa `templates/rta_config.yaml`
+- [ ] Implementera `src/tools/project_setup.ts`
+- [ ] Implementera `src/core/project_config.ts`
+
+**STEG 1: Skapa methodology/ struktur (30 min)**
+- [ ] Skapa `methodology/` mapp
+- [ ] Skapa `methodology/epistemology/` mapp
+- [ ] Kopiera/döp om filer från `docs/methodology/`
+
+**STEG 2: Skapa nya filer (1-2 tim)**
+- [ ] `methodology/rta_overview.md`
+- [ ] `methodology/phase2b_critical_review.md`
+- [ ] `methodology/fallback-summary.md`
+- [ ] `docs/mcp-usage/init-instructions.md`
+
+**STEG 3: MethodologyLoader (1-2 tim)**
+- [ ] Implementera `src/core/methodology_loader.ts`
+
+**STEG 4: init tool + SessionState (1 tim)**
+- [ ] Implementera `src/core/session_state.ts`
+- [ ] Implementera `src/tools/init.ts`
+
+**STEG 5: methodology_load tool (1 tim)**
+- [ ] Implementera `src/tools/methodology_load.ts`
+
+**STEG 6: Modifiera code_start (30 min)**
+- [ ] Rename till `phase2a_code_start.ts`
+- [ ] Lägg till `sessionState.requireInit()`
+- [ ] Lägg till metodologi i response
+
+**STEG 7: Uppdatera server.ts (1 tim)**
+- [ ] Registrera nya core tools (init, project_setup, methodology_load)
+- [ ] Uppdatera prefixes (phase2a-coding:*)
+- [ ] Lägg till switch cases
+
+**STEG 8: Testing (2-3 tim)**
+- [ ] Unit tests för SessionState
+- [ ] Unit tests för MethodologyLoader
+- [ ] Integration test: init → methodology_load → code_start
+
+**Total**: ~12 timmar
+
+---
+
+#### Phase 2b Critical Coding Review (FOUNDATION ONLY)
+
+**Status**: 🚧 Dokumenterat i RFC-003, implementation i v0.4.0+
+
+**Syfte**: Forskardriven kritisk granskning av semi-automatiserad kodning.
+
+**Key questions**:
+- Är segmentet koherent avgränsat?
+- Är koderna korrekta och tillräckliga?
+- Vilka koder ska läggas till/tas bort/förfinas?
+
+**See**: 
+- [RFC-003-methodology-separation-architecture.md](/docs/rfcs/RFC-003-methodology-separation-architecture.md)
+- [RFC-005-implementation-plan-methodology-separation.md](/docs/rfcs/RFC-005-implementation-plan-methodology-separation.md)
+
+---
+
+#### Success Criteria v0.3.0
+
+- [ ] `templates/rta_config.yaml` finns med konfigurerbara methodology-dokument
+- [ ] `project_setup` tool skapar projektstruktur
+- [ ] `methodology/` finns på toppnivå med alla dokument
+- [ ] `methodology_load` tool laddar metodologi baserat på fas + yaml config
+- [ ] `init` tool returnerar kritiska instruktioner
+- [ ] `session_state.ts` enforcerar att init() måste anropas först
+- [ ] Core tools (no prefix): init, project_setup, add_line_index, methodology_load
+- [ ] Phase 2a tools (prefix `phase2a-coding:`): code_start, code_read_next, etc.
+- [ ] Claude Desktop följer instruktioner utan Project Knowledge
+- [ ] Befintliga verktyg fungerar oförändrat (bara renamed)
+
+---
+
+#### References
+
+- [RFC-006: Rename to qualitative-analysis-rta](/docs/rfcs/RFC-006-rename-to-qualitative-analysis-rta.md) ⭐ **GÖR FÖRST**
+- [RFC-003: Methodology Separation Architecture](/docs/rfcs/RFC-003-methodology-separation-architecture.md)
+- [RFC-004: Phase 2 Terminology Alignment](/docs/rfcs/RFC-004-phase2-terminology-alignment.md)
+- [RFC-005: Implementation Plan](/docs/rfcs/RFC-005-implementation-plan-methodology-separation.md)
 
 ---
 

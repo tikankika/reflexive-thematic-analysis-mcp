@@ -1,21 +1,17 @@
 #!/usr/bin/env node
 
 /**
- * Phase 1 Coding MCP Server
+ * Qualitative Analysis RTA Server (Braun & Clarke Reflexive Thematic Analysis)
  *
- * Minimal file handler for chunk-based reading and segment-based coding
+ * MCP server for AI-augmented qualitative analysis following Braun & Clarke RTA methodology.
  *
  * Terminology:
  * - CHUNK: Technical reading unit (60-100 lines) for processing large files
  * - SEGMENT: Semantic coding unit (variable size) marked with /segment
  *
- * Tools:
- * - add_line_index: Add permanent line indices to transcript (prep tool)
- * - code_start: Initialize coding session (returns first chunk)
- * - code_read_next: Read next chunk for coding
- * - code_write_segment: Write codes for semantic segments
- * - code_skip_chunk: Skip chunk without coding (for non-codeable content)
- * - code_status: Show progress
+ * Tool Categories:
+ * - Core (no prefix): init, project_setup, add_line_index, methodology_load
+ * - Phase 2a (prefix phase2a-coding:): code_start, code_read_next, code_write_segment, etc.
  */
 
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
@@ -25,7 +21,13 @@ import {
   ListToolsRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
 
+// Core tools
+import { init } from './tools/init.js';
+import { projectSetup } from './tools/project_setup.js';
 import { addLineIndex } from './tools/add_line_index.js';
+import { methodologyLoad } from './tools/methodology_load.js';
+
+// Phase 2a tools
 import { codeStart } from './tools/code_start.js';
 import { codeReadNext } from './tools/code_read_next.js';
 import { codeWriteSegment } from './tools/code_write_segment.js';
@@ -37,16 +39,16 @@ import { codeDeleteSegment } from './tools/code_delete_segment.js';
 import { codeStatus } from './tools/code_status.js';
 
 /**
- * MCP Server for Phase 1 Coding
+ * MCP Server for Qualitative Analysis RTA (Braun & Clarke)
  */
-class Phase1CodingServer {
+class QualitativeAnalysisRTAServer {
   private server: Server;
 
   constructor() {
     this.server = new Server(
       {
-        name: 'phase1-coding-server',
-        version: '0.2.0',
+        name: 'qualitative-analysis-rta-server',
+        version: '0.3.0',
       },
       {
         capabilities: {
@@ -65,6 +67,50 @@ class Phase1CodingServer {
     // List available tools
     this.server.setRequestHandler(ListToolsRequestSchema, async () => ({
       tools: [
+        // === CORE TOOLS (no prefix) ===
+        {
+          name: 'init',
+          description:
+            'CALL THIS FIRST! Returns critical instructions for using RTA tools. ' +
+            'You MUST follow these instructions. ' +
+            'RESEARCHER has interpretive authority - propose codes, researcher decides. ' +
+            'NEVER use bash/find/ls/cat - MCP tools have full file access.',
+          inputSchema: {
+            type: 'object',
+            properties: {},
+            required: [],
+          },
+        },
+        {
+          name: 'project_setup',
+          description:
+            'Create a new RTA project structure. ' +
+            'Creates project folder with rta_config.yaml, methodology/, and project_state.json. ' +
+            'Use this when starting a new research project.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              project_name: {
+                type: 'string',
+                description: 'Name of the project (e.g., "AI_Teachers_Focus_Groups")',
+              },
+              output_path: {
+                type: 'string',
+                description: 'Path where project folder should be created',
+              },
+              researcher: {
+                type: 'string',
+                description: 'Name of the researcher',
+              },
+              transcripts: {
+                type: 'array',
+                items: { type: 'string' },
+                description: 'Array of paths to transcript files',
+              },
+            },
+            required: ['project_name', 'output_path', 'researcher', 'transcripts'],
+          },
+        },
         {
           name: 'add_line_index',
           description:
@@ -90,7 +136,34 @@ class Phase1CodingServer {
           },
         },
         {
-          name: 'code_start',
+          name: 'methodology_load',
+          description:
+            'Load methodology documents for any phase. ' +
+            'CRITICAL: SHOW full document.content to researcher (do NOT summarize!). ' +
+            'Start with document_index=0, ask "Ok?", wait for response, then document_index=1, etc. ' +
+            'Requires init() to be called first.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              config_path: {
+                type: 'string',
+                description: 'Path to rta_config.yaml (optional, uses repo methodology if not provided)',
+              },
+              phase: {
+                type: 'string',
+                description: 'Phase to load methodology for (e.g., "phase2a", "phase2b", "phase3")',
+              },
+              document_index: {
+                type: 'number',
+                description: '0-based index for progressive loading (default: 0)',
+              },
+            },
+            required: ['phase'],
+          },
+        },
+        // === PHASE 2a TOOLS (Initial Coding) ===
+        {
+          name: 'phase2a-coding:code_start',
           description:
             'Initialize coding session. Creates STATUS frontmatter and returns first chunk (raw text) for coding. Note: A "chunk" is a technical reading unit (60-100 lines). You will mark semantic "segments" with /segment markers when coding. Use this to start coding a new transcript.',
           inputSchema: {
@@ -118,7 +191,7 @@ class Phase1CodingServer {
           },
         },
         {
-          name: 'code_read_next',
+          name: 'phase2a-coding:code_read_next',
           description:
             'Read next uncoded chunk. Returns raw text of next 60-100 lines based on STATUS for coding. Note: A "chunk" is a technical reading unit. You will mark semantic "segments" with /segment markers when coding within each chunk. Use this to continue coding after accepting previous chunk.',
           inputSchema: {
@@ -133,7 +206,7 @@ class Phase1CodingServer {
           },
         },
         {
-          name: 'code_write_segment',
+          name: 'phase2a-coding:code_write_segment',
           description:
             'Write codes for semantic segment(s). A "segment" here is a meaningful coding unit (variable size, marked with /segment). Supports TWO MODES: (1) LEGACY (v0.1.0): single chunk using STATUS boundaries - provide "codes" array. (2) NEW (v0.2.0): multiple small semantic segments with explicit line ranges - provide "segments" array. Use NEW mode when you have identified specific meaningful units (quotes, exchanges, thematic chunks) to code precisely. Use LEGACY mode for standard sequential chunk-based coding.',
           inputSchema: {
@@ -182,7 +255,7 @@ class Phase1CodingServer {
           },
         },
         {
-          name: 'code_skip_chunk',
+          name: 'phase2a-coding:code_skip_chunk',
           description:
             'Skip current chunk without coding. Use when chunk contains no codeable content (e.g., facilitator-only talk, meta-organizational content). Marks chunk as processed and advances to next chunk. Updates STATUS and returns progress.',
           inputSchema: {
@@ -197,7 +270,7 @@ class Phase1CodingServer {
           },
         },
         {
-          name: 'code_reset_status',
+          name: 'phase2a-coding:code_reset_status',
           description:
             'Reset STATUS to uncoded state without modifying file content. Use when file was manually cleaned but STATUS is out of sync. Resets Last-coded-line to 0 and Progress to 0/N.',
           inputSchema: {
@@ -212,7 +285,7 @@ class Phase1CodingServer {
           },
         },
         {
-          name: 'code_verify',
+          name: 'phase2a-coding:code_verify',
           description:
             'Verify STATUS matches actual file content. Counts /segment markers and compares to STATUS. With fix=true, auto-corrects STATUS based on actual segments found. Use to diagnose and fix STATUS inconsistencies.',
           inputSchema: {
@@ -232,7 +305,7 @@ class Phase1CodingServer {
           },
         },
         {
-          name: 'code_clear_all',
+          name: 'phase2a-coding:code_clear_all',
           description:
             'Remove ALL coding from file (segments, markers, codes). Preserves line indices and transcript content. Creates automatic backup. Requires confirm: true for safety. Resets STATUS to uncoded state. Use to start over from scratch.',
           inputSchema: {
@@ -251,7 +324,7 @@ class Phase1CodingServer {
           },
         },
         {
-          name: 'code_delete_segment',
+          name: 'phase2a-coding:code_delete_segment',
           description:
             'Delete specific segment by line index range. Removes /segment markers, content, and codes for the specified range. Updates STATUS. Use when a specific segment was coded incorrectly.',
           inputSchema: {
@@ -274,7 +347,7 @@ class Phase1CodingServer {
           },
         },
         {
-          name: 'code_status',
+          name: 'phase2a-coding:code_status',
           description:
             'Show coding progress. Returns current STATUS including segments coded, lines remaining, and progress percentage.',
           inputSchema: {
@@ -299,43 +372,57 @@ class Phase1CodingServer {
         let result: any;
 
         switch (name) {
+          // === CORE TOOLS ===
+          case 'init':
+            result = await init();
+            break;
+
+          case 'project_setup':
+            result = await projectSetup(args as any);
+            break;
+
           case 'add_line_index':
             result = await addLineIndex(args as any);
             break;
 
-          case 'code_start':
+          case 'methodology_load':
+            result = await methodologyLoad(args as any);
+            break;
+
+          // === PHASE 2a TOOLS ===
+          case 'phase2a-coding:code_start':
             result = await codeStart(args as any);
             break;
 
-          case 'code_read_next':
+          case 'phase2a-coding:code_read_next':
             result = await codeReadNext(args as any);
             break;
 
-          case 'code_write_segment':
+          case 'phase2a-coding:code_write_segment':
             result = await codeWriteSegment(args as any);
             break;
 
-          case 'code_skip_chunk':
+          case 'phase2a-coding:code_skip_chunk':
             result = await codeSkipChunk(args as any);
             break;
 
-          case 'code_reset_status':
+          case 'phase2a-coding:code_reset_status':
             result = await codeResetStatus(args as any);
             break;
 
-          case 'code_verify':
+          case 'phase2a-coding:code_verify':
             result = await codeVerify(args as any);
             break;
 
-          case 'code_clear_all':
+          case 'phase2a-coding:code_clear_all':
             result = await codeClearAll(args as any);
             break;
 
-          case 'code_delete_segment':
+          case 'phase2a-coding:code_delete_segment':
             result = await codeDeleteSegment(args as any);
             break;
 
-          case 'code_status':
+          case 'phase2a-coding:code_status':
             result = await codeStatus(args as any);
             break;
 
@@ -382,15 +469,16 @@ class Phase1CodingServer {
     await this.server.connect(transport);
 
     // Log to stderr (stdout is used for MCP protocol)
-    console.error('Phase 1 Coding MCP Server running...');
+    console.error('Qualitative Analysis RTA Server v0.3.0 running...');
+    console.error('Core: init, project_setup, add_line_index, methodology_load');
     console.error(
-      'Tools: add_line_index, code_start, code_read_next, code_write_segment, code_skip_chunk, code_reset_status, code_verify, code_clear_all, code_delete_segment, code_status'
+      'Phase 2a: code_start, code_read_next, code_write_segment, code_skip_chunk, code_status, code_verify, code_reset_status, code_clear_all, code_delete_segment'
     );
   }
 }
 
 // Start server
-const server = new Phase1CodingServer();
+const server = new QualitativeAnalysisRTAServer();
 server.run().catch((error) => {
   console.error('Server error:', error);
   process.exit(1);

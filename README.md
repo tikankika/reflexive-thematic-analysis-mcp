@@ -1,13 +1,13 @@
-# MPC_RTA - Phase 1 Coding Server
+# Qualitative Analysis RTA - MCP Server
 
-MCP (Model Context Protocol) Server for AI-Augmented Reflexive Thematic Analysis (RTA).
+MCP server for AI-augmented Reflexive Thematic Analysis (Braun & Clarke).
 
-**Version:** 0.2.0
+**Version:** 0.3.0
 **Status:** Private Development
 
 ## Features
 
-### Phase 1: Coding (Current - v0.2.0)
+### Current (v0.2.0) - Braun & Clarke Phase 2: Initial Coding
 - 📖 Chunk-based reading for large transcripts (60-100 lines per chunk)
 - 🔍 Segment-based coding for semantic meaning units (variable size)
 - 🔧 Multi-segment API for granular qualitative coding
@@ -15,7 +15,7 @@ MCP (Model Context Protocol) Server for AI-Augmented Reflexive Thematic Analysis
 - 🔄 Backwards compatible with v0.1.0
 - 📖 Complete documentation in `/docs`
 
-### Phase 2: Reflexive Analysis (Planned - v0.3.0)
+### Planned (v0.3.0) - Phase 2b: Critical Review of Semi-Automated Coding
 - 🔁 Segment-by-segment reflexive note-taking
 - ✏️ Code revision during reflexive review (add/remove/replace)
 - 📈 Progress tracking with revision statistics
