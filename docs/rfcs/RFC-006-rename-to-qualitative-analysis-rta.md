@@ -82,7 +82,10 @@ Replace all occurrences of:
 ## 5. Files to Delete
 
 ```bash
-rm docs/rfcs/RFC-003-critical-review.md
+# Ta bort utdaterade metodologi-filer
+rm docs/rfcs/RFC-003-critical-review.md  # Redan borttagen
+rm methodology/coding_manual.md
+rm methodology/lenses_operationalized.md
 ```
 
 ## 6. Implementation

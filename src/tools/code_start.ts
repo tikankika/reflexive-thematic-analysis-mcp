@@ -91,7 +91,7 @@ export async function codeStart(args: {
     }
 
     try {
-      codingManual = await loader.loadDocument('coding_manual.md');
+      codingManual = await loader.loadDocument('KODNINGSMANUAL_AI_Augmented_RTA_DISRUPTIV_INTEGRATED_2026-01-10.md');
     } catch (error) {
       console.error('[code_start] Failed to load coding manual:', error);
     }

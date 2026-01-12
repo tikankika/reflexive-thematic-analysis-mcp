@@ -115,8 +115,7 @@ qualitative-analysis-rta/
 │   │
 │   ├── # === GENERELLA DOKUMENT ===
 │   ├── rta_overview.md              # RTA-introduktion (ny sammanfattning)
-│   ├── coding_manual.md             # Huvudkodningsmanual
-│   ├── lenses_operationalized.md    # Tre-lins operationalisering
+│   ├── KODNINGSMANUAL_AI_Augmented_RTA_DISRUPTIV_INTEGRATED_2026-01-10.md  # Integrerad kodningsmanual
 │   │
 │   ├── # === FAS-SPECIFIKA DOKUMENT ===
 │   ├── phase1_familiarization.md    # Braun & Clarke Phase 1
@@ -154,21 +153,23 @@ qualitative-analysis-rta/
 
 | Current Location | New Location | Action |
 |------------------|--------------|--------|
-| `docs/methodology/KODNINGSMANUAL_AI_Augmented_RTA_Lins1.md` | `methodology/coding_manual.md` | RENAME + CONSOLIDATE |
-| `docs/methodology/Linser_fordjupat.md` | `methodology/lenses_operationalized.md` | MOVE + RENAME |
-| `docs/methodology/RTA_phases/phase1_familiarization_template.md` | `methodology/phase1_familiarization.md` | MOVE + RENAME |
-| `docs/methodology/RTA_phases/phase2_*.md` (3 filer) | `methodology/phase2a_initial_coding.md` | CONSOLIDATE |
-| `docs/methodology/RTA_phases/phase3_generating_themes.md` | `methodology/phase3_generating_themes.md` | MOVE |
-| `docs/methodology/RTA_phases/phase4_reviewing_themes.md` | `methodology/phase4_reviewing_themes.md` | MOVE |
-| `docs/methodology/RTA_phases/phase5_defining_naming_themes.md` | `methodology/phase5_defining_naming.md` | MOVE + RENAME |
-| `docs/methodology/RTA_phases/phase6_producing_report.md` | `methodology/phase6_producing_report.md` | MOVE |
-| `docs/methodology/epistemology/Section_3.1.1_Epistemology_Guide.md` | `methodology/epistemology/constructionist.md` | MOVE + RENAME |
-| `docs/methodology/epistemology/Section_3_1_2_Orientation_Guide.md` | `methodology/epistemology/orientation.md` | MOVE + RENAME |
-| `docs/methodology/epistemology/Section_3_1_3_Inductive_Deductive_Guide.md` | `methodology/epistemology/inductive_deductive.md` | MOVE + RENAME |
-| `docs/methodology/epistemology/Section_3_1_4_Semantic_Latent_Guide.md` | `methodology/epistemology/semantic_latent.md` | MOVE + RENAME |
+| `methodology/KODNINGSMANUAL_AI_Augmented_RTA_DISRUPTIV_INTEGRATED_2026-01-10.md` | *(keep as-is)* | KEEP |
+| `docs/methodology/RTA_phases/phase1_familiarization_template.md` | `methodology/phase1_familiarization.md` | ALREADY DONE |
+| `docs/methodology/RTA_phases/phase2_*.md` | `methodology/phase2a_initial_coding.md` | ALREADY DONE |
+| `docs/methodology/RTA_phases/phase3_generating_themes.md` | `methodology/phase3_generating_themes.md` | ALREADY DONE |
+| `docs/methodology/RTA_phases/phase4_reviewing_themes.md` | `methodology/phase4_reviewing_themes.md` | ALREADY DONE |
+| `docs/methodology/RTA_phases/phase5_defining_naming_themes.md` | `methodology/phase5_defining_naming.md` | ALREADY DONE |
+| `docs/methodology/RTA_phases/phase6_producing_report.md` | `methodology/phase6_producing_report.md` | ALREADY DONE |
+| `docs/methodology/epistemology/Section_3.1.1_Epistemology_Guide.md` | `methodology/epistemology/constructionist.md` | ALREADY DONE |
+| `docs/methodology/epistemology/Section_3_1_3_Inductive_Deductive_Guide.md` | `methodology/epistemology/inductive_deductive.md` | ALREADY DONE |
+| `docs/methodology/epistemology/Section_3_1_4_Semantic_Latent_Guide.md` | `methodology/epistemology/semantic_latent.md` | ALREADY DONE |
 | *(ny)* | `methodology/rta_overview.md` | CREATE |
 | *(ny)* | `methodology/phase2b_critical_review.md` | CREATE (from development_ideas/) |
 | *(ny)* | `methodology/fallback-summary.md` | CREATE |
+
+**FILES TO DELETE:**
+- `methodology/coding_manual.md` - replaced by integrated KODNINGSMANUAL
+- `methodology/lenses_operationalized.md` - lens info is in KODNINGSMANUAL
 
 ---
 
@@ -199,7 +200,7 @@ methodology:
   # Generella dokument (laddas vid projekt-start)
   general:
     - rta_overview.md
-    - coding_manual.md
+    - KODNINGSMANUAL_AI_Augmented_RTA_DISRUPTIV_INTEGRATED_2026-01-10.md
   
   # Fas-specifika dokument
   phases:
@@ -207,7 +208,7 @@ methodology:
       - phase1_familiarization.md
     phase2a:
       - phase2a_initial_coding.md
-      - coding_manual.md
+      - KODNINGSMANUAL_AI_Augmented_RTA_DISRUPTIV_INTEGRATED_2026-01-10.md
     phase2b:
       - phase2b_critical_review.md
     phase3:
@@ -436,23 +437,21 @@ mkdir -p /Users/niklaskarlsson/AIED_EdTech_projects/qualitative-analysis-rta/doc
 **Flytta/kopiera filer:**
 
 ```bash
-# Generella dokument
-cp docs/methodology/KODNINGSMANUAL_AI_Augmented_RTA_Lins1.md methodology/coding_manual.md
-cp docs/methodology/Linser_fordjupat.md methodology/lenses_operationalized.md
+# Generella dokument - REDAN GJORT
+# KODNINGSMANUAL_AI_Augmented_RTA_DISRUPTIV_INTEGRATED_2026-01-10.md finns redan i methodology/
 
-# Fas-specifika dokument
-cp docs/methodology/RTA_phases/phase1_familiarization_template.md methodology/phase1_familiarization.md
-cp docs/methodology/RTA_phases/phase2_coding_template_final_INTEGRATED_byrne_based.md methodology/phase2a_initial_coding.md
-cp docs/methodology/RTA_phases/phase3_generating_themes.md methodology/phase3_generating_themes.md
-cp docs/methodology/RTA_phases/phase4_reviewing_themes.md methodology/phase4_reviewing_themes.md
-cp docs/methodology/RTA_phases/phase5_defining_naming_themes.md methodology/phase5_defining_naming.md
-cp docs/methodology/RTA_phases/phase6_producing_report.md methodology/phase6_producing_report.md
+# Fas-specifika dokument - REDAN GJORT
+# phase1_familiarization.md till phase6_producing_report.md finns redan i methodology/
 
-# Epistemologi
-cp docs/methodology/epistemology/Section_3.1.1_Epistemology_Guide.md methodology/epistemology/constructionist.md
-cp docs/methodology/epistemology/Section_3_1_2_Orientation_Guide.md methodology/epistemology/orientation.md
-cp docs/methodology/epistemology/Section_3_1_3_Inductive_Deductive_Guide.md methodology/epistemology/inductive_deductive.md
-cp docs/methodology/epistemology/Section_3_1_4_Semantic_Latent_Guide.md methodology/epistemology/semantic_latent.md
+# Epistemologi - REDAN GJORT
+# epistemology/*.md finns redan i methodology/epistemology/
+```
+
+**Ta bort utdaterade filer:**
+
+```bash
+rm methodology/coding_manual.md
+rm methodology/lenses_operationalized.md
 ```
 
 ---
@@ -630,7 +629,7 @@ ls /Users/niklaskarlsson/...
 - Respektera forskarens ändringar utan att ifrågasätta
 
 ### REGEL 5: Använd kodformat från kodningsmanual
-- Läs methodology/coding_manual.md
+- Läs methodology/KODNINGSMANUAL_AI_Augmented_RTA_DISRUPTIV_INTEGRATED_2026-01-10.md
 - Följ exakt format: #kod__lins1
 - In vivo: #"uttryck"__lins1
 - Latent: #LATENT_tolkning__lins1
@@ -667,8 +666,7 @@ export class MethodologyLoader {
   // Generella dokument som laddas vid session-start
   private readonly GENERAL_FILES = [
     'rta_overview.md',
-    'coding_manual.md',
-    'lenses_operationalized.md',
+    'KODNINGSMANUAL_AI_Augmented_RTA_DISRUPTIV_INTEGRATED_2026-01-10.md',
   ];
   
   // Fas-specifika dokument
@@ -786,10 +784,13 @@ export class MethodologyLoader {
   
   /**
    * Load lens-specific operationalization
+   * NOTE: Lens information is now part of the integrated KODNINGSMANUAL
    */
   async loadLens(lensNumber: 1 | 2 | 3): Promise<string> {
-    const content = await this.loadDocument('lenses_operationalized.md');
-    // TODO: Extract specific lens section if needed
+    const content = await this.loadDocument(
+      'KODNINGSMANUAL_AI_Augmented_RTA_DISRUPTIV_INTEGRATED_2026-01-10.md'
+    );
+    // Lens info is integrated in the KODNINGSMANUAL
     return content;
   }
   
@@ -838,7 +839,10 @@ export class MethodologyLoader {
   getDocumentList(phase: string): string[] {
     switch (phase) {
       case 'phase2a':
-        return ['coding_manual.md', 'lenses_operationalized.md', 'phase2a_initial_coding.md'];
+        return [
+          'KODNINGSMANUAL_AI_Augmented_RTA_DISRUPTIV_INTEGRATED_2026-01-10.md',
+          'phase2a_initial_coding.md'
+        ];
       case 'phase2b':
         return ['phase2b_critical_review.md'];
       case 'phase3':
@@ -1206,7 +1210,9 @@ if (config?.load_methodology !== false) {  // Default: true
   }
   
   try {
-    codingManual = await loader.loadDocument('coding_manual.md');
+    codingManual = await loader.loadDocument(
+      'KODNINGSMANUAL_AI_Augmented_RTA_DISRUPTIV_INTEGRATED_2026-01-10.md'
+    );
   } catch (error) {
     console.error('[code_start] Failed to load coding manual:', error);
   }
@@ -1359,7 +1365,7 @@ case 'methodology_load':
 
 - [ ] `MethodologyLoader.load()` returnerar generell metodologi
 - [ ] `MethodologyLoader.loadPhase2a()` returnerar Phase 2a
-- [ ] `MethodologyLoader.loadDocument('coding_manual.md')` fungerar
+- [ ] `MethodologyLoader.loadDocument('KODNINGSMANUAL_AI_Augmented_RTA_DISRUPTIV_INTEGRATED_2026-01-10.md')` fungerar
 - [ ] `MethodologyLoader.checkAvailability()` returnerar korrekt status
 - [ ] Fallback fungerar när filer saknas
 
@@ -1438,7 +1444,7 @@ case 'methodology_load':
 
 **Q:** Ska `code_start` ha en `lens` parameter för att ladda lins-specifik metodologi?
 
-**DECISION:** Nej - lens information är en del av methodology content (coding_manual.md), inte MCP-ansvar. Detta håller MCP generiskt och flexibelt för olika forskningsdesigns.
+**DECISION:** Nej - lens information är en del av methodology content (KODNINGSMANUAL_AI_Augmented_RTA_DISRUPTIV_INTEGRATED_2026-01-10.md), inte MCP-ansvar. Detta håller MCP generiskt och flexibelt för olika forskningsdesigns.
 
 ### 9.2 Phase 2b Tools
 

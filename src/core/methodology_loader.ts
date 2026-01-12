@@ -22,8 +22,7 @@ export class MethodologyLoader {
   // General documents loaded at session start
   private readonly GENERAL_FILES = [
     'rta_overview.md',
-    'coding_manual.md',
-    'lenses_operationalized.md',
+    'KODNINGSMANUAL_AI_Augmented_RTA_DISRUPTIV_INTEGRATED_2026-01-10.md',
   ];
 
   // Phase-specific documents
@@ -191,8 +190,7 @@ export class MethodologyLoader {
     switch (phase) {
       case 'phase2a':
         return [
-          'coding_manual.md',
-          'lenses_operationalized.md',
+          'KODNINGSMANUAL_AI_Augmented_RTA_DISRUPTIV_INTEGRATED_2026-01-10.md',
           'phase2a_initial_coding.md',
         ];
       case 'phase2b':

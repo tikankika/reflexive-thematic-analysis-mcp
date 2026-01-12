@@ -306,8 +306,7 @@ qualitative-analysis-rta/
 │
 ├── methodology/                      # 🆕 NY TOPPNIVÅ-MAPP
 │   ├── rta_overview.md              # Generell RTA-introduktion
-│   ├── coding_manual.md             # Kodningsmanual (nu: KODNINGSMANUAL_*)
-│   ├── lenses_operationalized.md    # Linser (nu: Linser_fordjupat.md)
+│   ├── KODNINGSMANUAL_AI_Augmented_RTA_DISRUPTIV_INTEGRATED_2026-01-10.md  # Integrerad kodningsmanual
 │   │
 │   ├── phase1_familiarization.md    # Fas 1 specifik
 │   ├── phase2a_initial_coding.md    # Fas 2a specifik
@@ -341,8 +340,7 @@ export class MethodologyLoader {
   // Generella dokument
   private readonly GENERAL_FILES = [
     'rta_overview.md',
-    'coding_manual.md',
-    'lenses_operationalized.md',
+    'KODNINGSMANUAL_AI_Augmented_RTA_DISRUPTIV_INTEGRATED_2026-01-10.md',
   ];
   
   /**
@@ -550,9 +548,11 @@ export async function phase2CodeStart(input: Phase2StartInput): Promise<Phase2St
   const methodology = await methodologyLoader.loadPhase2a();
   
   // 4. Load coding manual (NEW!)
-  const codingManual = await methodologyLoader.loadDocument('coding_manual.md');
+  const codingManual = await methodologyLoader.loadDocument(
+    'KODNINGSMANUAL_AI_Augmented_RTA_DISRUPTIV_INTEGRATED_2026-01-10.md'
+  );
   
-  // NOTE: Lens information is included in coding_manual.md
+  // NOTE: Lens information is included in the coding manual
   // MCP is generic and does not know about specific lenses
   
   return {
@@ -790,7 +790,7 @@ methodology:
   # Generella dokument (laddas vid projekt-start)
   general:
     - rta_overview.md
-    - coding_manual.md
+    - KODNINGSMANUAL_AI_Augmented_RTA_DISRUPTIV_INTEGRATED_2026-01-10.md
   
   # Fas-specifika dokument
   # Claude läser dessa dynamiskt baserat på aktuell fas
@@ -799,7 +799,7 @@ methodology:
       - phase1_familiarization.md
     phase2a:
       - phase2a_initial_coding.md
-      - coding_manual.md
+      - KODNINGSMANUAL_AI_Augmented_RTA_DISRUPTIV_INTEGRATED_2026-01-10.md
     phase2b:
       - phase2b_critical_review.md
     phase3:
@@ -841,7 +841,7 @@ state:
     ├── project_state.json              # Phase tracking
     ├── methodology/                     # Copied from qualitative-analysis-rta repo
     │   ├── rta_overview.md
-    │   ├── coding_manual.md
+    │   ├── KODNINGSMANUAL_AI_Augmented_RTA_DISRUPTIV_INTEGRATED_2026-01-10.md
     │   ├── phase1_familiarization.md
     │   ├── phase2a_initial_coding.md
     │   ├── ...
@@ -993,12 +993,15 @@ export class MethodologyLoader {
 
 | Current Location | New Location |
 |------------------|--------------|
-| docs/methodology/KODNINGSMANUAL_*.md | methodology/coding_manual.md |
-| docs/methodology/Linser_fordjupat.md | methodology/lenses_operationalized.md |
+| docs/methodology/KODNINGSMANUAL_AI_Augmented_RTA_DISRUPTIV_INTEGRATED_2026-01-10.md | methodology/KODNINGSMANUAL_AI_Augmented_RTA_DISRUPTIV_INTEGRATED_2026-01-10.md |
 | docs/methodology/RTA_phases/phase1_*.md | methodology/phase1_familiarization.md |
 | docs/methodology/RTA_phases/phase2_*.md | methodology/phase2a_initial_coding.md |
 | docs/methodology/RTA_phases/phase3_*.md | methodology/phase3_generating_themes.md |
 | docs/methodology/epistemology/*.md | methodology/epistemology/*.md |
+
+**NOT USED (can be deleted):**
+- `methodology/coding_manual.md` - replaced by integrated KODNINGSMANUAL
+- `methodology/lenses_operationalized.md` - lens info is in KODNINGSMANUAL
 
 ### 6.2 Backward Compatibility
 
