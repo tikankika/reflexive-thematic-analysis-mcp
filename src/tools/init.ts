@@ -94,9 +94,9 @@ export async function init(): Promise<InitResult> {
       'RESEARCHER maintains interpretive authority - propose codes, researcher decides',
       'NEVER use bash/find/ls/cat - MCP tools have full file access',
       'NEVER say "upload the file" - MCP reads files directly',
-      'Use coding manual format: #code__lens1 (underscore, double before lens)',
-      'In vivo codes: #"expression"__lens1 (with quotes)',
-      'Latent codes: #LATENT_interpretation__lens1 (uppercase prefix)',
+      'Read KODNINGSMANUAL in methodology/ for exact code format',
+      'Code format: #kod_beskrivning__rq1_semantisk or __rq1_latent',
+      'In vivo codes: #"exakt_citat"__rq1_semantisk (with quotes)',
       'SHOW full methodology content to researcher (do NOT summarize)',
     ],
 

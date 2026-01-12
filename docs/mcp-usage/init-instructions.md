@@ -36,11 +36,13 @@ cat /path/to/file
 
 ### RULE 4: Use Code Format from Coding Manual
 
-Read `methodology/coding_manual.md` and follow exact format:
+Read the KODNINGSMANUAL in `methodology/` and follow exact format:
 
-- Standard code: `#code_description__lens1`
-- In vivo: `#"exact_quote"__lens1`
-- Latent: `#LATENT_interpretation__lens1`
+- Semantic code: `#kod_beskrivning__rq1_semantisk`
+- Latent code: `#kod_beskrivning__rq1_latent`
+- In vivo: `#"exakt_citat"__rq1_semantisk`
+
+Three research questions (RQ1, RQ2, RQ3) with two levels each (semantisk, latent).
 
 ### RULE 5: Follow the Workflow
 

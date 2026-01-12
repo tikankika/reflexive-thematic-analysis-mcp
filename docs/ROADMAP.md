@@ -434,6 +434,12 @@ project_setup({
 - [RFC-004: Phase 2 Terminology Alignment](/docs/rfcs/RFC-004-phase2-terminology-alignment.md)
 - [RFC-005: Implementation Plan](/docs/rfcs/RFC-005-implementation-plan-methodology-separation.md)
 
+#### TODO v0.3.x - Cleanup & Generalization
+
+- [ ] **Gör init-instructions.md generisk**: Projektspecifik info (kodformat, RQs, linser) ska ENDAST finnas i `methodology/KODNINGSMANUAL*.md` - init-instructions ska bara innehålla generiska MCP-instruktioner
+- [ ] **project_setup kopierar methodology/**: När project_setup körs ska det kopiera hela `methodology/`-mappen till projektmappen, inklusive KODNINGSMANUAL
+- [ ] **init() läser kodformat från KODNINGSMANUAL**: Istället för hårdkodade kodformat i init.ts, läs dynamiskt från projektets methodology-mapp
+
 ---
 
 ### 📋 v0.4.0 - Memo & Annotation Support
