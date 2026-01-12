@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.3.1] - 2026-01-12
+
+### Fixed
+- **CRITICAL:** Tool names now comply with MCP specification
+  - Pattern required: `^[a-zA-Z0-9_-]{1,64}$`
+  - Changed: `phase2a-coding:code_start` → `phase2a_code_start`
+  - All Phase 2a tools now use `phase2a_` prefix instead of `phase2a-coding:`
+- Removed redundant `coding_manual.md` and `lenses_operationalized.md`
+  - Now uses integrated `KODNINGSMANUAL_AI_Augmented_RTA_DISRUPTIV_INTEGRATED_2026-01-10.md`
+
+---
+
 ## [0.3.0] - 2026-01-11
 
 ### MAJOR: Methodology Separation Architecture (RFC-003, RFC-005, RFC-006)
