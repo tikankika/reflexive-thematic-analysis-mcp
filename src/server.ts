@@ -11,7 +11,7 @@
  *
  * Tool Categories:
  * - Core (no prefix): init, project_setup, add_line_index, methodology_load
- * - Phase 2a (prefix phase2a-coding:): code_start, code_read_next, code_write_segment, etc.
+ * - Phase 2a (prefix phase2a_): code_start, code_read_next, code_write_segment, etc.
  */
 
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
@@ -163,7 +163,7 @@ class QualitativeAnalysisRTAServer {
         },
         // === PHASE 2a TOOLS (Initial Coding) ===
         {
-          name: 'phase2a-coding:code_start',
+          name: 'phase2a_code_start',
           description:
             'Initialize coding session. Creates STATUS frontmatter and returns first chunk (raw text) for coding. Note: A "chunk" is a technical reading unit (60-100 lines). You will mark semantic "segments" with /segment markers when coding. Use this to start coding a new transcript.',
           inputSchema: {
@@ -191,7 +191,7 @@ class QualitativeAnalysisRTAServer {
           },
         },
         {
-          name: 'phase2a-coding:code_read_next',
+          name: 'phase2a_code_read_next',
           description:
             'Read next uncoded chunk. Returns raw text of next 60-100 lines based on STATUS for coding. Note: A "chunk" is a technical reading unit. You will mark semantic "segments" with /segment markers when coding within each chunk. Use this to continue coding after accepting previous chunk.',
           inputSchema: {
@@ -206,7 +206,7 @@ class QualitativeAnalysisRTAServer {
           },
         },
         {
-          name: 'phase2a-coding:code_write_segment',
+          name: 'phase2a_code_write_segment',
           description:
             'Write codes for semantic segment(s). A "segment" here is a meaningful coding unit (variable size, marked with /segment). Supports TWO MODES: (1) LEGACY (v0.1.0): single chunk using STATUS boundaries - provide "codes" array. (2) NEW (v0.2.0): multiple small semantic segments with explicit line ranges - provide "segments" array. Use NEW mode when you have identified specific meaningful units (quotes, exchanges, thematic chunks) to code precisely. Use LEGACY mode for standard sequential chunk-based coding.',
           inputSchema: {
@@ -255,7 +255,7 @@ class QualitativeAnalysisRTAServer {
           },
         },
         {
-          name: 'phase2a-coding:code_skip_chunk',
+          name: 'phase2a_code_skip_chunk',
           description:
             'Skip current chunk without coding. Use when chunk contains no codeable content (e.g., facilitator-only talk, meta-organizational content). Marks chunk as processed and advances to next chunk. Updates STATUS and returns progress.',
           inputSchema: {
@@ -270,7 +270,7 @@ class QualitativeAnalysisRTAServer {
           },
         },
         {
-          name: 'phase2a-coding:code_reset_status',
+          name: 'phase2a_code_reset_status',
           description:
             'Reset STATUS to uncoded state without modifying file content. Use when file was manually cleaned but STATUS is out of sync. Resets Last-coded-line to 0 and Progress to 0/N.',
           inputSchema: {
@@ -285,7 +285,7 @@ class QualitativeAnalysisRTAServer {
           },
         },
         {
-          name: 'phase2a-coding:code_verify',
+          name: 'phase2a_code_verify',
           description:
             'Verify STATUS matches actual file content. Counts /segment markers and compares to STATUS. With fix=true, auto-corrects STATUS based on actual segments found. Use to diagnose and fix STATUS inconsistencies.',
           inputSchema: {
@@ -305,7 +305,7 @@ class QualitativeAnalysisRTAServer {
           },
         },
         {
-          name: 'phase2a-coding:code_clear_all',
+          name: 'phase2a_code_clear_all',
           description:
             'Remove ALL coding from file (segments, markers, codes). Preserves line indices and transcript content. Creates automatic backup. Requires confirm: true for safety. Resets STATUS to uncoded state. Use to start over from scratch.',
           inputSchema: {
@@ -324,7 +324,7 @@ class QualitativeAnalysisRTAServer {
           },
         },
         {
-          name: 'phase2a-coding:code_delete_segment',
+          name: 'phase2a_code_delete_segment',
           description:
             'Delete specific segment by line index range. Removes /segment markers, content, and codes for the specified range. Updates STATUS. Use when a specific segment was coded incorrectly.',
           inputSchema: {
@@ -347,7 +347,7 @@ class QualitativeAnalysisRTAServer {
           },
         },
         {
-          name: 'phase2a-coding:code_status',
+          name: 'phase2a_code_status',
           description:
             'Show coding progress. Returns current STATUS including segments coded, lines remaining, and progress percentage.',
           inputSchema: {
@@ -390,39 +390,39 @@ class QualitativeAnalysisRTAServer {
             break;
 
           // === PHASE 2a TOOLS ===
-          case 'phase2a-coding:code_start':
+          case 'phase2a_code_start':
             result = await codeStart(args as any);
             break;
 
-          case 'phase2a-coding:code_read_next':
+          case 'phase2a_code_read_next':
             result = await codeReadNext(args as any);
             break;
 
-          case 'phase2a-coding:code_write_segment':
+          case 'phase2a_code_write_segment':
             result = await codeWriteSegment(args as any);
             break;
 
-          case 'phase2a-coding:code_skip_chunk':
+          case 'phase2a_code_skip_chunk':
             result = await codeSkipChunk(args as any);
             break;
 
-          case 'phase2a-coding:code_reset_status':
+          case 'phase2a_code_reset_status':
             result = await codeResetStatus(args as any);
             break;
 
-          case 'phase2a-coding:code_verify':
+          case 'phase2a_code_verify':
             result = await codeVerify(args as any);
             break;
 
-          case 'phase2a-coding:code_clear_all':
+          case 'phase2a_code_clear_all':
             result = await codeClearAll(args as any);
             break;
 
-          case 'phase2a-coding:code_delete_segment':
+          case 'phase2a_code_delete_segment':
             result = await codeDeleteSegment(args as any);
             break;
 
-          case 'phase2a-coding:code_status':
+          case 'phase2a_code_status':
             result = await codeStatus(args as any);
             break;
 
