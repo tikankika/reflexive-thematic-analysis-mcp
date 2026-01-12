@@ -10,7 +10,7 @@
 
 **CORRECT:**
 ```
-phase2a-coding:code_start({
+phase2a_code_start({
   file_path: "/Users/niklaskarlsson/Nextcloud/.../transcript.md"
 })
 ```
@@ -46,7 +46,7 @@ Read `methodology/coding_manual.md` and follow exact format:
 
 1. Call `init()` first to get these instructions
 2. Call `methodology_load()` to read phase methodology
-3. Use phase-specific tools (`phase2a-coding:*`)
+3. Use phase-specific tools (`phase2a_*`)
 4. SHOW full methodology content to researcher (don't summarize)
 
 ## AVAILABLE TOOLS
@@ -57,7 +57,7 @@ Read `methodology/coding_manual.md` and follow exact format:
 - `add_line_index` - Add permanent line indices to transcript
 - `methodology_load` - Load methodology documents for any phase
 
-### Phase 2a Tools (prefix: phase2a-coding:)
+### Phase 2a Tools (prefix: phase2a_)
 - `code_start` - Initialize coding session
 - `code_read_next` - Read next chunk
 - `code_write_segment` - Write codes for segment(s)

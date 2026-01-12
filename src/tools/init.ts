@@ -75,7 +75,7 @@ export async function init(): Promise<InitResult> {
         ],
       },
       {
-        category: 'Phase 2a - Initial Coding (prefix: phase2a-coding:)',
+        category: 'Phase 2a - Initial Coding (prefix: phase2a_)',
         tools: [
           'code_start - Initialize coding session',
           'code_read_next - Read next chunk for coding',
