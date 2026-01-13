@@ -16,6 +16,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - All Phase 2a tools now use `phase2a_` prefix instead of `phase2a-coding:`
 - Removed redundant `coding_manual.md` and `lenses_operationalized.md`
   - Now uses integrated `KODNINGSMANUAL_AI_Augmented_RTA_DISRUPTIV_INTEGRATED_2026-01-10.md`
+- Updated init-instructions.md with correct code format
+  - Old (wrong): `#code__lens1`, `#LATENT_code__lens1`
+  - New (correct): `#kod__rq1_semantisk`, `#kod__rq1_latent`
+  - Three research questions (RQ1, RQ2, RQ3) with two levels (semantisk, latent)
+
+### Added
+- TODO in ROADMAP v0.3.x for generalization:
+  - Make init-instructions.md generic (project-specific info only in methodology/)
+  - project_setup should copy methodology/ to project folder
+  - init() should read code format dynamically from KODNINGSMANUAL
 
 ---
 
