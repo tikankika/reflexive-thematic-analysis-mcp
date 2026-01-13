@@ -28,11 +28,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Both support `~` for home directory expansion
 
 ### Changed
-- **project_setup now COPIES transcripts** to project folder
+- **project_setup now COPIES and INDEXES transcripts** automatically
   - Original files are NEVER modified
   - Creates `transcripts/` folder in project
-  - Config tracks both `path` (copied) and `original_path`
+  - **Automatically runs `add_line_index`** on all copied transcripts
+  - Config tracks `path` (copied), `original_path`, and `indexed` status
   - Coding happens on copies, originals preserved
+  - Ready to code immediately after setup!
 - TODO in ROADMAP v0.3.x for generalization:
   - Make init-instructions.md generic (project-specific info only in methodology/)
   - project_setup should copy methodology/ to project folder

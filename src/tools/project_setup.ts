@@ -15,6 +15,7 @@ import { promises as fs } from 'fs';
 import { join, dirname, basename } from 'path';
 import { fileURLToPath } from 'url';
 import * as yaml from 'js-yaml';
+import { addLineIndex } from './add_line_index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -32,6 +33,7 @@ export interface ProjectSetupOutput {
   config_path: string;
   files_created: string[];
   transcripts_copied: string[];
+  transcripts_indexed: string[];
   message: string;
   next_step: string;
 }
@@ -144,13 +146,27 @@ export async function projectSetup(
     }
   }
 
-  // Parse and add transcripts (pointing to COPIED files, not originals)
+  // 5. Add line indices to all copied transcripts (0001, 0002, ...)
+  const transcriptsIndexed: string[] = [];
+
+  for (const t of copiedTranscriptPaths) {
+    try {
+      await addLineIndex({ file_path: t.copied });
+      transcriptsIndexed.push(t.name);
+    } catch (error) {
+      console.error(`[project_setup] Failed to add line index to: ${t.name}`, error);
+      transcriptsIndexed.push(`${t.name} (INDEX FAILED)`);
+    }
+  }
+
+  // 6. Parse and add transcripts (pointing to COPIED files, not originals)
   const configObj = yaml.load(configContent) as any;
   configObj.transcripts = copiedTranscriptPaths.map((t) => ({
     path: t.copied,
     original_path: t.original,
     name: t.name,
     status: 'pending',
+    indexed: transcriptsIndexed.includes(t.name),
     current_phase: null,
   }));
 
@@ -158,7 +174,7 @@ export async function projectSetup(
   await fs.writeFile(configPath, yaml.dump(configObj, { indent: 2 }));
   filesCreated.push('rta_config.yaml');
 
-  // 5. Create project_state.json
+  // 7. Create project_state.json
   const projectState = {
     version: '1.0',
     project_name,
@@ -178,8 +194,9 @@ export async function projectSetup(
     config_path: configPath,
     files_created: filesCreated,
     transcripts_copied: transcriptsCopied,
-    message: `Project '${project_name}' created. ${transcriptsCopied.length} transcript(s) COPIED to project (originals preserved).`,
+    transcripts_indexed: transcriptsIndexed,
+    message: `Project '${project_name}' created. ${transcriptsCopied.length} transcript(s) COPIED and INDEXED (originals preserved).`,
     next_step:
-      'Call init() to get critical instructions, then use methodology_load or phase2a_code_start to begin',
+      'Call init() to get critical instructions, then use methodology_load or phase2a_code_start to begin coding',
   };
 }
