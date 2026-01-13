@@ -26,6 +26,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `list_files` - List files in a directory, with optional pattern filter (e.g., `*.md`)
   - `read_file` - Read contents of any file, with optional line limit
   - Both support `~` for home directory expansion
+
+### Changed
+- **project_setup now COPIES transcripts** to project folder
+  - Original files are NEVER modified
+  - Creates `transcripts/` folder in project
+  - Config tracks both `path` (copied) and `original_path`
+  - Coding happens on copies, originals preserved
 - TODO in ROADMAP v0.3.x for generalization:
   - Make init-instructions.md generic (project-specific info only in methodology/)
   - project_setup should copy methodology/ to project folder

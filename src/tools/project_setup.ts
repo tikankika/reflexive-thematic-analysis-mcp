@@ -4,6 +4,7 @@
  * Creates project folder with:
  * - rta_config.yaml (from template)
  * - methodology/ (copied from repo)
+ * - transcripts/ (COPIED from originals - originals are NEVER modified)
  * - project_state.json
  *
  * NOTE: This tool does NOT require init() to be called first.
@@ -11,7 +12,7 @@
  */
 
 import { promises as fs } from 'fs';
-import { join, dirname } from 'path';
+import { join, dirname, basename } from 'path';
 import { fileURLToPath } from 'url';
 import * as yaml from 'js-yaml';
 
@@ -30,6 +31,7 @@ export interface ProjectSetupOutput {
   project_path: string;
   config_path: string;
   files_created: string[];
+  transcripts_copied: string[];
   message: string;
   next_step: string;
 }
@@ -116,10 +118,38 @@ export async function projectSetup(
     .replace(/\{\{RESEARCHER\}\}/g, researcher)
     .replace(/\{\{CREATED\}\}/g, now);
 
-  // Parse and add transcripts
+  // 4. Create transcripts/ folder and COPY transcripts (originals never touched)
+  const transcriptsDir = join(projectPath, 'transcripts');
+  await fs.mkdir(transcriptsDir, { recursive: true });
+  filesCreated.push('transcripts/');
+
+  const transcriptsCopied: string[] = [];
+  const copiedTranscriptPaths: { original: string; copied: string; name: string }[] = [];
+
+  for (const originalPath of transcripts) {
+    const fileName = basename(originalPath);
+    const copiedPath = join(transcriptsDir, fileName);
+
+    try {
+      await fs.copyFile(originalPath, copiedPath);
+      transcriptsCopied.push(fileName);
+      copiedTranscriptPaths.push({
+        original: originalPath,
+        copied: copiedPath,
+        name: fileName,
+      });
+    } catch (error) {
+      console.error(`[project_setup] Failed to copy transcript: ${originalPath}`, error);
+      transcriptsCopied.push(`${fileName} (FAILED TO COPY)`);
+    }
+  }
+
+  // Parse and add transcripts (pointing to COPIED files, not originals)
   const configObj = yaml.load(configContent) as any;
-  configObj.transcripts = transcripts.map((path) => ({
-    path,
+  configObj.transcripts = copiedTranscriptPaths.map((t) => ({
+    path: t.copied,
+    original_path: t.original,
+    name: t.name,
     status: 'pending',
     current_phase: null,
   }));
@@ -128,7 +158,7 @@ export async function projectSetup(
   await fs.writeFile(configPath, yaml.dump(configObj, { indent: 2 }));
   filesCreated.push('rta_config.yaml');
 
-  // 4. Create project_state.json
+  // 5. Create project_state.json
   const projectState = {
     version: '1.0',
     project_name,
@@ -147,8 +177,9 @@ export async function projectSetup(
     project_path: projectPath,
     config_path: configPath,
     files_created: filesCreated,
-    message: `Project '${project_name}' created with ${transcripts.length} transcript(s)`,
+    transcripts_copied: transcriptsCopied,
+    message: `Project '${project_name}' created. ${transcriptsCopied.length} transcript(s) COPIED to project (originals preserved).`,
     next_step:
-      'Call init() to get critical instructions, then use methodology_load or phase2a-coding:code_start to begin',
+      'Call init() to get critical instructions, then use methodology_load or phase2a_code_start to begin',
   };
 }

@@ -41,10 +41,12 @@ methodology:
       - epistemology/inductive_deductive.md
       - epistemology/semantic_latent.md
 
-# Transcripts to analyze
+# Transcripts to analyze (COPIED to project - originals never modified)
 transcripts: []
   # Populated by project_setup:
-  # - path: "/path/to/transcript.md"
+  # - path: "/project/transcripts/file.md"        # COPIED file (work on this)
+  #   original_path: "/original/location/file.md" # Original (preserved)
+  #   name: "file.md"
   #   status: "pending"
   #   current_phase: null
 
