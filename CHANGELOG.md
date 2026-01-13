@@ -22,6 +22,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Three research questions (RQ1, RQ2, RQ3) with two levels (semantisk, latent)
 
 ### Added
+- **New Core Tools** for standalone operation (no Filesystem MCP needed):
+  - `list_files` - List files in a directory, with optional pattern filter (e.g., `*.md`)
+  - `read_file` - Read contents of any file, with optional line limit
+  - Both support `~` for home directory expansion
 - TODO in ROADMAP v0.3.x for generalization:
   - Make init-instructions.md generic (project-specific info only in methodology/)
   - project_setup should copy methodology/ to project folder

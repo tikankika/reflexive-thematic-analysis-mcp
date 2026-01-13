@@ -68,8 +68,10 @@ export async function init(): Promise<InitResult> {
       {
         category: 'Core (no prefix)',
         tools: [
-          'project_setup - Create new RTA project structure',
           'init - Get these instructions (call FIRST!)',
+          'list_files - List files in a directory (find transcripts)',
+          'read_file - Read contents of any file',
+          'project_setup - Create new RTA project structure',
           'add_line_index - Add permanent line indices to transcript',
           'methodology_load - Load methodology documents for any phase',
         ],

@@ -26,6 +26,8 @@ import { init } from './tools/init.js';
 import { projectSetup } from './tools/project_setup.js';
 import { addLineIndex } from './tools/add_line_index.js';
 import { methodologyLoad } from './tools/methodology_load.js';
+import { listFiles } from './tools/list_files.js';
+import { readFile } from './tools/read_file.js';
 
 // Phase 2a tools
 import { codeStart } from './tools/code_start.js';
@@ -159,6 +161,48 @@ class QualitativeAnalysisRTAServer {
               },
             },
             required: ['phase'],
+          },
+        },
+        {
+          name: 'list_files',
+          description:
+            'List files in a directory. ' +
+            'Useful for finding transcripts to analyze. ' +
+            'Supports ~ for home directory and optional pattern filter.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              path: {
+                type: 'string',
+                description: 'Directory path (supports ~ for home)',
+              },
+              pattern: {
+                type: 'string',
+                description: 'File pattern filter (e.g., "*.md" for markdown files)',
+              },
+            },
+            required: ['path'],
+          },
+        },
+        {
+          name: 'read_file',
+          description:
+            'Read contents of a file. ' +
+            'For transcripts, methodology, or any text file. ' +
+            'Supports ~ for home directory.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              path: {
+                type: 'string',
+                description: 'File path (supports ~ for home)',
+              },
+              max_lines: {
+                type: 'number',
+                description: 'Limit output to N lines (optional)',
+              },
+            },
+            required: ['path'],
           },
         },
         // === PHASE 2a TOOLS (Initial Coding) ===
@@ -389,6 +433,14 @@ class QualitativeAnalysisRTAServer {
             result = await methodologyLoad(args as any);
             break;
 
+          case 'list_files':
+            result = await listFiles(args as any);
+            break;
+
+          case 'read_file':
+            result = await readFile(args as any);
+            break;
+
           // === PHASE 2a TOOLS ===
           case 'phase2a_code_start':
             result = await codeStart(args as any);
@@ -469,8 +521,8 @@ class QualitativeAnalysisRTAServer {
     await this.server.connect(transport);
 
     // Log to stderr (stdout is used for MCP protocol)
-    console.error('Qualitative Analysis RTA Server v0.3.0 running...');
-    console.error('Core: init, project_setup, add_line_index, methodology_load');
+    console.error('Qualitative Analysis RTA Server v0.3.1 running...');
+    console.error('Core: init, project_setup, add_line_index, methodology_load, list_files, read_file');
     console.error(
       'Phase 2a: code_start, code_read_next, code_write_segment, code_skip_chunk, code_status, code_verify, code_reset_status, code_clear_all, code_delete_segment'
     );
