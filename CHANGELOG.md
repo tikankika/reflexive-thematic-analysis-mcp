@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.3.2] - 2026-01-13
+
+### Fixed
+- **CRITICAL:** Duplicate segment markers bug (double `/segment` and `/slut_segment`)
+  - **Root cause**: `code_write_segment` didn't detect if content was already coded
+  - **Symptom**: When same content was coded twice, resulted in nested segment markers
+  - **Fix**: Added `isLineInsideCodedSegment()` validation in both legacy and multi-segment modes
+  - Now throws clear error: "Line X is already inside a coded segment. Use code_delete_segment first."
+- Updated code_start.ts instructions with correct code format
+  - Was showing old format: `#kod__lins1`
+  - Now shows correct: `#kod_beskrivning__rq1_semantisk`
+
+---
+
 ## [0.3.1] - 2026-01-12
 
 ### Fixed

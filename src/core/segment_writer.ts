@@ -51,6 +51,21 @@ export class SegmentWriter {
         );
       }
 
+      // CRITICAL: Check if lines are already inside a coded segment
+      // This prevents double-coding (duplicate /segment markers)
+      if (this.isLineInsideCodedSegment(startLine, lines)) {
+        throw new Error(
+          `Line at position ${startLine} is already inside a coded segment. ` +
+          `Cannot code the same content twice. Use code_delete_segment first if you want to recode.`
+        );
+      }
+      if (this.isLineInsideCodedSegment(endLine, lines)) {
+        throw new Error(
+          `Line at position ${endLine} is already inside a coded segment. ` +
+          `Cannot code the same content twice. Use code_delete_segment first if you want to recode.`
+        );
+      }
+
       // Build coded segment
       const codedSegment = this.buildCodedSegment(
         lines,
@@ -145,6 +160,51 @@ export class SegmentWriter {
     } catch {
       return false;
     }
+  }
+
+  /**
+   * Check if a line is inside a coded segment (between /segment and /slut_segment)
+   *
+   * This prevents double-coding when the same content is coded twice.
+   *
+   * @param lineIndex - 0-indexed position in lines array
+   * @param lines - Array of all file lines
+   * @returns True if line is inside a coded segment
+   * @private
+   */
+  private isLineInsideCodedSegment(lineIndex: number, lines: string[]): boolean {
+    // Search backwards for /segment or /slut_segment
+    let foundSegmentStart = false;
+    for (let i = lineIndex - 1; i >= 0; i--) {
+      const trimmed = lines[i].trim();
+      if (trimmed === '/slut_segment') {
+        // Found end marker first - line is NOT inside a segment
+        return false;
+      }
+      if (trimmed === '/segment') {
+        // Found start marker - line IS inside a segment
+        foundSegmentStart = true;
+        break;
+      }
+    }
+
+    if (!foundSegmentStart) {
+      return false;
+    }
+
+    // Verify there's a /slut_segment after this line
+    for (let i = lineIndex + 1; i < lines.length; i++) {
+      const trimmed = lines[i].trim();
+      if (trimmed === '/slut_segment') {
+        return true; // Properly closed segment
+      }
+      if (trimmed === '/segment') {
+        // Found another start before end - malformed, treat as not inside
+        return false;
+      }
+    }
+
+    return false;
   }
 
   // ==========================================================================
@@ -267,6 +327,21 @@ export class SegmentWriter {
       // Find actual line positions by searching for line indices
       const startLine = this.findLineByIndex(seg.start_line, lines);
       const endLine = this.findLineByIndex(seg.end_line, lines);
+
+      // CRITICAL: Check if lines are already inside a coded segment
+      // This prevents double-coding (duplicate /segment markers)
+      if (this.isLineInsideCodedSegment(startLine, lines)) {
+        throw new Error(
+          `Segment ${i + 1}: Line ${seg.start_line} is already inside a coded segment. ` +
+          `Cannot code the same content twice. Use code_delete_segment first if you want to recode.`
+        );
+      }
+      if (this.isLineInsideCodedSegment(endLine, lines)) {
+        throw new Error(
+          `Segment ${i + 1}: Line ${seg.end_line} is already inside a coded segment. ` +
+          `Cannot code the same content twice. Use code_delete_segment first if you want to recode.`
+        );
+      }
 
       // Validate range
       if (startLine > endLine) {

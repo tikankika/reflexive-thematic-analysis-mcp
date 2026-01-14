@@ -50,7 +50,7 @@ class QualitativeAnalysisRTAServer {
     this.server = new Server(
       {
         name: 'qualitative-analysis-rta-server',
-        version: '0.3.1',
+        version: '0.3.2',
       },
       {
         capabilities: {
@@ -521,7 +521,7 @@ class QualitativeAnalysisRTAServer {
     await this.server.connect(transport);
 
     // Log to stderr (stdout is used for MCP protocol)
-    console.error('Qualitative Analysis RTA Server v0.3.1 running...');
+    console.error('Qualitative Analysis RTA Server v0.3.2 running...');
     console.error('Core: init, project_setup, add_line_index, methodology_load, list_files, read_file');
     console.error(
       'Phase 2a: code_start, code_read_next, code_write_segment, code_skip_chunk, code_status, code_verify, code_reset_status, code_clear_all, code_delete_segment'

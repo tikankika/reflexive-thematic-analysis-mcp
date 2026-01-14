@@ -112,9 +112,10 @@ export async function codeStart(args: {
     instructions: `
 KRITISKT: Läs methodology och coding_manual innan du föreslår koder.
 - Forskaren har tolkningsauktoritet
-- Kodformat: #kod__lins1
-- In vivo: #"uttryck"__lins1
-- Latent: #LATENT_tolkning__lins1
+- Kodformat: #kod_beskrivning__rq1_semantisk eller __rq1_latent
+- In vivo: #"exakt_citat"__rq1_semantisk (med citattecken)
+- Tre forskningsfrågor: RQ1, RQ2, RQ3
+- Två nivåer: semantisk (explicit), latent (tolkande)
     `.trim(),
   };
 }
