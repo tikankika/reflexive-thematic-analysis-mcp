@@ -26,6 +26,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Chunk vs segment distinction clarified
   - AI assistant instructions added (avoid mechanical patterns, researcher authority)
 
+### Design Decision
+- **Reflexive notes stay in chat during Phase 2a** — session log in `coding_decisions.md` captures key observations for Phase 2b/3
+  - Avoids disrupting coding flow with file writes
+  - Formal structured reflexive notes come in Phase 2b (RFC-001)
+
 ### Documentation
 - RFC-007: Methodology Updates from Coding Practice
 - RFC-007 Claude Code prompt for project_setup implementation
