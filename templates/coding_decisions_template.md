@@ -72,15 +72,12 @@ Uppdatera löpande.
 
 ## Sessionslogg
 
-<!-- 
-Kort notering efter varje kodningssession:
-- Datum
-- Vad gjordes
-- Viktiga beslut
-- Vad ska göras nästa gång
--->
+> **Rutin:** I slutet av varje kodningssession, sammanfatta det viktigaste
+> från sessionens reflexiva dialog. Reflexiva noter lever i chattråden
+> under Phase 2a — denna logg fångar det som bör bevaras till Phase 2b/3.
 
 ### [DATUM]
-- **Gjordes:**
-- **Beslut:**
-- **Nästa gång:**
+- **Transkript/chunk:** [vad kodades]
+- **Viktiga kodningsbeslut:** [beslut som påverkar framtida kodning]
+- **Reflexiva observationer:** [de viktigaste insikterna från sessionens dialog — mönster, osäkerheter, överraskningar]
+- **Nästa gång:** [vad ska göras härnäst]
