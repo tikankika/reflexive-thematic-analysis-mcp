@@ -627,6 +627,50 @@ As Byrne notes (p. 1403): "The focus shifts from the interpretation of individua
 
 ---
 
+## Chunk vs Segment — viktig distinktion
+
+När kodningsverktyget (MCP) används för att portionera transkript uppstår två olika enheter som är viktiga att skilja åt:
+
+**CHUNK** = teknisk läsenhet (60-100 rader). Bestäms av verktyget. Används för att portionera transkriptet i hanterbara bitar för läsning.
+
+**SEGMENT** = semantisk kodningsenhet (variabel storlek). Bestäms av INNEHÅLLET. En meningsbärande enhet som kan vara:
+- En enda rad (en stark, koncentrerad utsaga)
+- 3-5 rader (ett uttalande med kontext)
+- 20+ rader (en längre sammanhängande argumentation)
+
+En chunk kan innehålla FLERA segment, eller ibland bara ETT om hela chunken utgör en sammanhängande argumentation.
+
+**Principen:** Segmentera efter MENING, inte efter radantal. Verktygets chunk-storlek är en praktisk läsenhet — den ska INTE diktera var semantiska segment börjar och slutar.
+
+---
+
+## Instruktioner för AI-assistenten vid kodning
+
+Dessa instruktioner gäller när Claude eller annan AI-assistent används för att stödja kodningsarbetet.
+
+**UNDVIK mekaniska mönster:**
+- Samma antal koder per segment
+- Alltid både semantisk OCH latent nivå
+- Identisk struktur i reflexiva noter
+- Tvinga inte data in i förutbestämda kategorier
+
+**VARIERA baserat på innehåll:**
+- Rikt segment → generös kodning med många koder
+- Enkelt segment → 1-2 koder räcker
+- Genuint latent mening → koda latent
+- Inget latent → hoppa över
+- Reflexiva noter varierar i längd och fokus
+
+**FRÅGA VID OSÄKERHET:**
+- Vem talar? (SPEAKER-nummer kan vara opålitliga i transkript)
+- Moderator eller deltagare?
+- Vilket RQ:s perspektiv fångar detta bäst?
+- Ska segment delas upp eller hållas ihop?
+
+**Forskaren har ALLTID tolkningsauktoritet.** AI föreslår koder — forskaren beslutar. AI ska aldrig fatta kodningsbeslut autonomt eller försätta utan att forskaren godkänt förslaget.
+
+---
+
 ## A Note on Your Specific Context
 
 Your August 2025 coding of the MÅG transcript used a straightforward manual approach with hashtags directly in markdown. This worked well. Your subsequent attempts at Python automation and Docker containerization failed.

@@ -4,6 +4,7 @@
  * Creates project folder with:
  * - rta_config.yaml (from template)
  * - methodology/ (copied from repo)
+ * - coding_decisions.md (from template - researcher fills in during coding)
  * - transcripts/ (COPIED from originals - originals are NEVER modified)
  * - project_state.json
  *
@@ -104,7 +105,19 @@ export async function projectSetup(
     filesCreated.push('methodology/ (empty - source not found)');
   }
 
-  // 3. Load and customize template
+  // 3. Copy coding_decisions_template.md → coding_decisions.md
+  const codingDecisionsTemplate = join(__dirname, '../../templates/coding_decisions_template.md');
+  const codingDecisionsDest = join(projectPath, 'coding_decisions.md');
+
+  try {
+    await fs.copyFile(codingDecisionsTemplate, codingDecisionsDest);
+    filesCreated.push('coding_decisions.md');
+  } catch (error) {
+    console.error('[project_setup] Failed to copy coding_decisions_template.md:', error);
+    filesCreated.push('coding_decisions.md (FAILED - template not found)');
+  }
+
+  // 4. Load and customize rta_config template
   const templatePath = join(__dirname, '../../templates/rta_config.yaml');
   let template: string;
 
@@ -120,7 +133,7 @@ export async function projectSetup(
     .replace(/\{\{RESEARCHER\}\}/g, researcher)
     .replace(/\{\{CREATED\}\}/g, now);
 
-  // 4. Create transcripts/ folder and COPY transcripts (originals never touched)
+  // 5. Create transcripts/ folder and COPY transcripts (originals never touched)
   const transcriptsDir = join(projectPath, 'transcripts');
   await fs.mkdir(transcriptsDir, { recursive: true });
   filesCreated.push('transcripts/');
@@ -146,7 +159,7 @@ export async function projectSetup(
     }
   }
 
-  // 5. Add line indices to all copied transcripts (0001, 0002, ...)
+  // 6. Add line indices to all copied transcripts (0001, 0002, ...)
   const transcriptsIndexed: string[] = [];
 
   for (const t of copiedTranscriptPaths) {
@@ -159,7 +172,7 @@ export async function projectSetup(
     }
   }
 
-  // 6. Parse and add transcripts (pointing to COPIED files, not originals)
+  // 7. Parse and add transcripts (pointing to COPIED files, not originals)
   const configObj = yaml.load(configContent) as any;
   configObj.transcripts = copiedTranscriptPaths.map((t) => ({
     path: t.copied,
@@ -174,7 +187,7 @@ export async function projectSetup(
   await fs.writeFile(configPath, yaml.dump(configObj, { indent: 2 }));
   filesCreated.push('rta_config.yaml');
 
-  // 7. Create project_state.json
+  // 8. Create project_state.json
   const projectState = {
     version: '1.0',
     project_name,

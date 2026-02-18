@@ -170,6 +170,34 @@ och senare analys-fas - INTE vid själva kodningen.
 
 ---
 
+## FLEXIBILITET I KODNING
+
+### Antal koder per segment
+
+Antal koder per segment dikteras av INNEHÅLLET, inte av en mall:
+- Ett segment kan ha 1 kod om det fångar en enda tydlig idé
+- Ett segment kan ha 8+ koder om innehållet är rikt och mångfacetterat
+- Koda VARJE distinkt idé/observation — konsolidera i senare iteration
+
+UNDVIK mekaniska mönster som "alltid 2 semantiska + 2 latenta koder". Variera baserat på vad segmentet faktiskt innehåller.
+
+### Semantisk och latent nivå
+
+- Koda ALLTID semantisk nivå
+- Koda latent nivå ENDAST när det finns genuint djupare mening att fånga
+- Tvinga inte fram latent kodning om semantisk nivå är tillräcklig
+- Fråga: "Finns det något outtalat, underförstått eller teoretiskt här som den semantiska koden INTE fångar?" Om nej → ingen latent kod behövs.
+
+### In vivo-koder (VIKTIGT — Obsidian-kompatibilitet)
+
+- Skriv UTAN citattecken i hashtag-formatet (citattecken bryter Obsidian-taggar)
+- Notera att koden är in vivo i den reflexiva noten
+- Exempel: `#alla_exempel_direktanvändning__rq1_semantisk`
+  (reflexiv not: "in vivo — lärarens egen formulering 'alla exempel'")
+- INTE: `#"alla_exempel"__rq1_semantisk` ← BRYTER OBSIDIAN
+
+---
+
 ## TRANSKRIPT MED KODNING
 ```
 
@@ -656,17 +684,39 @@ T.ex. "Tyvärr. Eller, ja..." → latent kod om #ambivalens__rq2_latent
 INTE → #disrupts_teacher_certainty (teoretisk kategori)
 ```
 
-### 2.4 Reflexiva noter - kvalitetskontroll
+### 2.4 Reflexiva noter — genuint reflexivt tänkande
 
-**Bra reflexiva noter (integrerad kodning):**
+Reflexiva noter är INTE:
+- En formel ("Detta LIKNAR disruption av X")
+- Teoretisk kategorisering
+- Samma struktur varje gång
+
+Reflexiva noter ÄR dokumentation av forskarens tolkningsprocess. Variera form och fokus baserat på vad segmentet väcker.
+
+**Frågor att ställa sig:**
+- Vad SLÅR mig i detta segment?
+- Vad är jag osäker på?
+- Vilka antaganden gör jag?
+- Vad överraskar mig?
+- Vad var svårt att koda och varför?
+- Ser jag preliminära mönster som BÖRJAR framträda?
+- Hur kopplar detta till tidigare segment?
+
+**Längd:** Varierar. Ibland en mening ("Stark formulering — måste återkomma till detta"). Ibland ett helt stycke vid komplexa segment.
+
+**UNDVIK:** Att rutinmässigt avsluta varje not med en disruption-koppling. Teoretisk koppling ska uppstå organiskt, inte tvingas fram.
+
+**Bra reflexiva noter:**
 ```
-✅ "Lärare konstruerar KOPPLING: elevers instrumentella användning (RQ1) 
-   leder till reducerat lärande (RQ3) vilket gör bedömning omöjlig (RQ2). 
-   CROSS-CUTTING disruption: AI bryter pedagogisk kedja på alla nivåer."
+✅ "Vad slår mig här: läraren använder 'alla exempel' — stark generalisering.
+   Är det verkligen ALLA eller är det ett mönster som läraren börjat se 
+   och nu generaliserar? Osäker på om 'inte förstår' innebär att de saknar 
+   grundförståelse helt, eller att de är mitt i lärandeprocessen."
 
-✅ "RQ2-fokus: Lärare konstruerar IDENTITETSKRIS - förlorat roll som expert 
-   när AI tar positionen. FÖRE/EFTER-kontrast tydlig. Detta LIKNAR 
-   disruption av professionell auktoritet."
+✅ "RQ2-fokus: Lärare konstruerar IDENTITETSKRIS — förlorat roll som expert.
+   FÖRE/EFTER-kontrast tydlig. Kopplar till 0268 om verifikation."
+
+✅ "Stark formulering — måste återkomma till detta."
 ```
 
 **Svaga reflexiva noter:**
@@ -674,6 +724,7 @@ INTE → #disrupts_teacher_certainty (teoretisk kategori)
 ❌ "Detta är epistemisk disruption." (kategorisering, inte tolkning)
 ❌ "Lärare säger elever använder AI." (repeterar data, ingen analys)
 ❌ "RQ1, RQ2 och RQ3." (listar RQ utan att förklara hur de hänger ihop)
+❌ "Detta LIKNAR disruption av X." (formelartad, tvingas på varje segment)
 ```
 
 ### 2.5 Cross-cutting mönster - speciell uppmärksamhet
