@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.3.3] - 2026-02-18
+
+### Added
+- **`coding_decisions.md` template** (`templates/coding_decisions_template.md`)
+  - Generic project-level template for documenting coding decisions
+  - Sections: project context, data-specific decisions, coding conventions, status, session log
+  - Researcher fills in during coding; Claude reads at session start
+- **`project_setup` now copies `coding_decisions_template.md` → `coding_decisions.md`** into each new project
+
+### Changed
+- **KODNINGSMANUAL updated** (RFC-007: methodology updates from coding practice)
+  - Flexibility in coding: number of codes per segment dictated by content, not formula
+  - Semantic/latent guidance: latent only when genuinely needed
+  - In vivo codes: no quotes in hashtags (Obsidian compatibility)
+  - Reflexive notes: genuine reflexive thinking, not formulaic patterns
+- **phase2a_initial_coding.md updated**
+  - Chunk vs segment distinction clarified
+  - AI assistant instructions added (avoid mechanical patterns, researcher authority)
+
+### Documentation
+- RFC-007: Methodology Updates from Coding Practice
+- RFC-007 Claude Code prompt for project_setup implementation
+
+---
+
 ## [0.3.2] - 2026-01-13
 
 ### Fixed
