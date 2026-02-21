@@ -417,7 +417,7 @@ class QualitativeAnalysisRTAServer {
         {
           name: 'phase2b_review_start',
           description:
-            'Start Phase 2b critical review session. Parses coded transcript, creates or resumes review notes file, loads methodology, and returns first segment for review. Call this to begin reviewing a coded transcript.',
+            'Start Phase 2b critical review session. Parses coded transcript, creates or resumes review notes file, loads methodology, and returns first segment for review. CRITICAL: Response includes methodology document — you MUST show the FULL methodology to researcher and wait for "Ok" BEFORE reviewing any segments. Do NOT summarize.',
           inputSchema: {
             type: 'object',
             properties: {

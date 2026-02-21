@@ -97,10 +97,16 @@ export async function reviewStart(args: {
     instructions: `
 PHASE 2b: CRITICAL CODING REVIEW
 
-Du granskar nu kodade segment ett i taget.
+KRITISKT — VISA METODOLOGI FÖRST:
+Ovanfor finns 'methodology' — det ar Phase 2b-metodologidokumentet.
+Du MASTE visa HELA methodology-innehallet till forskaren INNAN du
+borjar granska segment. Sammanfatta INTE — visa fullstandig text.
+Vanta pa forskarens "Ok" innan du gar vidare till forsta segmentet.
+
+GRANSKNINGSPROCESS (efter metodologi ar last):
 For varje segment:
 1. Las transkripttexten noggrant
-2. Granska tilldelade koder - ar de korrekta?
+2. Granska tilldelade koder — ar de korrekta?
 3. Skriv en reflexiv anteckning (review_write_note)
 4. Vid behov: revidera koder (review_revise_codes)
 5. Ga vidare till nasta segment (review_next)
