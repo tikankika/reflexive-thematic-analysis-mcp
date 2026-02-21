@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.4.1] - 2026-02-21
+
+### Added
+- **Segment restructuring tools for Phase 2b** — split and merge segments while keeping review notes in sync
+  - `phase2b_review_split_segment` — Split a segment at a specified line into two; copies all codes to both halves
+  - `phase2b_review_merge_segments` — Merge two adjacent segments into one; deduplicates codes
+- **NoteManager enhancements:**
+  - `shiftIndices(notesFile, fromIndex, delta)` — Shift review note indices after split/merge operations
+  - `removeNote(notesFile, segmentIndex)` — Remove a specific segment's review note
+
+### Technical Details
+- Split/merge operations are atomic: file modification and note index updates happen together
+- Split copies all original codes to both new segments (researcher adjusts with `review_revise_codes`)
+- Merge deduplicates codes, keeps first segment's note, removes second segment's note
+- All notes with indices after the affected segment are shifted automatically (+1 for split, -1 for merge)
+- `metadata.total_segments` updated to reflect new segment count
+
+---
+
 ## [0.4.0] - 2026-02-21
 
 ### Added
