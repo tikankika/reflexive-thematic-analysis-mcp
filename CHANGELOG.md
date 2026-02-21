@@ -7,6 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.4.0] - 2026-02-21
+
+### Added
+- **Phase 2b: Critical Review Tools** — 6 new MCP tools for researcher-driven review of AI-assisted coding
+  - `phase2b_review_start` — Start/resume review session, load Phase 2b methodology, return first segment
+  - `phase2b_review_next` — Get next unreviewed segment (or "complete" when done)
+  - `phase2b_review_read_segment` — Read specific segment by 1-based index with existing note
+  - `phase2b_review_write_note` — Write reflexive note for a segment (marks as reviewed)
+  - `phase2b_review_revise_codes` — Revise codes in transcript (add/remove/replace) with audit trail
+  - `phase2b_review_status` — Show review progress (reviewed, remaining, revisions)
+- **Core modules for Phase 2b:**
+  - `src/types/review.ts` — Type definitions (ReviewSegment, ReviewNote, ReviewNotesFile, ReviewStatus, CodeRevision)
+  - `src/core/segment_reader.ts` — SegmentReader: parse coded transcripts, extract segments (read-only)
+  - `src/core/note_manager.ts` — NoteManager: create/load/save review notes JSON, track progress
+  - `src/core/segment_reviser.ts` — SegmentReviser: modify codes within existing segments
+- **Review notes stored as `[transcript]_review.json`** in same directory as transcript
+  - Per-segment reflexive notes with timestamps
+  - Code revision history for methodological transparency
+  - Progress tracking across sessions (resume support)
+
+### Changed
+- **Server version bumped to 0.4.0**
+- **Phase 2b status in `init` changed from `coming_soon` to `available`**
+- **Phase 2b methodology document expanded** (`methodology/phase2b_critical_review.md`)
+
+---
+
 ## [0.3.3] - 2026-02-18
 
 ### Added
