@@ -149,6 +149,47 @@ export class NoteManager {
   }
 
   /**
+   * Shift segment indices in review notes after a split or merge.
+   *
+   * After a split: delta = +1, fromIndex = segment_index + 1
+   *   (all notes at or after fromIndex shift up by 1)
+   * After a merge: delta = -1, fromIndex = second_segment_index
+   *   (all notes at or after fromIndex shift down by 1)
+   *
+   * Also updates metadata.total_segments accordingly.
+   *
+   * @param notesFile - Loaded notes file (modified in place)
+   * @param fromIndex - 1-based segment index: shift all notes with index >= this
+   * @param delta - Amount to shift (+1 for split, -1 for merge)
+   */
+  shiftIndices(notesFile: ReviewNotesFile, fromIndex: number, delta: number): void {
+    for (const note of notesFile.segments) {
+      if (note.index >= fromIndex) {
+        note.index += delta;
+      }
+    }
+    notesFile.metadata.total_segments += delta;
+    // Re-sort after index changes
+    notesFile.segments.sort((a, b) => a.index - b.index);
+  }
+
+  /**
+   * Remove the review note for a specific segment.
+   *
+   * @param notesFile - Loaded notes file (modified in place)
+   * @param segmentIndex - 1-based segment index to remove
+   * @returns true if a note was removed, false if none existed
+   */
+  removeNote(notesFile: ReviewNotesFile, segmentIndex: number): boolean {
+    const idx = notesFile.segments.findIndex((n) => n.index === segmentIndex);
+    if (idx >= 0) {
+      notesFile.segments.splice(idx, 1);
+      return true;
+    }
+    return false;
+  }
+
+  /**
    * Calculate review statistics.
    *
    * @param notesFile - Loaded notes file

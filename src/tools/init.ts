@@ -98,6 +98,8 @@ export async function init(): Promise<InitResult> {
           'review_read_segment - Read specific segment by index',
           'review_write_note - Write reflexive note for segment',
           'review_revise_codes - Revise codes (add/remove/replace)',
+          'review_split_segment - Split segment into two (adjusts notes)',
+          'review_merge_segments - Merge two adjacent segments (adjusts notes)',
           'review_status - Show review progress',
         ],
       },

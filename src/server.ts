@@ -47,6 +47,8 @@ import { reviewReadSegment } from './tools/review_read_segment.js';
 import { reviewWriteNote } from './tools/review_write_note.js';
 import { reviewReviseCodes } from './tools/review_revise_codes.js';
 import { reviewStatus } from './tools/review_status.js';
+import { reviewSplitSegment } from './tools/review_split_segment.js';
+import { reviewMergeSegments } from './tools/review_merge_segments.js';
 
 /**
  * MCP Server for Qualitative Analysis RTA (Braun & Clarke)
@@ -534,6 +536,54 @@ class QualitativeAnalysisRTAServer {
             required: ['file_path'],
           },
         },
+        {
+          name: 'phase2b_review_split_segment',
+          description:
+            'Split a segment into two during review. Copies all codes to both new segments. Use when a segment contains two distinct meaning units that should be coded separately. After splitting, use review_revise_codes to adjust codes on each half.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              file_path: {
+                type: 'string',
+                description: 'Path to coded transcript file',
+              },
+              segment_index: {
+                type: 'number',
+                description: '1-based index of the segment to split',
+              },
+              split_at_line: {
+                type: 'string',
+                description:
+                  '4-digit line index — the FIRST line of the second half (e.g., "0045")',
+              },
+            },
+            required: ['file_path', 'segment_index', 'split_at_line'],
+          },
+        },
+        {
+          name: 'phase2b_review_merge_segments',
+          description:
+            'Merge two adjacent segments into one during review. Combines text and deduplicates codes. Use when two consecutive segments belong to the same meaning unit.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              file_path: {
+                type: 'string',
+                description: 'Path to coded transcript file',
+              },
+              first_segment_index: {
+                type: 'number',
+                description: '1-based index of the first segment',
+              },
+              second_segment_index: {
+                type: 'number',
+                description:
+                  '1-based index of the second segment (must be first_segment_index + 1)',
+              },
+            },
+            required: ['file_path', 'first_segment_index', 'second_segment_index'],
+          },
+        },
       ],
     }));
 
@@ -632,6 +682,14 @@ class QualitativeAnalysisRTAServer {
             result = await reviewStatus(args as any);
             break;
 
+          case 'phase2b_review_split_segment':
+            result = await reviewSplitSegment(args as any);
+            break;
+
+          case 'phase2b_review_merge_segments':
+            result = await reviewMergeSegments(args as any);
+            break;
+
           default:
             throw new Error(`Unknown tool: ${name}`);
         }
@@ -681,7 +739,7 @@ class QualitativeAnalysisRTAServer {
       'Phase 2a: code_start, code_read_next, code_write_segment, code_skip_chunk, code_status, code_verify, code_reset_status, code_clear_all, code_delete_segment'
     );
     console.error(
-      'Phase 2b: review_start, review_next, review_read_segment, review_write_note, review_revise_codes, review_status'
+      'Phase 2b: review_start, review_next, review_read_segment, review_write_note, review_revise_codes, review_status, review_split_segment, review_merge_segments'
     );
   }
 }
