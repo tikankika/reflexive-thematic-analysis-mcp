@@ -90,6 +90,17 @@ export async function init(): Promise<InitResult> {
           'code_delete_segment - Delete specific segment',
         ],
       },
+      {
+        category: 'Phase 2b - Critical Review (prefix: phase2b_)',
+        tools: [
+          'review_start - Start critical review session',
+          'review_next - Get next unreviewed segment',
+          'review_read_segment - Read specific segment by index',
+          'review_write_note - Write reflexive note for segment',
+          'review_revise_codes - Revise codes (add/remove/replace)',
+          'review_status - Show review progress',
+        ],
+      },
     ],
 
     criticalRules: [
@@ -105,7 +116,7 @@ export async function init(): Promise<InitResult> {
     rtaPhases: [
       { phase: '1', name: 'Familiarization', status: 'coming_soon' },
       { phase: '2a', name: 'Initial Coding', status: 'available' },
-      { phase: '2b', name: 'Critical Review', status: 'coming_soon' },
+      { phase: '2b', name: 'Critical Review', status: 'available' },
       { phase: '3', name: 'Generating Themes', status: 'coming_soon' },
       { phase: '4', name: 'Reviewing Themes', status: 'coming_soon' },
       { phase: '5', name: 'Defining & Naming', status: 'coming_soon' },

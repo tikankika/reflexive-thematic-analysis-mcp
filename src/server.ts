@@ -40,6 +40,14 @@ import { codeClearAll } from './tools/code_clear_all.js';
 import { codeDeleteSegment } from './tools/code_delete_segment.js';
 import { codeStatus } from './tools/code_status.js';
 
+// Phase 2b tools
+import { reviewStart } from './tools/review_start.js';
+import { reviewNext } from './tools/review_next.js';
+import { reviewReadSegment } from './tools/review_read_segment.js';
+import { reviewWriteNote } from './tools/review_write_note.js';
+import { reviewReviseCodes } from './tools/review_revise_codes.js';
+import { reviewStatus } from './tools/review_status.js';
+
 /**
  * MCP Server for Qualitative Analysis RTA (Braun & Clarke)
  */
@@ -50,7 +58,7 @@ class QualitativeAnalysisRTAServer {
     this.server = new Server(
       {
         name: 'qualitative-analysis-rta-server',
-        version: '0.3.2',
+        version: '0.4.0',
       },
       {
         capabilities: {
@@ -405,6 +413,127 @@ class QualitativeAnalysisRTAServer {
             required: ['file_path'],
           },
         },
+        // === PHASE 2b TOOLS (Critical Review) ===
+        {
+          name: 'phase2b_review_start',
+          description:
+            'Start Phase 2b critical review session. Parses coded transcript, creates or resumes review notes file, loads methodology, and returns first segment for review. Call this to begin reviewing a coded transcript.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              file_path: {
+                type: 'string',
+                description: 'Path to coded transcript file (.md)',
+              },
+              researcher: {
+                type: 'string',
+                description: 'Researcher name (default: "researcher")',
+              },
+            },
+            required: ['file_path'],
+          },
+        },
+        {
+          name: 'phase2b_review_next',
+          description:
+            'Get next unreviewed segment. Returns the next segment that has not been reviewed yet, or "complete" if all segments are done.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              file_path: {
+                type: 'string',
+                description: 'Path to coded transcript file',
+              },
+            },
+            required: ['file_path'],
+          },
+        },
+        {
+          name: 'phase2b_review_read_segment',
+          description:
+            'Read a specific segment by its 1-based index. Returns segment text, codes, and any existing review note.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              file_path: {
+                type: 'string',
+                description: 'Path to coded transcript file',
+              },
+              index: {
+                type: 'number',
+                description: '1-based segment index',
+              },
+            },
+            required: ['file_path', 'index'],
+          },
+        },
+        {
+          name: 'phase2b_review_write_note',
+          description:
+            'Write a reflexive note for a segment. Creates or updates the researcher\'s analytical observation for the specified segment. This marks the segment as reviewed.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              file_path: {
+                type: 'string',
+                description: 'Path to coded transcript file',
+              },
+              index: {
+                type: 'number',
+                description: '1-based segment index',
+              },
+              note: {
+                type: 'string',
+                description: 'Reflexive note text (markdown)',
+              },
+            },
+            required: ['file_path', 'index', 'note'],
+          },
+        },
+        {
+          name: 'phase2b_review_revise_codes',
+          description:
+            'Revise codes for a segment. Modifies codes in the transcript file and logs the revision. Actions: "add" (append codes), "remove" (delete codes), "replace" (replace all codes).',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              file_path: {
+                type: 'string',
+                description: 'Path to coded transcript file',
+              },
+              segment_index: {
+                type: 'number',
+                description: '1-based segment index',
+              },
+              action: {
+                type: 'string',
+                enum: ['add', 'remove', 'replace'],
+                description: 'Revision type: add, remove, or replace',
+              },
+              codes: {
+                type: 'array',
+                items: { type: 'string' },
+                description: 'Codes to add/remove/replace with (e.g., ["#new_code__rq1_semantisk"])',
+              },
+            },
+            required: ['file_path', 'segment_index', 'action', 'codes'],
+          },
+        },
+        {
+          name: 'phase2b_review_status',
+          description:
+            'Show Phase 2b review progress. Returns total segments, reviewed count, remaining, percentage, and revision statistics.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              file_path: {
+                type: 'string',
+                description: 'Path to coded transcript file',
+              },
+            },
+            required: ['file_path'],
+          },
+        },
       ],
     }));
 
@@ -478,6 +607,31 @@ class QualitativeAnalysisRTAServer {
             result = await codeStatus(args as any);
             break;
 
+          // === PHASE 2b TOOLS ===
+          case 'phase2b_review_start':
+            result = await reviewStart(args as any);
+            break;
+
+          case 'phase2b_review_next':
+            result = await reviewNext(args as any);
+            break;
+
+          case 'phase2b_review_read_segment':
+            result = await reviewReadSegment(args as any);
+            break;
+
+          case 'phase2b_review_write_note':
+            result = await reviewWriteNote(args as any);
+            break;
+
+          case 'phase2b_review_revise_codes':
+            result = await reviewReviseCodes(args as any);
+            break;
+
+          case 'phase2b_review_status':
+            result = await reviewStatus(args as any);
+            break;
+
           default:
             throw new Error(`Unknown tool: ${name}`);
         }
@@ -521,10 +675,13 @@ class QualitativeAnalysisRTAServer {
     await this.server.connect(transport);
 
     // Log to stderr (stdout is used for MCP protocol)
-    console.error('Qualitative Analysis RTA Server v0.3.2 running...');
+    console.error('Qualitative Analysis RTA Server v0.4.0 running...');
     console.error('Core: init, project_setup, add_line_index, methodology_load, list_files, read_file');
     console.error(
       'Phase 2a: code_start, code_read_next, code_write_segment, code_skip_chunk, code_status, code_verify, code_reset_status, code_clear_all, code_delete_segment'
+    );
+    console.error(
+      'Phase 2b: review_start, review_next, review_read_segment, review_write_note, review_revise_codes, review_status'
     );
   }
 }
