@@ -1,14 +1,22 @@
 # Getting Started
 
-Get from zero to your first coded segment in ~10 minutes.
+From zero to your first coded segment in approximately 10 minutes.
 
-## Prerequisites
+---
 
-- **Node.js 18+** ([download](https://nodejs.org/))
-- **Claude Desktop** ([download](https://claude.ai/download))
-- A transcript file in `.md` format
+## What you need
 
-## 1. Install
+- **Claude Desktop** ([download](https://claude.ai/download)) — the application this tool extends
+- **Node.js 18+** ([download](https://nodejs.org/)) — the runtime environment that runs the tool
+- A transcript file in `.md` (markdown) format
+
+If you are unsure whether Node.js is installed, open a terminal and type `node --version`. If you see a version number (18 or higher), you are ready.
+
+---
+
+## 1. Install the tool
+
+Open a terminal and run:
 
 ```bash
 git clone https://github.com/tikankika/reflexive-thematic-analysis-mcp.git
@@ -17,16 +25,23 @@ npm install
 npm run build
 ```
 
-Verify: `ls dist/server.js` should exist.
+To verify the build succeeded, check that the file `dist/server.js` exists:
 
-## 2. Configure Claude Desktop
+```bash
+ls dist/server.js
+```
 
-Edit your Claude Desktop config file:
+---
+
+## 2. Connect to Claude Desktop
+
+Claude Desktop needs to know where to find the tool. Open the configuration file in a text editor:
 
 - **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
 - **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
+- **Linux:** `~/.config/Claude/claude_desktop_config.json`
 
-Add this MCP server entry:
+If the file does not exist, create it. Add the following (or add the `reflexive-thematic-analysis-mcp` entry to an existing `mcpServers` object):
 
 ```json
 {
@@ -39,64 +54,63 @@ Add this MCP server entry:
 }
 ```
 
-Replace `/absolute/path/to/reflexive-thematic-analysis-mcp` with the actual path where you cloned the repo.
+Replace `/absolute/path/to/reflexive-thematic-analysis-mcp` with the actual location on your computer. For example, if you cloned the repository to your home directory on macOS, the path would be `/Users/yourname/reflexive-thematic-analysis-mcp/dist/server.js`.
 
-## 3. Restart Claude Desktop
+Save the file and restart Claude Desktop (close it fully and reopen).
 
-Close and reopen Claude Desktop to load the MCP server.
+---
 
-## 4. Start Your First Session
+## 3. Verify the connection
 
 In Claude Desktop, type:
 
-> "Call the init tool"
+> *"Call the init tool"*
 
-Claude will receive instructions on how to use the RTA tools. Then:
+If the connection is working, Claude will respond with a list of available tools and instructions for using them. If you see an error or Claude does not recognise the request, see Troubleshooting below.
 
-> "Set up a new project for my transcript at /path/to/my_transcript.md"
+---
 
-This creates a project structure with methodology files and indexes your transcript.
+## 4. Try it out
 
-## 5. Start Coding (Phase 2a)
+With the tool connected, you can test the full workflow. You will need a transcript file in markdown format — even a short test file will do.
 
-> "Start coding the transcript"
+Ask Claude to set up a project:
 
-Claude will:
-1. Load the methodology for you to review
-2. Present the first chunk of text (~80 lines)
-3. Propose codes based on the content
-4. **Ask for your approval** before writing anything
+> *"Set up a new project called test_project for my transcript at /path/to/my_transcript.md"*
 
-You decide which codes to keep, modify, or reject. The researcher always has interpretive authority.
+Claude creates a project structure and indexes your transcript. Then start coding:
 
-## 6. Review Your Coding (Phase 2b)
+> *"Start coding the transcript"*
 
-After all segments are coded:
+Claude will load the methodology for you to read, then present the first chunk of text (approximately 80 lines). It proposes codes based on the content and waits for your decision. You accept, modify, or reject each proposal.
 
-> "Start a critical review of the coding"
+This brief test confirms everything works. For a full account of the analytical process — preparation, coding, review, and what you get at the end — see the [Research Workflow](RESEARCH_WORKFLOW.md) guide.
 
-This walks through each coded segment for you to:
-- Check segment boundaries
-- Verify code accuracy and sufficiency
-- Write reflexive notes
-- Revise codes where needed
-
-## What's Next?
-
-- [User Guide](USER_GUIDE.md) — Detailed workflow and all tool options
-- [API Reference](API.md) — Full tool specifications
-- [Methodology](../methodology/) — RTA methodology documents
+---
 
 ## Troubleshooting
 
-**Claude doesn't list the MCP tools:**
-- Verify the path in `claude_desktop_config.json` is absolute and correct
-- Restart Claude Desktop after config changes
-- Check that `dist/server.js` exists (run `npm run build`)
+**Claude does not recognise the tool or shows no MCP tools:**
+- Check that the path in `claude_desktop_config.json` is absolute (starts with `/` on macOS/Linux or `C:\` on Windows), not relative
+- Ensure `dist/server.js` exists — if not, run `npm run build` again
+- Restart Claude Desktop fully (not just close the window — quit the application)
+- On macOS, check Activity Monitor to confirm Claude Desktop is not still running in the background
 
 **"init not called" errors:**
-- Always start a session by asking Claude to call `init`
+- Every Claude Desktop session starts fresh. Begin each session by asking Claude to call `init` before doing anything else
 
-**Coding seems stuck:**
-- Ask Claude to call `code_status` to check progress
-- Use `code_verify(fix=true)` to fix STATUS inconsistencies
+**Progress seems wrong or coding is stuck:**
+- Ask Claude: *"Verify and fix the STATUS for my transcript"*
+- This checks the actual file content against the progress tracking and corrects any inconsistencies
+
+**Build fails during installation:**
+- Ensure Node.js is version 18 or higher: `node --version`
+- Delete `node_modules/` and try again: `rm -rf node_modules && npm install && npm run build`
+
+---
+
+## Next steps
+
+- [Research Workflow](RESEARCH_WORKFLOW.md) — how to conduct your analysis with this tool
+- [API Reference](API.md) — complete tool specifications
+- [Methodology](../methodology/) — the RTA methodology documents that load during sessions

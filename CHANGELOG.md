@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.5.0] - 2026-02-22
+
+### Changed
+- **Project identity reframed: methodology as core, tools as infrastructure.** All public documentation now presents the methodology suite as the intellectual substance of the project, with file operations explicitly secondary. This affects README, RESEARCH_WORKFLOW, and init-instructions.
+- **README.md completely rewritten for researcher audience.** Opens with the research problem, not the technology. Concrete coding session description. "What you get" section with code example. Honest about setup complexity. Technical content (architecture, MCP) moved to clearly labelled developer section at the bottom.
+- **docs/GETTING_STARTED.md rewritten.** Linux path added. Verification steps after each installation step. Troubleshooting expanded. "Try it out" replaces full tutorial — points to RESEARCH_WORKFLOW for the analytical process.
+- **docs/ROADMAP.md rewritten** from 655 lines of internal planning to 75 lines: current release, next priorities, future development, design principles.
+- **docs/API.md** — orienting introduction added for researchers ("You do not need to know these tool names").
+- **CONTRIBUTING.md** — project structure section added explaining methodology/protocols/tools separation.
+- **docs/mcp-usage/init-instructions.md** — methodology engagement elevated to primary instruction. New opening section "THE METHODOLOGY IS THE CORE". Phase 2b tools and utility tools added to available tools list. Workflow reordered: methodology → show full → wait for acknowledgement → then data.
+
+### Added
+- **docs/RESEARCH_WORKFLOW.md** — new document covering the researcher's complete analytical journey: preparation (know your data, prepare transcripts, write coding protocol), engaging with the methodology (why it matters, what to read, why not to skip it), how coding sessions unfold, chunks vs segments, what good coding feels like, between-session continuity, why review matters, the difference between coding and reviewing, what you get after coding and review, practical session management. Written in academic prose for a researcher audience, with no tool names or API references.
+
+### Removed
+- **docs/USER_GUIDE.md** — replaced by RESEARCH_WORKFLOW.md. The User Guide mixed workflow and technical reference without serving either audience well.
+- **docs/PUBLIC_RELEASE_CLEANUP.md** — self-deleting instruction document, job completed.
+
+### Repository
+- GitHub repository renamed from `MPC_RTA` to `reflexive-thematic-analysis-mcp`
+- GitHub About description updated to lead with researcher value, not technology
+- GitHub Topics expanded for researcher discoverability
+
+---
+
 ## [0.4.2] - 2026-02-22
 
 ### Changed

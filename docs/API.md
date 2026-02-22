@@ -2,6 +2,8 @@
 
 Complete tool specifications for the Reflexive Thematic Analysis MCP Server.
 
+This document is a technical reference for developers and advanced users. If you are looking for how to use the tool in your research, see the [Research Workflow](RESEARCH_WORKFLOW.md) guide. You do not need to know these tool names — Claude handles tool calls based on your natural language requests.
+
 ---
 
 ## Tool Overview
@@ -404,4 +406,4 @@ CODING-STATUS:
 
 ---
 
-**Version**: 0.4.2
+**Version**: 0.4.x

@@ -10,23 +10,27 @@ Qualitative researchers working with AI assistants face a practical tension. Lar
 
 The result is ad hoc analysis — productive in short bursts, but difficult to sustain across the dozens of hours that rigorous qualitative coding demands.
 
-## What this tool provides
+## What this provides
 
-An extension for [Claude Desktop](https://claude.ai/download) that structures the coding process. It handles the infrastructure — chunking large transcripts, tracking progress, writing codes to files, managing segment boundaries — so that the conversation between researcher and AI can focus on interpretation.
+At its core, this is a **methodology for conducting qualitative analysis with AI** — a set of documents that articulate how Braun & Clarke's Reflexive Thematic Analysis works when an AI language model participates in the analytical process. The methodology addresses the epistemological challenges that AI mediation introduces: the tendency toward shallow pattern reproduction, the risk of displaced researcher authority, and the need for a second layer of reflexivity directed at AI's influence on interpretation (Brailas, 2025; Ozuem et al., 2025).
 
-The tool ships with a complete methodology suite grounded in Braun & Clarke's six-phase RTA framework (2006, 2022), adapted for AI-augmented analysis with attention to the epistemological challenges that AI mediation introduces (Brailas, 2025; Ozuem et al., 2025). The methodology loads automatically at each phase, so Claude operates within an explicit analytical framework rather than generating generic responses.
+The methodology is delivered through an extension for [Claude Desktop](https://claude.ai/download) that loads the relevant analytical framework at each phase of the research process. Claude does not generate generic responses — it operates within an explicit methodological position that the researcher reads, engages with, and applies to their data.
+
+The tool also handles the practical infrastructure — chunking large transcripts, tracking progress across sessions, writing codes to files, managing segment boundaries — so that the conversation between researcher and AI can focus on interpretation rather than file management.
 
 Two phases are currently supported: **Phase 2a** (initial coding) and **Phase 2b** (critical review of that coding). Phases 3–6 are planned.
 
 ## What a coding session looks like
 
-You work in Claude Desktop. The conversation is natural language — you talk to Claude as you would to a research assistant who knows your methodology.
+You work in Claude Desktop. The conversation is natural language — you talk to Claude as you would to a research colleague who shares your methodological framework.
 
-**Phase 2a — Initial coding.** Claude presents approximately 80 lines of transcript text. You read it together. Claude proposes codes — semantic and latent, mapped to your research questions. You evaluate each proposal: accept, modify, reject, or add codes Claude missed. When you are satisfied, the codes are written to your transcript file with permanent line references. Claude presents the next chunk. This continues until the transcript is fully coded.
+Each session begins with methodology. Claude loads the relevant phase document — not as a formality but as the analytical foundation for the work that follows. You read it together. The methodology establishes what counts as a good code, what risks AI introduces at this phase, and what questions should guide your interpretive decisions. This shared framework is what makes the subsequent coding dialogue productive rather than ad hoc.
 
-**Phase 2b — Critical review.** Claude presents each coded segment one at a time. You review the codes with fresh eyes, write a reflexive note capturing your analytical observations, and revise codes where your understanding has deepened. You can split segments that contain multiple meaning units or merge segments that belong together. Every revision is logged.
+**Phase 2a — Initial coding.** Claude presents approximately 80 lines of transcript text. You read it together. Claude proposes codes — semantic and latent, mapped to your research questions — grounded in the methodology you have just reviewed. You evaluate each proposal: accept, modify, reject, or add codes Claude missed. When you are satisfied, the codes are written to your transcript file with permanent line references. Claude presents the next chunk. This continues until the transcript is fully coded.
 
-Throughout both phases, Claude follows the project's methodology documents and coding protocol. It proposes — you decide. This is not automated coding; it is a structured dialogue where the researcher retains full interpretive authority.
+**Phase 2b — Critical review.** Claude presents each coded segment one at a time. The Phase 2b methodology introduces specific concepts — the "proving the obvious" problem, double reflexivity — that structure how you revisit the coding. You review the codes with fresh eyes, write a reflexive note capturing your analytical observations, and revise codes where your understanding has deepened. You can split segments that contain multiple meaning units or merge segments that belong together. Every revision is logged.
+
+Throughout both phases, Claude operates within the methodology, not alongside it. It proposes — you decide. This is not automated coding; it is a structured analytical dialogue where the researcher retains full interpretive authority.
 
 ## What you get
 
@@ -81,11 +85,13 @@ Replace `/absolute/path/to/` with the actual location where you cloned the repos
 
 ## What ships with the tool
 
-**Methodology suite** (`methodology/`). Phase-specific guidance for all six RTA phases, grounded in Braun & Clarke (2006, 2022) and recent literature on AI-augmented qualitative research. These documents load automatically when you begin each phase — you review them with Claude before coding starts.
+**Methodology suite** (`methodology/`). This is the intellectual core of the project. Phase-specific documents for all six RTA phases articulate how each analytical task works when AI participates in the process — what risks emerge, what questions the researcher should ask, and where human interpretive capacity is most essential. The methodology is grounded in Braun & Clarke (2006, 2022) and draws on recent literature addressing AI's role in qualitative research (Brailas, 2025; Ozuem et al., 2025; Al-Fattal & Singh, 2025). Three foundational principles — the "proving the obvious" problem, double reflexivity, and AI as heuristic partner — run through every phase document. These are not background reading; they load automatically at the start of each session and shape how Claude engages with your data.
 
-**Epistemological foundations** (`methodology/epistemology/`). Four documents addressing constructionist epistemology, theoretical orientation, inductive/deductive reasoning, and semantic/latent coding — each written with specific attention to how AI mediation affects these analytical dimensions.
+**Epistemological foundations** (`methodology/epistemology/`). Four documents addressing constructionist epistemology, theoretical orientation, inductive/deductive reasoning, and semantic/latent coding. Each examines how AI mediation affects that analytical dimension — where AI is competent, where it fails, and what the researcher must supply.
 
 **Example coding protocols** (`protocols/`). Project-specific coding conventions — code formatting, research question mapping, segment structure. The included protocols are from an educational research project and serve as concrete examples. For your own research, you would write a coding protocol that defines your research questions, code format conventions, and any project-specific rules. The [Research Workflow](docs/RESEARCH_WORKFLOW.md) guide explains how.
+
+**Tool infrastructure** (`src/`). The file operations, progress tracking, and session management that make the methodology usable with large datasets. The tools are important but secondary — they exist to serve the analytical process, not to replace it.
 
 ## For developers
 

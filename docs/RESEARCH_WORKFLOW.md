@@ -2,7 +2,9 @@
 
 How to conduct qualitative analysis using this tool — from preparation through coding to review.
 
-This document describes the researcher's analytical journey. For tool commands and parameters, see the [API Reference](API.md). For installation, see [Getting Started](GETTING_STARTED.md). The detailed methodology loads automatically during sessions; what follows is an orientation to the overall process.
+This document describes the researcher's analytical journey. For tool commands and parameters, see the [API Reference](API.md). For installation, see [Getting Started](GETTING_STARTED.md).
+
+A note on what drives this process: the tool's core contribution is not its file operations but the methodology suite that structures how researcher and AI engage with qualitative data. The methodology loads at the start of each session and shapes every analytical decision that follows. What follows here is an orientation to the overall process; the methodology documents themselves provide the detailed analytical guidance.
 
 ---
 
@@ -43,7 +45,17 @@ Open Claude Desktop and begin with: *"Call the init tool."* This gives Claude th
 
 Then ask Claude to set up a project. You provide a project name, the location for your project folder, and the paths to your transcript files. The tool creates a project structure with a copy of the methodology suite and a configuration file that tracks which transcripts are in the project and their coding status.
 
-Before coding begins, Claude loads the relevant methodology — for Phase 2a, this includes the methodological framework and the initial coding guide. You should read these documents when Claude presents them, not skip past them. They establish the analytical principles that govern the session: what "proving the obvious" means in practice, why double reflexivity matters, how to use AI's proposals as heuristic starting points rather than conclusions.
+### Engaging with the methodology
+
+Before any coding begins, Claude loads the methodology for the current phase. This is the most important part of starting a session — more important than the technical setup, more important than getting to the data quickly.
+
+For Phase 2a, you will read the methodological framework and the initial coding guide together with Claude. These documents are substantial. They establish three foundational principles that govern AI-augmented analysis: the "proving the obvious" problem (AI reproduces expected patterns rather than surfacing what is analytically interesting), double reflexivity (monitoring both your own and AI's influence on interpretation), and AI as heuristic partner (treating proposals as starting points for interpretive engagement, not conclusions).
+
+The methodology also addresses your specific epistemological position — what it means to code constructionistically with AI, how to maintain an experiential orientation when AI lacks access to experiential meaning, where AI is competent at semantic coding and where it fails at latent coding.
+
+Do not skip this. Do not skim it. The methodology is not a preamble to the real work — it *is* the analytical framework that makes the subsequent coding rigorous rather than superficial. When Claude later proposes a code, your capacity to evaluate that proposal depends on having internalised these principles. When you write a reflexive note during review, the depth of that note reflects how seriously you engaged with the methodology's concept of double reflexivity.
+
+In subsequent sessions on the same transcript, Claude loads the methodology again. This is not redundant — each re-reading deepens your engagement, and the fresh start prevents the methodological framework from fading into background noise over time.
 
 ---
 
@@ -51,7 +63,7 @@ Before coding begins, Claude loads the relevant methodology — for Phase 2a, th
 
 ### How a session unfolds
 
-Claude presents a chunk of transcript text — typically around 80 lines. You read it together. Claude proposes codes for the meaningful segments it identifies within that chunk, drawing on the methodology and your coding protocol.
+After the methodology has been read and acknowledged, the coding begins. Claude presents a chunk of transcript text — typically around 80 lines. You read it together. Claude proposes codes for the meaningful segments it identifies within that chunk, drawing on the methodology you have just reviewed and your coding protocol.
 
 Your role at this point is evaluative and interpretive. For each proposed code, consider:
 
@@ -80,7 +92,7 @@ The number of codes per segment varies with the content. A rich, complex exchang
 
 When you close Claude Desktop, your progress is saved in the transcript file itself as STATUS metadata. The next time you open Claude Desktop and call `init`, you can resume where you left off. Claude reads the STATUS and picks up at the next uncoded chunk.
 
-However, Claude does not remember the previous conversation. Each session is fresh. This is actually useful — it prevents accumulated interpretive drift within a single long session, and it means you encounter the data with some renewed distance each time.
+However, Claude does not remember the previous conversation. Each session is fresh — including the methodology, which loads again from the beginning. This is actually useful. It prevents accumulated interpretive drift within a single long session, it means you encounter the data with renewed distance, and the repeated engagement with the methodology deepens your analytical framework rather than letting it fade.
 
 ---
 
@@ -91,6 +103,8 @@ However, Claude does not remember the previous conversation. Each session is fre
 Phase 2b — critical review — exists because AI-assisted coding creates a specific methodological risk. During Phase 2a, the researcher evaluates AI proposals in the flow of coding, which can create a bias toward acceptance: proposals that sound reasonable get approved without the deeper engagement that generates genuine analytical insight.
 
 Review is where you step back and look at each coded segment with critical distance. You are no longer in the flow of production. You are asking: does this coding actually capture what is happening in this data?
+
+The Phase 2b methodology is distinct from Phase 2a's. It introduces specific analytical concepts — the "proving the obvious" heuristic as a review tool, double reflexivity directed at your own coding history, attention to where AI's proposals shaped what you subsequently saw in the data. Claude loads this methodology at the start of the review session. As with Phase 2a, reading it is not a formality — it provides the critical lens through which you examine the coding.
 
 ### How review works
 
