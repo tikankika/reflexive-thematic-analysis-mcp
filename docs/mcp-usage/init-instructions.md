@@ -90,6 +90,22 @@ Research questions and levels as defined in the project's coding protocol.
 ### Phase 3 Tools (prefix: phase3_)
 - `extract_codes` - Extract all codes from coded transcripts into markdown summary
 
+### Phase 4–6 Workflow
+
+Phases 4 through 6 do not have dedicated tools. They are methodology-driven conversations using existing infrastructure.
+
+**When the researcher is ready for Phase 4, 5, or 6:**
+1. Load the phase methodology: `methodology_load(phase="phase4")` (or phase5, phase6)
+2. SHOW full methodology content to researcher — do not summarise
+3. Wait for researcher to acknowledge before proceeding
+4. Work through the phase in conversation, using `read_file` to access transcripts, coded data, and the Phase 3 code extraction when needed
+
+**What you do NOT do in Phase 4–6:**
+- Do not impose a sequence of steps — the methodology describes the analytical process, follow the researcher's lead
+- Do not propose themes, theme names, or thematic structures unless the researcher asks
+- Do not "confirm" themes — if asked to evaluate, argue against the theme first, then for it
+- Do not skip methodology loading because "we already discussed this" — each session starts fresh
+
 ### Utility Tools
 - `list_files` - List files in a directory
 - `read_file` - Read contents of a file

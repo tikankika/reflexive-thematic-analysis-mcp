@@ -153,7 +153,6 @@ export class MethodologyLoader {
     const allFiles = [
       ...this.GENERAL_FILES,
       ...Object.values(this.PHASE_FILES),
-      'fallback-summary.md',
     ];
 
     const available: string[] = [];
@@ -197,6 +196,12 @@ export class MethodologyLoader {
         return ['phase2b_critical_review.md'];
       case 'phase3':
         return ['phase3_generating_themes.md'];
+      case 'phase4':
+        return ['phase4_reviewing_themes.md'];
+      case 'phase5':
+        return ['phase5_defining_naming.md'];
+      case 'phase6':
+        return ['phase6_producing_report.md'];
       default:
         return this.GENERAL_FILES;
     }
@@ -232,47 +237,64 @@ export class MethodologyLoader {
     const fallbacks: Record<string, string> = {
       phase2a: `
 # Phase 2a: Initial Coding (Fallback)
-
-1. Read transcript chunk (60-100 lines)
-2. Identify semantic segments (1-20 lines)
-3. Propose codes for each segment
+Methodology documents not found. Core workflow:
+1. Read transcript chunk
+2. Identify semantic segments
+3. Propose codes: #code_name__rq1_semantic or #code_name__rq1_latent
 4. Researcher approves/modifies/rejects
-5. Code format: #code__lens1
 `,
       phase2b: `
 # Phase 2b: Critical Review (Fallback)
-
-Review each coded segment:
-1. Are segment boundaries correct?
-2. Are codes accurate and sufficient?
-3. What codes to add/remove/refine?
-4. Document analytical observations
+Methodology documents not found. Core workflow:
+1. Review each coded segment
+2. Evaluate codes critically
+3. Write reflexive note
+4. Revise codes where needed
 `,
       phase3: `
 # Phase 3: Generating Themes (Fallback)
-
-1. Cluster related codes
-2. Identify candidate themes
-3. Check themes against data
-4. Researcher authority on theme naming
+Methodology documents not found. Core workflow:
+1. Review all codes across transcripts
+2. Look for patterns of shared meaning
+3. Cluster codes into candidate themes
+4. Researcher constructs themes — AI proposes, researcher decides
+`,
+      phase4: `
+# Phase 4: Reviewing Themes (Fallback)
+Methodology documents not found. Core workflow:
+1. Test each theme against coded data (Level One)
+2. Test thematic framework against full dataset (Level Two)
+3. Reconceptualise, split, merge, or discard themes as needed
+`,
+      phase5: `
+# Phase 5: Defining and Naming Themes (Fallback)
+Methodology documents not found. Core workflow:
+1. Define what each theme captures and does not capture
+2. Articulate the central organizing concept
+3. Select data extracts for the report
+4. Finalize theme names
+`,
+      phase6: `
+# Phase 6: Producing the Report (Fallback)
+Methodology documents not found. Core workflow:
+1. Write analytical narrative — interpret, don't describe
+2. Integrate data extracts as evidence
+3. Weave literature into analysis
+4. Document AI transparency
 `,
     };
 
-    return fallbacks[phase] || '# Methodology not available';
+    return fallbacks[phase] || '# Methodology not available for this phase.';
   }
 
   private getHardcodedFallback(): string {
     return `
-# RTA Methodology - Fallback
+# RTA Methodology — Fallback
 
-## Critical Rules
-1. RESEARCHER has interpretive authority
-2. CODES grow from data (inductive)
-3. SEGMENTS are semantic units (1-20 lines)
-4. CODE FORMAT: #code__lens1
-
-## Workflow
-1. Read chunk -> Identify segments -> Propose codes -> Researcher decides
+Methodology documents not found. Critical principles:
+1. Researcher has interpretive authority — AI proposes, researcher decides
+2. Code format: #code_name__rqN_semantic or #code_name__rqN_latent
+3. Methodology loads at each phase — read it fully before proceeding
 `;
   }
 }

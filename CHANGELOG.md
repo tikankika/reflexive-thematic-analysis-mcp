@@ -19,8 +19,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Phase 3 status changed from `coming_soon` to `available` in init tool output.
-- `init-instructions.md` updated with Phase 3 tools section.
+- `init-instructions.md` updated with Phase 3 tools section and Phase 4–6 workflow guidance.
 - `API.md` updated with Phase 3 tool specification.
+- **`MethodologyLoader` infrastructure fixes for Phases 4–6:**
+  - `getDocumentList()` now returns correct documents for phase4, phase5, phase6 (previously fell through to default).
+  - `getPhaseFallback()` updated to current code format (`#code_name__rqN_semantic`), added phase 4–6 fallback texts.
+  - `getHardcodedFallback()` updated to current terminology.
+  - `checkAvailability()` no longer references non-existent `fallback-summary.md`.
+- **`templates/rta_config.yaml`** — removed project-specific `coding_protocol_disruptive_3rq.md` from generic template (was listed under both `general` and `phase2a`). Coding protocols are project-specific and added during `project_setup`.
 
 ---
 
