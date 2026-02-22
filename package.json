@@ -23,7 +23,7 @@
   "author": "Niklas Karlsson",
   "license": "CC-BY-NC-SA-4.0",
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.24.3",
+    "@modelcontextprotocol/sdk": "^1.26.0",
     "js-yaml": "^4.1.1"
   },
   "devDependencies": {
