@@ -71,6 +71,7 @@ export async function init(): Promise<InitResult> {
           'init - Get these instructions (call FIRST!)',
           'list_files - List files in a directory (find transcripts)',
           'read_file - Read contents of any file',
+          'write_file - Write content to a file (save analytical work between sessions)',
           'project_setup - Create new RTA project structure',
           'add_line_index - Add permanent line indices to transcript',
           'methodology_load - Load methodology documents for any phase',
@@ -103,6 +104,12 @@ export async function init(): Promise<InitResult> {
           'review_status - Show review progress',
         ],
       },
+      {
+        category: 'Phase 3 - Generating Themes (prefix: phase3_)',
+        tools: [
+          'extract_codes - Extract all codes from coded transcripts into markdown summary',
+        ],
+      },
     ],
 
     criticalRules: [
@@ -119,10 +126,10 @@ export async function init(): Promise<InitResult> {
       { phase: '1', name: 'Familiarization', status: 'coming_soon' },
       { phase: '2a', name: 'Initial Coding', status: 'available' },
       { phase: '2b', name: 'Critical Review', status: 'available' },
-      { phase: '3', name: 'Generating Themes', status: 'coming_soon' },
-      { phase: '4', name: 'Reviewing Themes', status: 'coming_soon' },
-      { phase: '5', name: 'Defining & Naming', status: 'coming_soon' },
-      { phase: '6', name: 'Producing Report', status: 'coming_soon' },
+      { phase: '3', name: 'Generating Themes', status: 'available' },
+      { phase: '4', name: 'Reviewing Themes', status: 'available' },
+      { phase: '5', name: 'Defining & Naming', status: 'available' },
+      { phase: '6', name: 'Producing Report', status: 'available' },
     ],
 
     methodologyStatus,

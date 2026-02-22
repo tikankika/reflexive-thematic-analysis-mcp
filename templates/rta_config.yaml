@@ -12,7 +12,6 @@ methodology:
   # General documents (loaded at project start)
   general:
     - rta_overview.md
-    - KODNINGSMANUAL_AI_Augmented_RTA_DISRUPTIV_INTEGRATED_2026-01-10.md
 
   # Phase-specific documents
   # Claude reads these dynamically based on current phase
@@ -21,7 +20,6 @@ methodology:
       - phase1_familiarization.md
     phase2a:
       - phase2a_initial_coding.md
-      - KODNINGSMANUAL_AI_Augmented_RTA_DISRUPTIV_INTEGRATED_2026-01-10.md
     phase2b:
       - phase2b_critical_review.md
     phase3:

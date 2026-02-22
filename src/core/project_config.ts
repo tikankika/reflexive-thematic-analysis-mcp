@@ -47,6 +47,31 @@ export class ProjectConfig {
   }
 
   /**
+   * Try to find rta_config.yaml from a transcript file path.
+   *
+   * Searches parent directories (transcripts are typically in project/transcripts/).
+   * Returns null if not found — callers should treat status updates as best-effort.
+   */
+  static async findFromTranscript(
+    transcriptPath: string
+  ): Promise<ProjectConfig | null> {
+    // Try parent dir (project/transcripts/file.md → project/)
+    // and grandparent dir, up to 3 levels
+    let dir = dirname(transcriptPath);
+    for (let i = 0; i < 3; i++) {
+      const candidate = join(dir, 'rta_config.yaml');
+      try {
+        await fs.access(candidate);
+        return new ProjectConfig(candidate);
+      } catch {
+        // Not found at this level, go up
+        dir = dirname(dir);
+      }
+    }
+    return null;
+  }
+
+  /**
    * Load configuration from file
    */
   async load(): Promise<RtaConfig> {

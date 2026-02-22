@@ -28,6 +28,7 @@ import { addLineIndex } from './tools/add_line_index.js';
 import { methodologyLoad } from './tools/methodology_load.js';
 import { listFiles } from './tools/list_files.js';
 import { readFile } from './tools/read_file.js';
+import { writeFile } from './tools/write_file.js';
 
 // Phase 2a tools
 import { codeStart } from './tools/code_start.js';
@@ -50,6 +51,9 @@ import { reviewStatus } from './tools/review_status.js';
 import { reviewSplitSegment } from './tools/review_split_segment.js';
 import { reviewMergeSegments } from './tools/review_merge_segments.js';
 
+// Phase 3 tools
+import { extractCodes } from './tools/phase3_extract_codes.js';
+
 /**
  * MCP Server for Qualitative Analysis RTA (Braun & Clarke)
  */
@@ -60,7 +64,7 @@ class QualitativeAnalysisRTAServer {
     this.server = new Server(
       {
         name: 'reflexive-thematic-analysis-mcp',
-        version: '0.4.0',
+        version: '0.5.2',
       },
       {
         capabilities: {
@@ -213,6 +217,34 @@ class QualitativeAnalysisRTAServer {
               },
             },
             required: ['path'],
+          },
+        },
+        {
+          name: 'write_file',
+          description:
+            'Write content to a file. ' +
+            'For saving analytical work between sessions: candidate themes, thematic maps, ' +
+            'definitions, report drafts. Creates parent directories if needed. ' +
+            'Refuses to overwrite coded transcripts or review notes unless overwrite=true. ' +
+            'Supports ~ for home directory.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              path: {
+                type: 'string',
+                description: 'File path to write (supports ~ for home)',
+              },
+              content: {
+                type: 'string',
+                description: 'Content to write to the file',
+              },
+              overwrite: {
+                type: 'boolean',
+                description:
+                  'Set true to overwrite protected files (coded transcripts, review notes). Default: false.',
+              },
+            },
+            required: ['path', 'content'],
           },
         },
         // === PHASE 2a TOOLS (Initial Coding) ===
@@ -584,6 +616,26 @@ class QualitativeAnalysisRTAServer {
             required: ['file_path', 'first_segment_index', 'second_segment_index'],
           },
         },
+        // === PHASE 3 TOOLS (Generating Themes) ===
+        {
+          name: 'phase3_extract_codes',
+          description:
+            'Extract all codes from coded transcripts into a single markdown file. ' +
+            'Gathers codes with metadata (source, line reference, research question, level, original text) ' +
+            'across all project transcripts. Run this when the researcher is ready to begin Phase 3 ' +
+            '(generating themes).',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              project_path: {
+                type: 'string',
+                description:
+                  'Path to project directory (contains rta_config.yaml)',
+              },
+            },
+            required: ['project_path'],
+          },
+        },
       ],
     }));
 
@@ -618,6 +670,10 @@ class QualitativeAnalysisRTAServer {
 
           case 'read_file':
             result = await readFile(args as any);
+            break;
+
+          case 'write_file':
+            result = await writeFile(args as any);
             break;
 
           // === PHASE 2a TOOLS ===
@@ -690,6 +746,11 @@ class QualitativeAnalysisRTAServer {
             result = await reviewMergeSegments(args as any);
             break;
 
+          // === PHASE 3 TOOLS ===
+          case 'phase3_extract_codes':
+            result = await extractCodes(args as any);
+            break;
+
           default:
             throw new Error(`Unknown tool: ${name}`);
         }
@@ -733,14 +794,15 @@ class QualitativeAnalysisRTAServer {
     await this.server.connect(transport);
 
     // Log to stderr (stdout is used for MCP protocol)
-    console.error('Qualitative Analysis RTA Server v0.4.0 running...');
-    console.error('Core: init, project_setup, add_line_index, methodology_load, list_files, read_file');
+    console.error('Reflexive Thematic Analysis MCP Server v0.5.2 running...');
+    console.error('Core: init, project_setup, add_line_index, methodology_load, list_files, read_file, write_file');
     console.error(
       'Phase 2a: code_start, code_read_next, code_write_segment, code_skip_chunk, code_status, code_verify, code_reset_status, code_clear_all, code_delete_segment'
     );
     console.error(
       'Phase 2b: review_start, review_next, review_read_segment, review_write_note, review_revise_codes, review_status, review_split_segment, review_merge_segments'
     );
+    console.error('Phase 3: extract_codes');
   }
 }
 

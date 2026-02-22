@@ -2,6 +2,7 @@ import { ChunkReader } from '../core/chunk_reader.js';
 import { StatusManager } from '../core/status_manager.js';
 import { sessionState } from '../core/session_state.js';
 import { MethodologyLoader } from '../core/methodology_loader.js';
+import { ProjectConfig } from '../core/project_config.js';
 
 /**
  * code_start - Initialize coding session (Phase 2a: Initial Coding)
@@ -70,6 +71,17 @@ export async function codeStart(args: {
 
   // Create STATUS
   await statusManager.create(file_path, totalLines, chunkSize);
+
+  // Update project config status (best-effort)
+  try {
+    const projectConfig = await ProjectConfig.findFromTranscript(file_path);
+    if (projectConfig) {
+      await projectConfig.load();
+      await projectConfig.updateTranscriptStatus(file_path, 'phase2a_in_progress', 'phase2a');
+    }
+  } catch {
+    // Non-critical — status update is best-effort
+  }
 
   // Find where actual content starts (after STATUS frontmatter)
   const contentStart = await reader.getContentStartLine(file_path);
