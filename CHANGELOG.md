@@ -7,6 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.4.2] - 2026-02-22
+
+### Changed
+- **Methodology suite upgraded to Phase 2b quality level** — all phase documents now share consistent analytical register, theoretical sophistication, and AI-epistemological integration
+  - `rta_overview.md` → Full methodological framework: three foundational principles ("proving the obvious", double reflexivity, AI as heuristic partner), epistemological foundation with AI-specific implications, phase table with AI roles and risks, "Methodological Integrity" rewritten from checklist to argument
+  - `phase2a_initial_coding.md` → Reduced from ~700 to ~350 lines. Epistemological grounding moved to overview. Four analytical questions per code added. AI-orientation list rewritten as paragraph. Approach A deepened to match Approach B
+  - `phase3_generating_themes.md` → AI integrated throughout (not bolted on). "Similarity is not meaning" as core distinction. Salience section strengthened with concrete example
+  - `phase4_reviewing_themes.md` → AI confirmation bias section added. Byrne Level One example strengthened. "Quality Indicators" and "What You Should Have" merged
+  - `phase5_defining_naming.md` → AI language colonization risk identified. Balanced AI section added (testing definitions, alternative names, boundary cases)
+  - `phase6_producing_report.md` → "Analytical flattening" as AI-specific writing risk. Illustrative/analytical overlap with Phase 5 removed. AI transparency rewritten from checklist to method argument. Theme ordering refers to Phase 5
+  - `phase2b_critical_review.md` — Unchanged (already at target quality)
+  - `phase1_familiarization.md` — Unchanged (different in kind: preparatory, not analytical)
+
+### Added
+- **`protocols/` directory** (project root level) — Coding Protocols separated from methodology
+  - `coding_protocol_disruptive_3rq.md` — Three-RQ disruption study (moved from `methodology/KODNINGSMANUAL_...`)
+  - `coding_protocol_sensemaking_v1.md` — Sensemaking study (copied from Nextcloud project)
+- Clear architectural separation: `methodology/` = how to think (stable), `protocols/` = how to code (project-specific)
+
+### Removed
+- `methodology/KODNINGSMANUAL_AI_Augmented_RTA_DISRUPTIV_INTEGRATED_2026-01-10.md` (moved to `protocols/`)
+
+### Documentation
+- Literature base expanded across all documents: Brailas (2025), Ozuem et al. (2025), Al-Fattal & Singh (2025), Dröge (2025), Heersmink et al. (2024)
+- Backup of pre-upgrade methodology saved to Nextcloud: `_archive_20260222_methodology_v3/`
+
+---
+
 ## [0.4.1] - 2026-02-21
 
 ### Added
