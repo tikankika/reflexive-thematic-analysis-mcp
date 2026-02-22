@@ -26,7 +26,7 @@ After Phase 1 coding (segment identification + systematic coding), researchers n
 
 ### Research Context
 - **Project:** ULF 2025-12-07 focus group analysis
-- **Data:** 5 coded transcripts in `/Users/niklaskarlsson/Nextcloud/Fokusgrupper_AI_2025/Analysis/ULF_2025-12-07/Phase 2 - Teams`
+- **Data:** 5 coded transcripts in `/path/to/data/transcripts`
 - **Methodology:** Reflexive Thematic Analysis (Braun & Clarke, 2006)
 - **Current phase:** Transition from Phase 1 (coding) to Phase 2 (theme generation)
 
@@ -171,7 +171,7 @@ reflective_status(file_path: string): {
     "transcript": "Ai_fokusgrupp_ne_traff_1_rec_1.md",
     "created_at": "2025-12-10T14:30:00Z",
     "last_modified": "2025-12-10T15:45:00Z",
-    "researcher": "Niklas Karlsson"
+    "researcher": "Researcher"
   },
   "segments": [
     {
@@ -430,7 +430,7 @@ Next?"
 - **Phase 1 MCP Implementation:** Current codebase (`src/tools/code_*.ts`)
 - **Segment Format:** Design doc `docs/design/001-multi-segment-api.md`
 - **RTA Methodology:** Braun & Clarke (2006, 2019) - Reflexive Thematic Analysis
-- **Data Location:** `/Users/niklaskarlsson/Nextcloud/Fokusgrupper_AI_2025/Analysis/ULF_2025-12-07/Phase 2 - Teams`
+- **Data Location:** `/path/to/data/transcripts`
 
 ---
 

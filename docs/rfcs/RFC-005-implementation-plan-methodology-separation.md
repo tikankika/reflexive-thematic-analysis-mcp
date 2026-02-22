@@ -145,7 +145,7 @@ qualitative-analysis-rta/
 │
 └── # === NEXTCLOUD SYNC ===
     # methodology/ synkas automatiskt till:
-    # /Users/niklaskarlsson/Nextcloud/.../qualitative-analysis-rta_Methodology/
+    # /path/to/data/.../qualitative-analysis-rta_Methodology/
     # (konfigureras i Nextcloud-klient)
 ```
 
@@ -180,7 +180,7 @@ qualitative-analysis-rta/
 **Skapa templates/ mapp och rta_config.yaml:**
 
 ```bash
-mkdir -p /Users/niklaskarlsson/AIED_EdTech_projects/qualitative-analysis-rta/templates
+mkdir -p <PROJECT_ROOT>/templates
 ```
 
 **Fil:** `templates/rta_config.yaml`
@@ -429,9 +429,9 @@ export class ProjectConfig {
 
 ```bash
 # Skapa mappar
-mkdir -p /Users/niklaskarlsson/AIED_EdTech_projects/qualitative-analysis-rta/methodology
-mkdir -p /Users/niklaskarlsson/AIED_EdTech_projects/qualitative-analysis-rta/methodology/epistemology
-mkdir -p /Users/niklaskarlsson/AIED_EdTech_projects/qualitative-analysis-rta/docs/mcp-usage
+mkdir -p <PROJECT_ROOT>/methodology
+mkdir -p <PROJECT_ROOT>/methodology/epistemology
+mkdir -p <PROJECT_ROOT>/docs/mcp-usage
 ```
 
 **Flytta/kopiera filer:**
@@ -604,7 +604,7 @@ Rätt i Phase 2b:
 
 ### REGEL 2: Filer behöver INTE laddas upp
 - MCP-servern körs på användarens dator
-- Den kan läsa /Users/niklaskarlsson/Nextcloud/... direkt
+- Den kan läsa /path/to/data/... direkt
 - SÄGG ALDRIG "ladda upp filen" eller "filen är inte tillgänglig"
 
 ### REGEL 3: Korrekt syntax
@@ -612,14 +612,14 @@ Rätt i Phase 2b:
 **RÄTT:**
 ```
 code_start({
-  file_path: "/Users/niklaskarlsson/Nextcloud/.../transkript.md"
+  file_path: "/path/to/data/.../transkript.md"
 })
 ```
 
 **FEL:**
 ```
 find /mnt -name "*.md"
-ls /Users/niklaskarlsson/...
+ls /path/to/dir/...
 "Filen måste laddas upp"
 ```
 
@@ -1347,12 +1347,12 @@ case 'methodology_load':
 
 1. I Nextcloud Desktop-klient, lägg till selektiv sync för:
    ```
-   /Users/niklaskarlsson/AIED_EdTech_projects/qualitative-analysis-rta/methodology/
+   <PROJECT_ROOT>/methodology/
    ```
 
 2. Synka till:
    ```
-   /Users/niklaskarlsson/Nextcloud/AIED_Tools/qualitative-analysis-rta_Methodology/
+   /path/to/data/AIED_Tools/qualitative-analysis-rta_Methodology/
    ```
 
 3. Denna mapp kan sedan laddas upp till Claude Project Knowledge om önskat (men är nu OPTIONAL).

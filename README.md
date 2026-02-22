@@ -1,48 +1,77 @@
-# Qualitative Analysis RTA - MCP Server
+# Qualitative Analysis RTA — MCP Server
 
-MCP server for AI-augmented Reflexive Thematic Analysis (Braun & Clarke).
+MCP server for AI-augmented Reflexive Thematic Analysis (Braun & Clarke). Provides structured tools for qualitative coding where the researcher maintains full interpretive authority while AI assists with processing.
 
-**Version:** 0.3.0
-**Status:** Private Development
+## What is this?
 
-## Features
+An [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) server that connects to Claude Desktop and provides tools for systematic qualitative analysis of interview/focus group transcripts. It follows Braun & Clarke's six-phase RTA methodology, currently supporting Phase 2a (initial coding) and Phase 2b (critical review).
 
-### Current (v0.2.0) - Braun & Clarke Phase 2: Initial Coding
-- 📖 Chunk-based reading for large transcripts (60-100 lines per chunk)
-- 🔍 Segment-based coding for semantic meaning units (variable size)
-- 🔧 Multi-segment API for granular qualitative coding
-- 📊 STATUS tracking via YAML frontmatter
-- 🔄 Backwards compatible with v0.1.0
-- 📖 Complete documentation in `/docs`
+## Quick Start
 
-### Planned (v0.3.0) - Phase 2b: Critical Review of Semi-Automated Coding
-- 🔁 Segment-by-segment reflexive note-taking
-- ✏️ Code revision during reflexive review (add/remove/replace)
-- 📈 Progress tracking with revision statistics
-- 💾 Session persistence across Claude Desktop restarts
-- 📝 Revision history for methodological transparency
-- 🎯 Addresses Claude Desktop data volume constraints
-- 📚 Follows iterative RTA methodology (Braun & Clarke)
-
-## Terminology
-- **CHUNK**: Technical reading unit (60-100 lines) used to process large files
-- **SEGMENT**: Semantic coding unit (variable size) marked with `/segment` markers
-
-## Documentation
-- [Vision](./VISION.md) - Project purpose and goals
-- [Roadmap](./docs/ROADMAP.md) - Development timeline and planned features
-- [User Guide](./docs/USER_GUIDE.md) - Step-by-step workflow
-- [API Reference](./docs/API.md) - Tool specifications
-- [Design Docs](./docs/design/) - Architecture decisions
-- [RFCs](./docs/rfcs/) - Request for Comments for major features
-
-## Installation
 ```bash
+# Clone and build
+git clone https://github.com/tikankika/MPC_RTA.git
+cd MPC_RTA
 npm install
 npm run build
 ```
 
-See [docs/README.md](./docs/README.md) for full setup instructions.
+Add to your Claude Desktop configuration (`claude_desktop_config.json`):
+
+```json
+{
+  "mcpServers": {
+    "qualitative-analysis-rta": {
+      "command": "node",
+      "args": ["/absolute/path/to/MPC_RTA/dist/server.js"]
+    }
+  }
+}
+```
+
+Then in Claude Desktop, call `init` to get started.
+
+## Features
+
+### Phase 2a — Initial Coding
+- Chunk-based reading for large transcripts (60-100 lines per chunk)
+- Segment-based coding for semantic meaning units (variable size)
+- Multi-segment API for granular qualitative coding
+- STATUS tracking via YAML frontmatter
+- Error recovery tools (verify, reset, clear, delete)
+
+### Phase 2b — Critical Review
+- Segment-by-segment review of AI-assisted coding
+- Reflexive note-taking per segment
+- Code revision with full audit trail (add/remove/replace)
+- Segment restructuring (split/merge) with note synchronization
+- Progress tracking across sessions
+
+### Core Tools
+- Project setup with methodology loading
+- Permanent line indexing for transcripts
+- File browsing and reading
+
+## Key Principle
+
+**The researcher has interpretive authority.** AI proposes codes — the researcher decides. This is not automated coding; it is AI-augmented analysis where every code is subject to human judgment.
+
+## Documentation
+
+- [User Guide](docs/USER_GUIDE.md) — Step-by-step workflow
+- [API Reference](docs/API.md) — Tool specifications
+- [Vision](VISION.md) — Project purpose and goals
+- [Roadmap](docs/ROADMAP.md) — Development timeline
+- [Changelog](CHANGELOG.md) — Version history
+- [Design Docs](docs/design/) — Architecture decisions
+- [RFCs](docs/rfcs/) — Feature proposals
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
-MIT - Niklas Karlsson
+
+CC BY-NC-SA 4.0 — See [LICENSE](LICENSE)
+
+Copyright (c) 2025-2026 Niklas Karlsson

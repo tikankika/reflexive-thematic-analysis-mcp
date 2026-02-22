@@ -406,7 +406,7 @@ Before proceeding to Phase 1, confirm:
 
 ## Part 8: EXAMPLE - How This Might Look in Practice
 
-### Niklas's Specific Case Study
+### Example Case Study
 
 **Research Context**: 
 Three focus groups (BSG, MÅG, NE) with Swedish teachers about AI use in education

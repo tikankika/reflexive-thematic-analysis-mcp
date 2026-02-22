@@ -230,7 +230,7 @@ Date: 2025-12-05
 
 ## License
 
-MIT License
+CC BY-NC-SA 4.0 — See [LICENSE](../LICENSE)
 
 ---
 

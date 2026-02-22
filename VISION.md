@@ -229,7 +229,7 @@ By providing reliable technical infrastructure for large file processing in Clau
 
 ## License
 
-MIT License - Open source for academic and research use.
+CC BY-NC-SA 4.0 — Open source for academic and research use. See [LICENSE](LICENSE).
 
 ---
 

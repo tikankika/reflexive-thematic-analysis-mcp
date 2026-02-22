@@ -11,21 +11,21 @@
 **CORRECT:**
 ```
 phase2a_code_start({
-  file_path: "/Users/niklaskarlsson/Nextcloud/.../transcript.md"
+  file_path: "/path/to/your/transcript.md"
 })
 ```
 
 **WRONG:**
 ```
 find /mnt -name "*.md"
-ls /Users/niklaskarlsson/...
+ls /path/to/dir/...
 cat /path/to/file
 ```
 
 ### RULE 2: Files Do NOT Need to Be Uploaded
 
 - The MCP server runs on the user's computer
-- It can read `/Users/niklaskarlsson/Nextcloud/...` directly
+- It can read any file path directly
 - **NEVER** say "upload the file" or "the file is not accessible"
 
 ### RULE 3: Researcher Has Interpretive Authority

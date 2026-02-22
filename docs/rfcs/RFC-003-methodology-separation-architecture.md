@@ -766,7 +766,7 @@ export async function projectSetup(input: ProjectSetupInput): Promise<ProjectSet
 interface ProjectSetupInput {
   project_name: string;           // e.g., "AI_Teachers_Focus_Groups"
   output_path: string;            // e.g., "/Users/.../Nextcloud/Analysis"
-  researcher: string;             // e.g., "Niklas Karlsson"
+  researcher: string;             // e.g., "Researcher Name"
   transcripts: string[];          // Paths to transcript files
 }
 ```
@@ -835,7 +835,7 @@ state:
 #### 4.6.3 Project Structure After Setup
 
 ```
-/Users/.../Nextcloud/Fokusgrupper_AI_2025/Analysis/
+/path/to/data/analysis/
 └── AI_Teachers_Focus_Groups/          # Created by project_setup
     ├── rta_config.yaml                 # Project configuration
     ├── project_state.json              # Phase tracking

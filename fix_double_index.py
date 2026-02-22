@@ -56,7 +56,11 @@ def remove_first_index(file_path: str):
 
 
 if __name__ == '__main__':
-    file_path = '/Users/niklaskarlsson/Nextcloud/Fokusgrupper_AI_2025/Analysis/ULF_2025-12-07/Ai_fokusgrupp_ne_traff_1_rec_2.md'
+    import sys
+    if len(sys.argv) != 2:
+        print("Usage: python fix_double_index.py <file_path>")
+        sys.exit(1)
+    file_path = sys.argv[1]
 
     print("=" * 60)
     print("FIX DUBBLA INDEX-NUMMER")

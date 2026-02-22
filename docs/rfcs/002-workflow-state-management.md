@@ -540,7 +540,7 @@ code_verify fix=true  ← Rebuild STATUS from file
 ## References
 
 ### Primary Sources
-- **Chat history:** `/Users/niklaskarlsson/Nextcloud/Fokusgrupper_AI_2025/Analysis/ULF_2025-12-07/Chat_history.md` (37,092 lines)
+- **Chat history:** `/path/to/data/Chat_history.md` (37,092 lines)
 - **Coded transcripts:** 5 files from ULF 2025-12-07 project
 - **MCP_RTA codebase:** v0.2.1 (current)
 

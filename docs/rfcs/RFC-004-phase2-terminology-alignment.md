@@ -144,7 +144,7 @@ NEW: phase2-coding:
 After all changes:
 
 ```bash
-cd /Users/niklaskarlsson/AIED_EdTech_projects/MPC_RTA
+cd <PROJECT_ROOT>
 npm run build
 ```
 

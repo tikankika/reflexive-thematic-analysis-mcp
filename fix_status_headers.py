@@ -62,7 +62,11 @@ def fix_status_headers(file_path: str):
     print(f"   • Next-segment: 2801-1002 → 331-1002")
 
 if __name__ == '__main__':
-    file_path = '/Users/niklaskarlsson/Nextcloud/Fokusgrupper_AI_2025/Analysis/ULF_2025-12-07/Ai_fokusgrupp_ne_traff_1_rec_2.md'
+    import sys
+    if len(sys.argv) != 2:
+        print("Usage: python fix_status_headers.py <file_path>")
+        sys.exit(1)
+    file_path = sys.argv[1]
 
     print("=" * 60)
     print("FIX DUBBLA STATUS HEADERS")

@@ -41,3 +41,10 @@ temp/
 
 # Development ideas (work in progress, not for version control)
 docs/development_ideas/
+
+# Internal documentation (not for public repository)
+docs/Chat_history/
+docs/KÄLLFILER_KNOWLEDGE_REFERENS.md
+docs/methodology/
+docs/methodology_BACKUP_*/
+*.private.md

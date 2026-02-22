@@ -21,7 +21,7 @@
     "braun-clarke"
   ],
   "author": "Niklas Karlsson",
-  "license": "MIT",
+  "license": "CC-BY-NC-SA-4.0",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.24.3",
     "js-yaml": "^4.1.1"

@@ -325,7 +325,7 @@ Tool: ✅ Chunk + methodology
 project_setup({
   project_name: "AI_Teachers_Focus_Groups",
   output_path: "/Users/.../Nextcloud/Analysis",
-  researcher: "Niklas Karlsson",
+  researcher: "Researcher",
   transcripts: ["NE_traff_1.md", "BSG_traff_1.md"]
 })
 ```

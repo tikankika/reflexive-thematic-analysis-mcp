@@ -173,9 +173,9 @@ Create a new file for project-specific context that Claude reads at session star
 # Kodningsbeslut — AI_Teachers_Focus_Group_qarta_test3
 
 ## Projektkontext
-- Forskare: Niklas Karlsson
-- Data: 5 transkript från NE-fokusgrupper (2 träffar)
-- Moderatorer: Niklas och Kristin
+- Forskare: [Researcher]
+- Data: 5 transkript från fokusgrupper (2 träffar)
+- Moderatorer: [Moderator 1] och [Moderator 2]
 
 ## Dataspecifika beslut
 
@@ -185,7 +185,7 @@ kan ha olika nummer i olika segment. Bedöm talare utifrån INNEHÅLL
 och kontext, inte SPEAKER-ID.
 
 ### Moderator-hantering
-- Niklas och Kristin var moderatorer
+- [Moderator 1] och [Moderator 2] var moderatorer
 - Meta-organisatoriskt innehåll (tidsramar, logistik) → SKIPPA
 - Moderator-frågor/inramningar med substantivt innehåll → KODA med 
   prefix `moderator_` i kodnamnet
