@@ -126,9 +126,9 @@ export async function init(): Promise<InitResult> {
       { phase: '2a', name: 'Initial Coding', status: 'available' },
       { phase: '2b', name: 'Critical Review', status: 'available' },
       { phase: '3', name: 'Generating Themes', status: 'available' },
-      { phase: '4', name: 'Reviewing Themes', status: 'coming_soon' },
-      { phase: '5', name: 'Defining & Naming', status: 'coming_soon' },
-      { phase: '6', name: 'Producing Report', status: 'coming_soon' },
+      { phase: '4', name: 'Reviewing Themes', status: 'available' },
+      { phase: '5', name: 'Defining & Naming', status: 'available' },
+      { phase: '6', name: 'Producing Report', status: 'available' },
     ],
 
     methodologyStatus,

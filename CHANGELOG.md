@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`templates/rta_config.yaml`** — replaced stale `KODNINGSMANUAL_AI_Augmented_RTA_DISRUPTIV_INTEGRATED_2026-01-10.md` references with `coding_protocol_disruptive_3rq.md` (2 occurrences). This was the last remaining KODNINGSMANUAL reference in the codebase.
 
 ### Changed
-- Phase 3 status changed from `coming_soon` to `available` in init tool output.
+- Phase 3–6 status changed from `coming_soon` to `available` in init tool output. Phases 4–6 work through `methodology_load` + conversation using existing infrastructure (`read_file` for data access) — no dedicated tools needed.
 - `init-instructions.md` updated with Phase 3 tools section and Phase 4–6 workflow guidance.
 - `API.md` updated with Phase 3 tool specification.
 - **`MethodologyLoader` infrastructure fixes for Phases 4–6:**
