@@ -7,27 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.5.2] - 2026-02-22
+
+### Added
+- **`write_file` utility tool** — generic file writer for saving analytical work between sessions (candidate themes, thematic maps, definitions, report drafts). Creates parent directories. Refuses to overwrite coded transcripts or review notes unless explicitly confirmed. Closes the critical persistence gap for Phase 3–6: without this, all analytical work produced in conversation was lost when the session ended.
+
+### Changed
+- Phase 4–6 status changed from `coming_soon` to `available` in init tool output. These phases work through `methodology_load` + conversation using existing infrastructure — no dedicated tools needed.
+
+---
+
 ## [0.5.1] - 2026-02-22
 
 ### Added
 - **Phase 3 tool: `phase3_extract_codes`** — extracts all codes from coded transcripts into a single markdown file (`phase3_code_extraction.md`) with metadata: source transcript, line references, research question, semantic/latent level, and text excerpts. Grouped by RQ, then level, then alphabetically. Gives the researcher the complete code inventory for theme generation.
 - **`CodeExtractor` core module** (`src/core/code_extractor.ts`) — parses code format using string splitting (not regex), detects coded transcripts by `/segment` marker presence rather than config status field, strips line index prefixes from text excerpts.
-- **`write_file` utility tool** — generic file writer for saving analytical work between sessions (candidate themes, thematic maps, definitions, report drafts). Creates parent directories. Refuses to overwrite coded transcripts or review notes unless explicitly confirmed. Closes the critical persistence gap for Phase 3–6: without this, all analytical work produced in conversation was lost when the session ended.
 
 ### Fixed
 - **`rta_config.yaml` transcript status now updates during coding workflow.** Previously all transcripts stayed `pending` forever — Phase 2a tools never called `updateTranscriptStatus()`. Now: `code_start` → `phase2a_in_progress`, `code_read_next` (completion) → `phase2a_complete`, `review_start` → `phase2b_in_progress`. Uses best-effort config discovery from transcript path.
 - **`templates/rta_config.yaml`** — replaced stale `KODNINGSMANUAL_AI_Augmented_RTA_DISRUPTIV_INTEGRATED_2026-01-10.md` references with `coding_protocol_disruptive_3rq.md` (2 occurrences). This was the last remaining KODNINGSMANUAL reference in the codebase.
-
-### Changed
-- Phase 3–6 status changed from `coming_soon` to `available` in init tool output. Phases 4–6 work through `methodology_load` + conversation using existing infrastructure (`read_file` for data access) — no dedicated tools needed.
-- `init-instructions.md` updated with Phase 3 tools section and Phase 4–6 workflow guidance.
-- `API.md` updated with Phase 3 tool specification.
 - **`MethodologyLoader` infrastructure fixes for Phases 4–6:**
   - `getDocumentList()` now returns correct documents for phase4, phase5, phase6 (previously fell through to default).
   - `getPhaseFallback()` updated to current code format (`#code_name__rqN_semantic`), added phase 4–6 fallback texts.
   - `getHardcodedFallback()` updated to current terminology.
   - `checkAvailability()` no longer references non-existent `fallback-summary.md`.
 - **`templates/rta_config.yaml`** — removed project-specific `coding_protocol_disruptive_3rq.md` from generic template (was listed under both `general` and `phase2a`). Coding protocols are project-specific and added during `project_setup`.
+
+### Changed
+- Phase 3 status changed from `coming_soon` to `available` in init tool output.
+- `init-instructions.md` updated with Phase 3 tools section and Phase 4–6 workflow guidance.
+- `API.md` updated with Phase 3 tool specification.
 
 ---
 

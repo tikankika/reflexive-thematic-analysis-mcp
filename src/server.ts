@@ -64,7 +64,7 @@ class QualitativeAnalysisRTAServer {
     this.server = new Server(
       {
         name: 'reflexive-thematic-analysis-mcp',
-        version: '0.5.1',
+        version: '0.5.2',
       },
       {
         capabilities: {
@@ -794,7 +794,7 @@ class QualitativeAnalysisRTAServer {
     await this.server.connect(transport);
 
     // Log to stderr (stdout is used for MCP protocol)
-    console.error('Reflexive Thematic Analysis MCP Server v0.5.1 running...');
+    console.error('Reflexive Thematic Analysis MCP Server v0.5.2 running...');
     console.error('Core: init, project_setup, add_line_index, methodology_load, list_files, read_file, write_file');
     console.error(
       'Phase 2a: code_start, code_read_next, code_write_segment, code_skip_chunk, code_status, code_verify, code_reset_status, code_clear_all, code_delete_segment'
