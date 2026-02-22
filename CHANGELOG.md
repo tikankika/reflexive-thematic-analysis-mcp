@@ -30,6 +30,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `methodology/KODNINGSMANUAL_AI_Augmented_RTA_DISRUPTIV_INTEGRATED_2026-01-10.md` (moved to `protocols/`)
 
 ### Documentation
+- **Epistemology documents rewritten** from tutorial format to researcher-colleague register
+  - `epistemology/constructionist.md` → ~500→130 lines. Central argument: AI tends toward essentialist assumptions; constructionism is actually better suited to AI augmentation. Constructionist-computational tension as full section
+  - `epistemology/orientation.md` → ~450→120 lines. Key insight: AI produces text that looks like chosen orientation without doing its analytical work. Experiential and critical risks differentiated
+  - `epistemology/inductive_deductive.md` → ~500→120 lines. Core claim: AI has no genuinely inductive capacity — its proposals are deductive (training-data derived). Research questions as diagnostic tool
+  - `epistemology/semantic_latent.md` → ~550→130 lines. Sharpest AI distinction: competent at semantic, weak at latent. Two failure patterns identified: generic theoretical labels and disguised semantic codes
+  - All four: tutorial elements removed (26 "Write here" blocks, 11 AI prompt templates, exercise sections, methodology-section writing templates), project-specific references anonymised, consistent voice throughout
 - Literature base expanded across all documents: Brailas (2025), Ozuem et al. (2025), Al-Fattal & Singh (2025), Dröge (2025), Heersmink et al. (2024)
 - Backup of pre-upgrade methodology saved to Nextcloud: `_archive_20260222_methodology_v3/`
 
