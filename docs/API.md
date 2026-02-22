@@ -46,6 +46,12 @@ This document is a technical reference for developers and advanced users. If you
 | `phase2b_review_split_segment` | Split segment into two |
 | `phase2b_review_merge_segments` | Merge two adjacent segments |
 
+### Phase 3 — Generating Themes
+
+| Tool | Purpose |
+|------|---------|
+| `phase3_extract_codes` | Extract all codes from coded transcripts into markdown summary |
+
 ---
 
 ## Core Tools
@@ -406,4 +412,36 @@ CODING-STATUS:
 
 ---
 
-**Version**: 0.4.x
+---
+
+## Phase 3 Tools
+
+### `phase3_extract_codes`
+
+Extract all codes from coded transcripts into a single markdown file with metadata.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `project_path` | string | Yes | Path to project directory (contains rta_config.yaml) |
+
+**Returns:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `status` | string | `"success"` |
+| `output_file` | string | Path to generated `phase3_code_extraction.md` |
+| `transcripts_processed` | number | Number of coded transcripts found |
+| `transcripts_skipped` | number | Transcripts with no coded segments |
+| `total_segments` | number | Total segments across all transcripts |
+| `total_codes` | number | Total codes extracted |
+| `codes_per_rq` | object | Counts per research question: `{ semantic, latent, inVivo }` |
+| `uncategorized_codes` | number | Codes not matching `#name__rqN_level` format |
+
+**Notes:**
+- Detects coded transcripts by `/segment` marker presence (does not rely on config status field)
+- Partially coded transcripts are processed with a warning in the output
+- Output file is written to project root alongside `rta_config.yaml`
+- Text excerpts have 4-digit line index prefixes stripped for readability
+- Codes grouped by RQ, then semantic/latent, then alphabetically
+
+**Version**: 0.5.x

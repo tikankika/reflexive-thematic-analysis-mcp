@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.5.1] - 2026-02-22
+
+### Added
+- **Phase 3 tool: `phase3_extract_codes`** — extracts all codes from coded transcripts into a single markdown file (`phase3_code_extraction.md`) with metadata: source transcript, line references, research question, semantic/latent level, and text excerpts. Grouped by RQ, then level, then alphabetically. Gives the researcher the complete code inventory for theme generation.
+- **`CodeExtractor` core module** (`src/core/code_extractor.ts`) — parses code format using string splitting (not regex), detects coded transcripts by `/segment` marker presence rather than config status field, strips line index prefixes from text excerpts.
+
+### Fixed
+- **`templates/rta_config.yaml`** — replaced stale `KODNINGSMANUAL_AI_Augmented_RTA_DISRUPTIV_INTEGRATED_2026-01-10.md` references with `coding_protocol_disruptive_3rq.md` (2 occurrences). This was the last remaining KODNINGSMANUAL reference in the codebase.
+
+### Changed
+- Phase 3 status changed from `coming_soon` to `available` in init tool output.
+- `init-instructions.md` updated with Phase 3 tools section.
+- `API.md` updated with Phase 3 tool specification.
+
+---
+
 ## [0.5.0] - 2026-02-22
 
 ### Changed

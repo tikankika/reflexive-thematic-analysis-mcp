@@ -50,6 +50,9 @@ import { reviewStatus } from './tools/review_status.js';
 import { reviewSplitSegment } from './tools/review_split_segment.js';
 import { reviewMergeSegments } from './tools/review_merge_segments.js';
 
+// Phase 3 tools
+import { extractCodes } from './tools/phase3_extract_codes.js';
+
 /**
  * MCP Server for Qualitative Analysis RTA (Braun & Clarke)
  */
@@ -584,6 +587,26 @@ class QualitativeAnalysisRTAServer {
             required: ['file_path', 'first_segment_index', 'second_segment_index'],
           },
         },
+        // === PHASE 3 TOOLS (Generating Themes) ===
+        {
+          name: 'phase3_extract_codes',
+          description:
+            'Extract all codes from coded transcripts into a single markdown file. ' +
+            'Gathers codes with metadata (source, line reference, research question, level, original text) ' +
+            'across all project transcripts. Run this when the researcher is ready to begin Phase 3 ' +
+            '(generating themes).',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              project_path: {
+                type: 'string',
+                description:
+                  'Path to project directory (contains rta_config.yaml)',
+              },
+            },
+            required: ['project_path'],
+          },
+        },
       ],
     }));
 
@@ -690,6 +713,11 @@ class QualitativeAnalysisRTAServer {
             result = await reviewMergeSegments(args as any);
             break;
 
+          // === PHASE 3 TOOLS ===
+          case 'phase3_extract_codes':
+            result = await extractCodes(args as any);
+            break;
+
           default:
             throw new Error(`Unknown tool: ${name}`);
         }
@@ -741,6 +769,7 @@ class QualitativeAnalysisRTAServer {
     console.error(
       'Phase 2b: review_start, review_next, review_read_segment, review_write_note, review_revise_codes, review_status, review_split_segment, review_merge_segments'
     );
+    console.error('Phase 3: extract_codes');
   }
 }
 

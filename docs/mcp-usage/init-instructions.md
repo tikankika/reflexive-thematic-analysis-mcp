@@ -56,7 +56,7 @@ Research questions and levels as defined in the project's coding protocol.
 2. Call `methodology_load()` to read phase methodology — **this is the foundation, not a formality**
 3. SHOW full methodology content to researcher (do not summarise, excerpt, or paraphrase)
 4. Wait for researcher to acknowledge before proceeding to data
-5. Use phase-specific tools (`phase2a_*`, `phase2b_*`)
+5. Use phase-specific tools (`phase2a_*`, `phase2b_*`, `phase3_*`)
 
 ## AVAILABLE TOOLS
 
@@ -86,6 +86,9 @@ Research questions and levels as defined in the project's coding protocol.
 - `review_status` - Show review progress
 - `review_split_segment` - Split segment into two
 - `review_merge_segments` - Merge two adjacent segments
+
+### Phase 3 Tools (prefix: phase3_)
+- `extract_codes` - Extract all codes from coded transcripts into markdown summary
 
 ### Utility Tools
 - `list_files` - List files in a directory

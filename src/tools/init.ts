@@ -103,6 +103,12 @@ export async function init(): Promise<InitResult> {
           'review_status - Show review progress',
         ],
       },
+      {
+        category: 'Phase 3 - Generating Themes (prefix: phase3_)',
+        tools: [
+          'extract_codes - Extract all codes from coded transcripts into markdown summary',
+        ],
+      },
     ],
 
     criticalRules: [
@@ -119,7 +125,7 @@ export async function init(): Promise<InitResult> {
       { phase: '1', name: 'Familiarization', status: 'coming_soon' },
       { phase: '2a', name: 'Initial Coding', status: 'available' },
       { phase: '2b', name: 'Critical Review', status: 'available' },
-      { phase: '3', name: 'Generating Themes', status: 'coming_soon' },
+      { phase: '3', name: 'Generating Themes', status: 'available' },
       { phase: '4', name: 'Reviewing Themes', status: 'coming_soon' },
       { phase: '5', name: 'Defining & Naming', status: 'coming_soon' },
       { phase: '6', name: 'Producing Report', status: 'coming_soon' },

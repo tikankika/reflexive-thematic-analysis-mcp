@@ -1,6 +1,6 @@
 {
   "name": "reflexive-thematic-analysis-mcp",
-  "version": "0.3.3",
+  "version": "0.5.1",
   "description": "MCP server for AI-augmented Reflexive Thematic Analysis (Braun & Clarke)",
   "main": "dist/server.js",
   "type": "module",
