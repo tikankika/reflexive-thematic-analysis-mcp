@@ -3,6 +3,7 @@ import { sessionState } from '../core/session_state.js';
 import { SegmentReader } from '../core/segment_reader.js';
 import { NoteManager } from '../core/note_manager.js';
 import { MethodologyLoader } from '../core/methodology_loader.js';
+import { ProjectConfig } from '../core/project_config.js';
 
 /**
  * review_start - Initialize Phase 2b critical review session
@@ -66,6 +67,17 @@ export async function reviewStart(args: {
 
   // Get review stats
   const stats = noteManager.getStats(notesFile, segments.length);
+
+  // Update project config status (best-effort)
+  try {
+    const projectConfig = await ProjectConfig.findFromTranscript(file_path);
+    if (projectConfig) {
+      await projectConfig.load();
+      await projectConfig.updateTranscriptStatus(file_path, 'phase2b_in_progress', 'phase2b');
+    }
+  } catch {
+    // Non-critical — status update is best-effort
+  }
 
   // Load Phase 2b methodology
   let methodology: string | undefined;

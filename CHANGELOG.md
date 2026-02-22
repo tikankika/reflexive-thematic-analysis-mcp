@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`CodeExtractor` core module** (`src/core/code_extractor.ts`) — parses code format using string splitting (not regex), detects coded transcripts by `/segment` marker presence rather than config status field, strips line index prefixes from text excerpts.
 
 ### Fixed
+- **`rta_config.yaml` transcript status now updates during coding workflow.** Previously all transcripts stayed `pending` forever — Phase 2a tools never called `updateTranscriptStatus()`. Now: `code_start` → `phase2a_in_progress`, `code_read_next` (completion) → `phase2a_complete`, `review_start` → `phase2b_in_progress`. Uses best-effort config discovery from transcript path.
 - **`templates/rta_config.yaml`** — replaced stale `KODNINGSMANUAL_AI_Augmented_RTA_DISRUPTIV_INTEGRATED_2026-01-10.md` references with `coding_protocol_disruptive_3rq.md` (2 occurrences). This was the last remaining KODNINGSMANUAL reference in the codebase.
 
 ### Changed

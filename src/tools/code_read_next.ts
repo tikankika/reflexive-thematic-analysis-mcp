@@ -1,5 +1,6 @@
 import { ChunkReader } from '../core/chunk_reader.js';
 import { StatusManager } from '../core/status_manager.js';
+import { ProjectConfig } from '../core/project_config.js';
 
 /**
  * code_read_next - Read next chunk to code
@@ -42,9 +43,20 @@ export async function codeReadNext(args: {
 
   // Check if all chunks are coded
   if (status.nextSegmentStart > status.totalLines) {
+    // Update project config status (best-effort)
+    try {
+      const projectConfig = await ProjectConfig.findFromTranscript(file_path);
+      if (projectConfig) {
+        await projectConfig.load();
+        await projectConfig.updateTranscriptStatus(file_path, 'phase2a_complete', 'phase2b');
+      }
+    } catch {
+      // Non-critical — status update is best-effort
+    }
+
     return {
       status: 'complete',
-      message: 'All chunks have been coded',
+      message: 'All chunks have been coded. Phase 2a complete.',
       progress: status.progress
     };
   }
