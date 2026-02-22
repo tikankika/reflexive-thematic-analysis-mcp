@@ -59,7 +59,7 @@ class QualitativeAnalysisRTAServer {
   constructor() {
     this.server = new Server(
       {
-        name: 'qualitative-analysis-rta-server',
+        name: 'reflexive-thematic-analysis-mcp',
         version: '0.4.0',
       },
       {

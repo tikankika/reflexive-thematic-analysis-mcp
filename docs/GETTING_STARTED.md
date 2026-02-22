@@ -31,7 +31,7 @@ Add this MCP server entry:
 ```json
 {
   "mcpServers": {
-    "qualitative-analysis-rta": {
+    "reflexive-thematic-analysis-mcp": {
       "command": "node",
       "args": ["/absolute/path/to/reflexive-thematic-analysis-mcp/dist/server.js"]
     }
