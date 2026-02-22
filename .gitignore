@@ -39,12 +39,13 @@ tmp/
 temp/
 *.tmp
 
-# Development ideas (work in progress, not for version control)
+# Internal documentation (archived to Nextcloud)
 docs/development_ideas/
-
-# Internal documentation (not for public repository)
 docs/Chat_history/
 docs/KÄLLFILER_KNOWLEDGE_REFERENS.md
 docs/methodology/
 docs/methodology_BACKUP_*/
 *.private.md
+
+# One-off scripts (not part of product)
+fix_*.py
