@@ -97,28 +97,28 @@ export async function reviewStart(args: {
     instructions: `
 PHASE 2b: CRITICAL CODING REVIEW
 
-KRITISKT — VISA METODOLOGI FÖRST:
-Ovanfor finns 'methodology' — det ar Phase 2b-metodologidokumentet.
-Du MASTE visa HELA methodology-innehallet till forskaren INNAN du
-borjar granska segment. Sammanfatta INTE — visa fullstandig text.
-Vanta pa forskarens "Ok" innan du gar vidare till forsta segmentet.
+CRITICAL — SHOW METHODOLOGY FIRST:
+Above is 'methodology' — the Phase 2b methodology document.
+You MUST show the FULL methodology content to the researcher BEFORE
+you begin reviewing segments. DO NOT summarise — show complete text.
+Wait for the researcher's "OK" before proceeding to the first segment.
 
-GRANSKNINGSPROCESS (efter metodologi ar last):
-For varje segment:
-1. Las transkripttexten noggrant
-2. Granska tilldelade koder — ar de korrekta?
-3. Skriv en reflexiv anteckning (review_write_note)
-4. Vid behov: revidera koder (review_revise_codes)
-5. Ga vidare till nasta segment (review_next)
+REVIEW PROCESS (after methodology is read):
+For each segment:
+1. Read the transcript text carefully
+2. Review assigned codes — are they accurate?
+3. Write a reflexive note (review_write_note)
+4. If needed: revise codes (review_revise_codes)
+5. Proceed to next segment (review_next)
 
-VERKTYG:
-- phase2b_review_next: Nasta ogranskade segment
-- phase2b_review_read_segment: Las specifikt segment
-- phase2b_review_write_note: Skriv reflexiv anteckning
-- phase2b_review_revise_codes: Andra koder (add/remove/replace)
-- phase2b_review_status: Visa granskningsframsteg
+TOOLS:
+- phase2b_review_next: Next unreviewed segment
+- phase2b_review_read_segment: Read specific segment
+- phase2b_review_write_note: Write reflexive note
+- phase2b_review_revise_codes: Change codes (add/remove/replace)
+- phase2b_review_status: Show review progress
 
-FORSKAREN HAR TOLKNINGSAUKTORITET.
+THE RESEARCHER HAS INTERPRETIVE AUTHORITY.
     `.trim(),
   };
 }

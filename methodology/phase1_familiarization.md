@@ -1,323 +1,71 @@
-# Phase 1: Data Familiarization in AI-Augmented Reflexive Thematic Analysis
+# Phase 1: Data Familiarization in AI-Augmented RTA
 
-## Overview
-Data familiarization in AI-augmented RTA reconceptualizes the traditional immersion process while maintaining human primacy in interpretation. This phase involves three integrated dimensions that work together to establish both researcher knowledge and AI orientation while documenting their relationship throughout.
+## Purpose
 
-## Core Principle
-**Human familiarization remains primary and essential.** AI does not "familiarize" with data in the human sense of interpretive immersion. Rather, AI is *oriented* to project parameters while *scaffolding* human deep engagement with data.
+Familiarization establishes the researcher's independent interpretive relationship with the data before AI-augmented analysis begins. This phase is preparatory, not analytical — it creates the conditions under which the researcher can exercise genuine interpretive authority in Phases 2–6.
+
+Byrne (2022, p. 1399) is direct about what this requires:
+
+> "This phase can be quite time consuming and requires a degree of patience. However, it is important to afford equal consideration across the entire depth and breadth of the dataset."
+
+In AI-augmented contexts, familiarization has an additional function: it protects against the specific risk of outsourcing interpretive engagement to AI. A researcher who enters Phase 2 without intimate knowledge of the data has no basis from which to evaluate AI's proposals — every suggestion will seem plausible because the researcher lacks the contextual awareness to recognise when something is wrong.
 
 ---
 
 ## Three Integrated Dimensions
 
-### 1. Human Deep Immersion (Primary & Essential)
+Familiarization involves three dimensions that operate together, not sequentially. Human immersion is primary. AI orientation and dialogic scaffolding support immersion but do not replace it.
 
-**Purpose:** Establish researcher's interpretive authority through intimate engagement with data
+### 1. Human Deep Immersion
 
-**Activities:**
-- [ ] Read entire dataset multiple times (active, focused reading)
-- [ ] Listen to/watch original recordings if available
-- [ ] Take preliminary notes on:
-  - Initial patterns observed
-  - Potentially interesting passages
-  - Personal thoughts and feelings about data
-  - Reflexive observations about analytical process
-- [ ] Document contextual details from data collection
-- [ ] Maintain research journal throughout
+The researcher reads the entire dataset multiple times, with equal attention across all data items. Immersion means engaging with the data closely enough that the researcher can discuss specific passages, recall contextual details, and identify preliminary patterns from memory — not from notes or AI summaries.
 
-**Documentation Requirements:**
-```
-Date: [Date]
-Data Item: [Transcript/Recording ID]
-Reading/Listening: [1st, 2nd, 3rd, etc.]
+For focus group data, immersion includes listening to original recordings where available. Text transcripts lose tone, emphasis, pauses, laughter, and the interactional dynamics between participants. These elements carry meaning that shapes interpretation throughout the analysis. A researcher who has only read transcripts without hearing the conversations has an incomplete relationship with the data.
 
-Preliminary Observations:
-- [Pattern/theme you notice]
-- [Interesting passages - note location]
-- [Questions that arise]
+Throughout immersion, the researcher maintains preliminary notes — initial observations, interesting passages, emerging questions, reflexive observations about their own reactions to the data. These notes are not codes. They are the raw material of the researcher's developing interpretive awareness, and they serve as an independent reference point when AI begins proposing codes in Phase 2.
 
-Reflexive Notes:
-- [Your thoughts, feelings, biases you notice]
-- [How your positionality might affect interpretation]
-```
+### 2. AI Orientation
 
-**Theoretical Note (Byrne 2022):**
-> "This phase can be quite time consuming and requires a degree of patience. However, it is important to afford equal consideration across the entire depth and breadth of the dataset."
+AI does not "familiarize" with data in the human sense. It does not develop interpretive sensitivity, contextual understanding, or experiential knowledge. What AI receives is orientation — project parameters that enable it to function as an effective dialogic partner.
 
-### 2. AI Context-Setting (Orientation)
+Effective orientation includes: the research context and questions, the epistemological position (constructionist, experiential, predominantly inductive), the coding approach (semantic and latent), and any relevant contextual information about participants, setting, and data collection circumstances. Naeem et al. (2023) argue that sufficient contextual information at the familiarization stage is necessary "to inform [the AI] about the research context and data."
 
-**Purpose:** Provide AI with necessary information to serve as effective dialogic partner
+The purpose of orientation is not to make AI "understand" the research — it is to shape AI's initial proposals so they are at least roughly calibrated to the project's analytical framework. Without orientation, AI defaults to generic patterns from its training data. With orientation, AI's proposals are still computational approximations, but they begin from a more relevant starting point.
 
-**What AI Needs (NOT "AI Familiarization"):**
+### 3. Dialogic Scaffolding
 
-**A. Project Parameters**
-```markdown
-Research Context:
-- Topic: [Your research topic]
-- Setting: [Where/when data collected]
-- Participants: [Brief characterization without identifying info]
-- Data type: [Interviews, focus groups, etc.]
+AI can scaffold human familiarization — deepen the researcher's engagement with data — through structured dialogue. This is distinct from AI analysing the data. The researcher uses AI to test their emerging understanding, not to generate understanding.
 
-Research Questions:
-1. [Your RQ1]
-2. [Your RQ2]
-etc.
+Scaffolding serves several functions. The researcher can test preliminary observations against AI's pattern identification — not to validate them but to check whether their attention has been comprehensive. AI can highlight passages across the dataset where a pattern the researcher has noticed appears, helping ensure the researcher's immersion covers the full breadth of the data. AI can also surface topics or patterns the researcher has not noticed, serving as a blind-spot check that the researcher evaluates critically rather than accepts uncritically.
 
-Research Objectives:
-- [What you hope to understand]
-```
-
-**B. Theoretical Framework**
-```markdown
-Epistemological Position:
-- [Constructionist/Critical/etc.]
-- Key principle: Meaning is [socially constructed/etc.]
-
-Orientation to Data:
-- [Experiential - focusing on participant meanings]
-- [Critical - examining power relations, etc.]
-
-Analytical Approach:
-- [Predominantly inductive]
-- [Data-driven but research-question aware]
-
-Coding Approach:
-- [Semantic and latent]
-- [Open to both surface meanings and underlying assumptions]
-```
-
-**C. Contextualization Prompt Template**
-```markdown
-I am conducting reflexive thematic analysis using Braun & Clarke's approach on [type of data] from [context]. 
-
-My epistemological position is [constructionist/etc.], meaning I understand [brief explanation].
-
-My research questions are:
-1. [RQ1]
-2. [RQ2]
-
-I will be uploading [X] transcripts/data items. Before we begin analysis, please confirm your understanding of:
-1. The constructionist epistemology - that you will not treat codes/themes as "residing in the data" but as interpretations
-2. That I maintain interpretive authority - your role is to scaffold my analysis, not replace my judgment
-3. That our dialogue will be documented and forms part of the reflexive process
-```
-
-**Theoretical Note (Naeem et al. 2025):**
-> "Sufficient information should be provided to the AI system at the first step of systematic thematic analysis (familiarization) to inform it about the research context and data."
-
-### 3. Dialogic Co-Engagement (Scaffolding)
-
-**Purpose:** Use AI to deepen and enrich human familiarization through structured dialogue
-
-**How AI Can Scaffold Human Familiarization:**
-
-#### A. Orientation Scaffolding
-```
-Prompt: "I've just completed my first reading of [Data Item X]. Before my second reading, can you provide a high-level summary of the main topics discussed? I want to see if my initial impressions align with a systematic overview."
-
-Purpose: Tests your emerging understanding against structured summary
-Important: You evaluate the summary critically, not uncritically accept it
-```
-
-#### B. Pattern Highlighting Scaffolding
-```
-Prompt: "In my preliminary notes, I observed [pattern/theme you noticed]. Can you identify passages in the transcript where this pattern appears? I want to ensure I'm seeing its full breadth."
-
-Purpose: Helps ensure comprehensive attention to emerging patterns
-Important: AI highlights passages; YOU determine their meaning/significance
-```
-
-#### C. Comparative Scaffolding
-```
-Prompt: "I've noted that Participant 3's discussion of [topic] felt different in tone from other participants. Can you identify similar passages across transcripts so I can examine what makes them distinctive?"
-
-Purpose: Facilitates comparison across dataset
-Important: AI groups passages; YOU interpret the differences
-```
-
-#### D. Blind Spot Scaffolding
-```
-Prompt: "What topics or patterns do you notice in this transcript that I haven't mentioned in my preliminary notes? I want to check my potential blind spots."
-
-Purpose: Challenges you to consider overlooked aspects
-Important: AI suggests possibilities; YOU determine if they're meaningful
-```
-
-#### E. Reflexive Scaffolding
-```
-Prompt: "I notice I'm particularly drawn to passages about [topic]. Based on my research questions and notes, why might this be significant? Or could this reflect a bias?"
-
-Purpose: Prompts reflexive thinking about your interpretive process
-Important: AI offers possibilities; YOU engage in genuine self-reflection
-```
+The critical distinction: in scaffolding, the researcher drives the dialogue. They ask questions based on their own emerging interpretations. AI responds within the parameters set by the researcher's questions. This is fundamentally different from AI "summarising" the data or "identifying key themes" — those activities bypass the researcher's interpretive engagement rather than supporting it.
 
 ---
 
-## Integration: Documenting the Familiarization Process
+## The Relationship Between Familiarization and Phase 2
 
-### Reflexive Documentation Template
+Phase 1 is different in kind from the subsequent phases. It is preparatory — it does not produce analytical outputs (codes, themes, definitions). What it produces is the researcher's capacity to do analytical work.
 
-For each familiarization activity, document:
+A researcher who has completed strong familiarization enters Phase 2 with: intimate knowledge of what participants said and how they said it, preliminary awareness of patterns spanning the dataset, questions and curiosities about the data, reflexive awareness of their own positioning and potential biases, and confidence in their interpretive authority — the capacity to evaluate AI's proposals from a position of knowledge rather than dependence.
 
-```markdown
-## Familiarization Session: [Date]
-
-### Human Activity
-- Data Items Engaged: [List]
-- Reading/Listening: [1st, 2nd, 3rd pass]
-- Duration: [Time spent]
-
-Initial Observations:
-1. [What you noticed]
-2. [Patterns emerging]
-3. [Questions arising]
-
-### AI Scaffolding Activity
-Prompt Given:
-```
-[Exact prompt you used]
-```
-
-AI Response Summary:
-- [Key points from AI response]
-
-### Human Reflection on AI Scaffolding
-How did AI response affect your understanding?
-- [ ] Confirmed my impressions: [Explain]
-- [ ] Challenged my thinking: [Explain]
-- [ ] Revealed blind spots: [Explain]
-- [ ] Raised new questions: [Explain]
-
-What interpretive decisions did I make?
-- [How you evaluated AI's input]
-- [What you accepted/rejected and why]
-- [How this shaped your familiarization]
-
-### Reflexive Notes
-Biases/assumptions noticed:
-- [What you're becoming aware of]
-
-Positionality considerations:
-- [How your background/perspective affects interpretation]
-
-### Next Steps
-- [ ] Areas needing deeper immersion
-- [ ] Questions to explore in next pass
-- [ ] Patterns to track more systematically
-```
+A researcher who has completed weak familiarization enters Phase 2 reliant on AI. They accept AI's proposals because they lack the contextual knowledge to challenge them. They cannot distinguish between codes that capture situated meaning and codes that merely sound plausible. The entire analytical structure that follows — themes, definitions, the written report — inherits the weakness of this foundation.
 
 ---
 
-## Critical Considerations
+## Documenting Familiarization
 
-### What This Phase Is NOT:
-- ❌ AI "reading" and "understanding" data like humans do
-- ❌ Outsourcing familiarization to AI
-- ❌ Accepting AI summaries as authoritative interpretations
-- ❌ Skipping human deep immersion because AI is involved
+Reflexive documentation during familiarization serves two purposes. First, it creates a record of the researcher's independent observations before AI-mediated analysis begins — a baseline against which AI's subsequent influence can be assessed. Second, it captures the dialogic scaffolding process: what the researcher asked AI, what AI responded, and how the researcher evaluated that response. This documentation forms part of the reflexive audit trail that runs through all phases.
 
-### What This Phase IS:
-- ✅ Human researcher establishing intimate knowledge of data
-- ✅ AI being oriented to project to serve as effective dialogic partner
-- ✅ Human using AI to scaffold and deepen familiarization
-- ✅ Reflexive documentation of human-AI interaction
-- ✅ Maintaining human interpretive authority throughout
+Ozuem et al. (2025) argue that researchers in AI-augmented contexts should "document both human-led and AI-supported analytic actions in detail to ensure clarity in how codes and themes were identified, revised, or validated." This begins in Phase 1, not Phase 2.
 
-### Quality Indicators for Phase 1:
-
-**Strong Familiarization:**
-- You can discuss data in detail without constantly referring to transcripts
-- You've identified preliminary patterns that span the dataset
-- You have questions and curiosities about the data
-- You've documented your reflexive process
-- You can explain how AI scaffolding enhanced (not replaced) your engagement
-- You feel confident in your interpretive authority
-
-**Weak Familiarization:**
-- You rely on AI summaries instead of knowing the data yourself
-- You accept AI's pattern identification without critical evaluation
-- You haven't documented your independent observations
-- You can't explain your interpretive decisions
-- You feel uncertain about your authority to interpret
+The documentation need not follow a rigid format. What matters is that the researcher records their independent observations, their dialogic interactions with AI, and their reflexive assessment of how AI scaffolding affected their developing understanding. The goal is transparency about the conditions under which analytical work subsequently proceeds.
 
 ---
 
-## Transition to Phase 2
+## References
 
-Before moving to coding:
-
-**Human Checklist:**
-- [ ] I have read/engaged with entire dataset multiple times
-- [ ] I have preliminary observations documented independently
-- [ ] I understand the context and nuances of the data
-- [ ] I can discuss data items in detail from memory
-- [ ] I have reflexive notes on my positionality and potential biases
-
-**AI Orientation Checklist:**
-- [ ] AI has been provided with project parameters
-- [ ] AI understands theoretical framework
-- [ ] AI's role as scaffolding (not replacing) has been established
-- [ ] Initial dialogic interactions have been documented
-
-**Integration Checklist:**
-- [ ] I have documented how AI scaffolding affected my familiarization
-- [ ] I have critically evaluated AI's contributions
-- [ ] I maintain confidence in my interpretive authority
-- [ ] The human-AI interaction process is transparent and documented
-
----
-
-## Notes from Literature
-
-**Byrne (2022) on Traditional Familiarization:**
-> "Familiarisation entails the reading and re-reading of the entire dataset in order to become intimately familiar with the data. This is necessary to be able to identify appropriate information that may be relevant to the research question(s)."
-
-**Ozuem et al. (2025) on AI-Augmented Process:**
-> "Researchers working in AI-augmented contexts are therefore advised to document both human-led and AI-supported analytic actions in detail to ensure clarity in how codes and themes were identified, revised, or validated."
-
-**Naeem et al. (2023) on Purpose of Familiarization:**
-> "The data immersion stage in thematic analysis is not only about documenting everything, but also involves identifying significant information relevant to the research objectives."
-
----
-
-## Your Phase 1 Completion Summary
-
-```markdown
-## Phase 1 Completion Report
-
-### Human Familiarization
-Total dataset reading/listening sessions: [X]
-Total time spent in deep immersion: [X hours]
-Preliminary patterns identified: [X]
-Key observations: [List 3-5 main observations]
-
-### AI Orientation
-Context provided to AI: [Date and summary]
-Theoretical framework confirmed: [Yes/No]
-AI's understanding validated: [How]
-
-### Dialogic Scaffolding
-Number of scaffolding interactions: [X]
-Types of scaffolding used: [Orientation/Pattern/Comparative/etc.]
-Impact on familiarization: [Brief reflection]
-
-### Reflexivity
-Key biases/assumptions identified: [List]
-Positionality considerations: [Summary]
-Interpretive authority maintained: [How demonstrated]
-
-### Ready for Phase 2?
-[ ] Yes - All checklists completed
-[ ] No - Areas needing more work: [List]
-```
-
----
-
-## Templates in Use
-
-See the templates section of this document for copy-paste ready formats for:
-1. Human Deep Immersion Documentation
-2. AI Context-Setting Prompts
-3. Dialogic Scaffolding Prompt Library
-4. Reflexive Integration Documentation
-5. Phase 1 Completion Summary
+- Braun, V. & Clarke, V. (2006). Using thematic analysis in psychology. *Qualitative Research in Psychology*, 3(2), 77–101.
+- Braun, V. & Clarke, V. (2019). Reflecting on reflexive thematic analysis. *Qualitative Research in Sport, Exercise and Health*, 11(4), 589–597.
+- Byrne, D. (2022). A worked example of Braun and Clarke's approach to reflexive thematic analysis. *Quality & Quantity*, 56, 1391–1412.
+- Naeem, M., Ozuem, W., Howell, K., & Ranfagni, S. (2023). A step-by-step process of thematic analysis to develop a conceptual model in qualitative research. *International Journal of Qualitative Methods*, 22, 1–18.
+- Ozuem, W., Willis, M., Ranfagni, S., & Omeish, F. (2025). Thematic analysis in an artificial intelligence-driven context: A stage-by-stage process. *International Journal of Qualitative Methods*, 24, 1–15.

@@ -34,15 +34,15 @@ cat /path/to/file
 - **ALWAYS** ask before writing codes to file
 - Respect researcher's changes without questioning
 
-### RULE 4: Use Code Format from Coding Manual
+### RULE 4: Use Code Format from Coding Protocol
 
-Read the KODNINGSMANUAL in `methodology/` and follow exact format:
+Read the coding protocol in `protocols/` and follow exact format:
 
-- Semantic code: `#kod_beskrivning__rq1_semantisk`
-- Latent code: `#kod_beskrivning__rq1_latent`
-- In vivo: `#"exakt_citat"__rq1_semantisk`
+- Semantic code: `#code_description__rq1_semantic`
+- Latent code: `#code_description__rq1_latent`
+- In vivo: `#"exact_quote"__rq1_semantic`
 
-Three research questions (RQ1, RQ2, RQ3) with two levels each (semantisk, latent).
+Research questions and levels as defined in the project's coding protocol.
 
 ### RULE 5: Follow the Workflow
 

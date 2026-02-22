@@ -43,9 +43,9 @@ class SessionState {
   requireInit(): void {
     if (!this._initCalled) {
       throw new Error(
-        "🛑 STOPP! Du MÅSTE anropa 'init' först.\n" +
-          'Anropa: init()\n' +
-          'Sedan kan du använda andra tools.'
+        "🛑 STOP! You MUST call 'init' first.\n" +
+          'Call: init()\n' +
+          'Then you can use other tools.'
       );
     }
   }

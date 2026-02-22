@@ -84,12 +84,12 @@ export async function methodologyLoad(
   let nextAction: string;
 
   if (remaining.length === 0) {
-    nextAction = `KLART! Alla metodologi-dokument för ${phase} laddade. Redo att fortsätta.`;
+    nextAction = `DONE! All methodology documents for ${phase} loaded. Ready to continue.`;
   } else {
     nextAction =
-      `VIKTIGT: VISA HELA document.content för forskaren (SAMMANFATTA INTE!). ` +
-      `Fråga sedan: "Ok att fortsätta till ${remaining[0]}?" ` +
-      `Vänta på svar. Anropa sedan med document_index=${document_index + 1}`;
+      `IMPORTANT: SHOW the FULL document.content to the researcher (DO NOT SUMMARISE!). ` +
+      `Then ask: "OK to continue to ${remaining[0]}?" ` +
+      `Wait for response. Then call with document_index=${document_index + 1}`;
   }
 
   return {

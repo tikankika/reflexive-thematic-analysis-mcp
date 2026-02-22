@@ -91,7 +91,7 @@ export async function codeStart(args: {
     }
 
     try {
-      codingManual = await loader.loadDocument('KODNINGSMANUAL_AI_Augmented_RTA_DISRUPTIV_INTEGRATED_2026-01-10.md');
+      codingManual = await loader.loadDocument('../protocols/coding_protocol_disruptive_3rq.md');
     } catch (error) {
       console.error('[code_start] Failed to load coding manual:', error);
     }
@@ -110,12 +110,12 @@ export async function codeStart(args: {
     methodology,
     coding_manual: codingManual,
     instructions: `
-KRITISKT: Läs methodology och coding_manual innan du föreslår koder.
-- Forskaren har tolkningsauktoritet
-- Kodformat: #kod_beskrivning__rq1_semantisk eller __rq1_latent
-- In vivo: #"exakt_citat"__rq1_semantisk (med citattecken)
-- Tre forskningsfrågor: RQ1, RQ2, RQ3
-- Två nivåer: semantisk (explicit), latent (tolkande)
+CRITICAL: Read methodology and coding_manual before proposing codes.
+- Researcher has interpretive authority
+- Code format: #code_description__rq1_semantic or __rq1_latent
+- In vivo: #"exact_quote"__rq1_semantic (with quotes)
+- Research questions as defined in coding protocol
+- Two levels: semantic (explicit), latent (interpretive)
     `.trim(),
   };
 }

@@ -36,6 +36,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `epistemology/inductive_deductive.md` → ~500→120 lines. Core claim: AI has no genuinely inductive capacity — its proposals are deductive (training-data derived). Research questions as diagnostic tool
   - `epistemology/semantic_latent.md` → ~550→130 lines. Sharpest AI distinction: competent at semantic, weak at latent. Two failure patterns identified: generic theoretical labels and disguised semantic codes
   - All four: tutorial elements removed (26 "Write here" blocks, 11 AI prompt templates, exercise sections, methodology-section writing templates), project-specific references anonymised, consistent voice throughout
+- **Phase 1 familiarization rewritten** from tutorial format (~300 lines, 15+ checklists, 5 prompt templates) to researcher-colleague register (~90 lines). Three dimensions preserved: human immersion, AI orientation, dialogic scaffolding
+- **protocols/README.md created** — English summary explaining why coding protocols are in Swedish
+- **docs/LANGUAGE_REVIEW_CODE.md created** — instructions for Claude Code: src/ language cleanup, KODNINGSMANUAL→coding protocol terminology, fallback-summary.md decision
+- **Source code language cleanup** — all user-facing text in TypeScript translated from Swedish to English
+  - `session_state.ts`, `code_start.ts`, `methodology_load.ts`, `review_start.ts`, `init.ts` — Swedish instructions and error messages translated
+  - `init-instructions.md` — updated to match
+  - Stale `KODNINGSMANUAL` references in `methodology_loader.ts` and `code_start.ts` fixed to point to `protocols/coding_protocol_disruptive_3rq.md`
 - Literature base expanded across all documents: Brailas (2025), Ozuem et al. (2025), Al-Fattal & Singh (2025), Dröge (2025), Heersmink et al. (2024)
 - Backup of pre-upgrade methodology saved to Nextcloud: `_archive_20260222_methodology_v3/`
 
