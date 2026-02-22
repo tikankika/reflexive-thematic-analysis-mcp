@@ -56,6 +56,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `session_state.ts`, `code_start.ts`, `methodology_load.ts`, `review_start.ts`, `init.ts` — Swedish instructions and error messages translated
   - `init-instructions.md` — updated to match
   - Stale `KODNINGSMANUAL` references in `methodology_loader.ts` and `code_start.ts` fixed to point to `protocols/coding_protocol_disruptive_3rq.md`
+- **Public documentation rewritten for external users**
+  - `docs/API.md` → Complete rewrite: "4 tools" → all 22 tools with correct `phase2a_`/`phase2b_` prefixes, current parameters, file format reference
+  - `docs/USER_GUIDE.md` → Complete rewrite: "Phase 1 Coding" → Phase 2a/2b workflow, removed KODNINGSMANUAL references, removed Swedish examples
+  - `docs/ROADMAP.md` → 655→85 lines. Removed internal planning, Swedish terminology boxes, RFC cross-references. Now: current version, next priorities, future vision, design principles
+  - `README.md`, `GETTING_STARTED.md`, `CONTRIBUTING.md` → git clone URL updated from `MPC_RTA` to `reflexive-thematic-analysis-mcp`
+  - `package.json` → name updated to `reflexive-thematic-analysis-mcp`
+  - Dead links to removed files (VISION.md, docs/rfcs/, docs/design/) cleaned from README
 - Literature base expanded across all documents: Brailas (2025), Ozuem et al. (2025), Al-Fattal & Singh (2025), Dröge (2025), Heersmink et al. (2024)
 - Backup of pre-upgrade methodology saved to Nextcloud: `_archive_20260222_methodology_v3/`
 

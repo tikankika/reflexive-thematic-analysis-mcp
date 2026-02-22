@@ -10,8 +10,8 @@ An [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) server that 
 
 ```bash
 # Clone and build
-git clone https://github.com/tikankika/MPC_RTA.git
-cd MPC_RTA
+git clone https://github.com/tikankika/reflexive-thematic-analysis-mcp.git
+cd reflexive-thematic-analysis-mcp
 npm install
 npm run build
 ```
@@ -23,7 +23,7 @@ Add to your Claude Desktop configuration (`claude_desktop_config.json`):
   "mcpServers": {
     "qualitative-analysis-rta": {
       "command": "node",
-      "args": ["/absolute/path/to/MPC_RTA/dist/server.js"]
+      "args": ["/absolute/path/to/reflexive-thematic-analysis-mcp/dist/server.js"]
     }
   }
 }
@@ -60,11 +60,9 @@ Then in Claude Desktop, call `init` to get started.
 
 - [User Guide](docs/USER_GUIDE.md) — Step-by-step workflow
 - [API Reference](docs/API.md) — Tool specifications
-- [Vision](VISION.md) — Project purpose and goals
+- [Getting Started](docs/GETTING_STARTED.md) — Quick start guide
 - [Roadmap](docs/ROADMAP.md) — Development timeline
 - [Changelog](CHANGELOG.md) — Version history
-- [Design Docs](docs/design/) — Architecture decisions
-- [RFCs](docs/rfcs/) — Feature proposals
 
 ## Contributing
 

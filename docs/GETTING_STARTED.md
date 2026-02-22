@@ -11,8 +11,8 @@ Get from zero to your first coded segment in ~10 minutes.
 ## 1. Install
 
 ```bash
-git clone https://github.com/tikankika/MPC_RTA.git
-cd MPC_RTA
+git clone https://github.com/tikankika/reflexive-thematic-analysis-mcp.git
+cd reflexive-thematic-analysis-mcp
 npm install
 npm run build
 ```
@@ -33,13 +33,13 @@ Add this MCP server entry:
   "mcpServers": {
     "qualitative-analysis-rta": {
       "command": "node",
-      "args": ["/absolute/path/to/MPC_RTA/dist/server.js"]
+      "args": ["/absolute/path/to/reflexive-thematic-analysis-mcp/dist/server.js"]
     }
   }
 }
 ```
 
-Replace `/absolute/path/to/MPC_RTA` with the actual path where you cloned the repo.
+Replace `/absolute/path/to/reflexive-thematic-analysis-mcp` with the actual path where you cloned the repo.
 
 ## 3. Restart Claude Desktop
 

@@ -15,8 +15,8 @@ Thank you for your interest in contributing to Qualitative Analysis RTA!
 ## Development Setup
 
 ```bash
-git clone https://github.com/tikankika/MPC_RTA.git
-cd MPC_RTA
+git clone https://github.com/tikankika/reflexive-thematic-analysis-mcp.git
+cd reflexive-thematic-analysis-mcp
 npm install
 npm run build
 ```
