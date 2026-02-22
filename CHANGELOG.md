@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - **Phase 3 tool: `phase3_extract_codes`** — extracts all codes from coded transcripts into a single markdown file (`phase3_code_extraction.md`) with metadata: source transcript, line references, research question, semantic/latent level, and text excerpts. Grouped by RQ, then level, then alphabetically. Gives the researcher the complete code inventory for theme generation.
 - **`CodeExtractor` core module** (`src/core/code_extractor.ts`) — parses code format using string splitting (not regex), detects coded transcripts by `/segment` marker presence rather than config status field, strips line index prefixes from text excerpts.
+- **`write_file` utility tool** — generic file writer for saving analytical work between sessions (candidate themes, thematic maps, definitions, report drafts). Creates parent directories. Refuses to overwrite coded transcripts or review notes unless explicitly confirmed. Closes the critical persistence gap for Phase 3–6: without this, all analytical work produced in conversation was lost when the session ended.
 
 ### Fixed
 - **`rta_config.yaml` transcript status now updates during coding workflow.** Previously all transcripts stayed `pending` forever — Phase 2a tools never called `updateTranscriptStatus()`. Now: `code_start` → `phase2a_in_progress`, `code_read_next` (completion) → `phase2a_complete`, `review_start` → `phase2b_in_progress`. Uses best-effort config discovery from transcript path.

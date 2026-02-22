@@ -71,6 +71,7 @@ export async function init(): Promise<InitResult> {
           'init - Get these instructions (call FIRST!)',
           'list_files - List files in a directory (find transcripts)',
           'read_file - Read contents of any file',
+          'write_file - Write content to a file (save analytical work between sessions)',
           'project_setup - Create new RTA project structure',
           'add_line_index - Add permanent line indices to transcript',
           'methodology_load - Load methodology documents for any phase',

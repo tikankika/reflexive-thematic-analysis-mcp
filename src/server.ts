@@ -28,6 +28,7 @@ import { addLineIndex } from './tools/add_line_index.js';
 import { methodologyLoad } from './tools/methodology_load.js';
 import { listFiles } from './tools/list_files.js';
 import { readFile } from './tools/read_file.js';
+import { writeFile } from './tools/write_file.js';
 
 // Phase 2a tools
 import { codeStart } from './tools/code_start.js';
@@ -216,6 +217,34 @@ class QualitativeAnalysisRTAServer {
               },
             },
             required: ['path'],
+          },
+        },
+        {
+          name: 'write_file',
+          description:
+            'Write content to a file. ' +
+            'For saving analytical work between sessions: candidate themes, thematic maps, ' +
+            'definitions, report drafts. Creates parent directories if needed. ' +
+            'Refuses to overwrite coded transcripts or review notes unless overwrite=true. ' +
+            'Supports ~ for home directory.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              path: {
+                type: 'string',
+                description: 'File path to write (supports ~ for home)',
+              },
+              content: {
+                type: 'string',
+                description: 'Content to write to the file',
+              },
+              overwrite: {
+                type: 'boolean',
+                description:
+                  'Set true to overwrite protected files (coded transcripts, review notes). Default: false.',
+              },
+            },
+            required: ['path', 'content'],
           },
         },
         // === PHASE 2a TOOLS (Initial Coding) ===
@@ -643,6 +672,10 @@ class QualitativeAnalysisRTAServer {
             result = await readFile(args as any);
             break;
 
+          case 'write_file':
+            result = await writeFile(args as any);
+            break;
+
           // === PHASE 2a TOOLS ===
           case 'phase2a_code_start':
             result = await codeStart(args as any);
@@ -762,7 +795,7 @@ class QualitativeAnalysisRTAServer {
 
     // Log to stderr (stdout is used for MCP protocol)
     console.error('Reflexive Thematic Analysis MCP Server v0.5.1 running...');
-    console.error('Core: init, project_setup, add_line_index, methodology_load, list_files, read_file');
+    console.error('Core: init, project_setup, add_line_index, methodology_load, list_files, read_file, write_file');
     console.error(
       'Phase 2a: code_start, code_read_next, code_write_segment, code_skip_chunk, code_status, code_verify, code_reset_status, code_clear_all, code_delete_segment'
     );

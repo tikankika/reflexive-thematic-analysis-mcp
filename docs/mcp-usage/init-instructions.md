@@ -109,6 +109,7 @@ Phases 4 through 6 do not have dedicated tools. They are methodology-driven conv
 ### Utility Tools
 - `list_files` - List files in a directory
 - `read_file` - Read contents of a file
+- `write_file` - Write content to a file (save analytical work between sessions)
 
 ## CRITICAL REMINDERS
 
