@@ -1,6 +1,16 @@
-# Reflexive Thematic Analysis — AI-Augmented Qualitative Coding
+# Dialogic Reflexive Thematic Analysis — Qualitative Coding with AI as Partner
 
 Structured qualitative coding for Braun & Clarke's Reflexive Thematic Analysis, with AI as a dialogic partner. You read the data. AI proposes codes. You decide.
+
+---
+
+## Status
+
+The tool infrastructure (Phase 2a, 2b) is stable and has been tested through extensive coding work on real focus group data. It works.
+
+The methodology documents are working documents. They are theoretically grounded in Braun & Clarke's RTA and recent literature on AI in qualitative research, but they have not been peer-reviewed. References have not been systematically verified against their sources — some claims attributed to specific authors may need correction. The terminological framework ("Dialogic Reflexive Thematic Analysis") and the fourth foundational principle (dialogic reflexivity, grounded in Bakhtin, Gadamer, Schön, and postphenomenology) are recent theoretical developments undergoing refinement. Phase 3–6 methodology documents exist but have not been tested in practice.
+
+This is an active research project, not a finished product. The methodology is being developed through use — insights from coding sessions feed back into the documents. If you use it, read critically.
 
 ---
 
