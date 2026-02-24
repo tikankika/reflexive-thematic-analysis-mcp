@@ -110,6 +110,13 @@ export async function init(): Promise<InitResult> {
           'extract_codes - Extract all codes from coded transcripts into markdown summary',
         ],
       },
+      {
+        category: 'Process Logging',
+        tools: [
+          'log_process_event - Log epistemically significant moment in researcher-AI dialogue',
+          'log_session_end - Summarize and close a coding/review session',
+        ],
+      },
     ],
 
     criticalRules: [
@@ -120,6 +127,8 @@ export async function init(): Promise<InitResult> {
       'Code format: #code_description__rq1_semantic or __rq1_latent',
       'In vivo codes: #"exact_quote"__rq1_semantic (with quotes)',
       'SHOW full methodology content to researcher (do NOT summarize)',
+      'PROCESS LOGGING: When researcher corrects your patterns, redirects focus, rejects a suggestion, or establishes a convention — call log_process_event. Capture researcher exact words in researcher_words field.',
+      'SESSION END: Before ending any coding or review session, call log_session_end with a summary of key analytical decisions.',
     ],
 
     rtaPhases: [

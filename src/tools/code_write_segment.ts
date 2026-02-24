@@ -2,6 +2,7 @@ import { promises as fs } from 'fs';
 import { SegmentWriter } from '../core/segment_writer.js';
 import { StatusManager } from '../core/status_manager.js';
 import { CodeSegmentInput } from '../types/chunk.js';
+import { ProcessLogger } from '../core/process_logger.js';
 
 /**
  * code_write_segment - Write codes for segment(s)
@@ -92,6 +93,22 @@ async function writeMultiSegmentMode(
   // Read updated STATUS for progress
   const updatedStatus = await statusManager.read(file_path);
 
+  // Auto-log to process log
+  try {
+    const processLogger = new ProcessLogger();
+    await processLogger.log(file_path, 'codes_written', {
+      phase: '2a',
+      context: {
+        segment: segments.length > 0
+          ? `${segments[0].start_line}-${segments[segments.length - 1].end_line}`
+          : undefined,
+        code_count: result.total_codes_written,
+      },
+    });
+  } catch {
+    // Don't fail the write if logging fails
+  }
+
   return {
     segments_written: result.segments_written,
     codes_written: result.total_codes_written,
@@ -157,6 +174,20 @@ async function writeLegacyMode(
 
   // Read updated STATUS for progress
   const updatedStatus = await statusManager.read(file_path);
+
+  // Auto-log to process log
+  try {
+    const processLogger = new ProcessLogger();
+    await processLogger.log(file_path, 'codes_written', {
+      phase: '2a',
+      context: {
+        segment: `${fileStartLine}-${fileEndLine}`,
+        code_count: result.codesWritten,
+      },
+    });
+  } catch {
+    // Don't fail the write if logging fails
+  }
 
   return {
     segment_written: result.chunkNumber,

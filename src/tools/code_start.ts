@@ -3,6 +3,7 @@ import { StatusManager } from '../core/status_manager.js';
 import { sessionState } from '../core/session_state.js';
 import { MethodologyLoader } from '../core/methodology_loader.js';
 import { ProjectConfig } from '../core/project_config.js';
+import { ProcessLogger } from '../core/process_logger.js';
 
 /**
  * code_start - Initialize coding session (Phase 2a: Initial Coding)
@@ -81,6 +82,14 @@ export async function codeStart(args: {
     }
   } catch {
     // Non-critical — status update is best-effort
+  }
+
+  // Auto-log session start
+  try {
+    const processLogger = new ProcessLogger();
+    await processLogger.log(file_path, 'session_start', { phase: '2a' });
+  } catch {
+    // Don't fail coding if logging fails
   }
 
   // Find where actual content starts (after STATUS frontmatter)

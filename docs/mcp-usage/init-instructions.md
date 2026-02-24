@@ -106,10 +106,35 @@ Phases 4 through 6 do not have dedicated tools. They are methodology-driven conv
 - Do not "confirm" themes — if asked to evaluate, argue against the theme first, then for it
 - Do not skip methodology loading because "we already discussed this" — each session starts fresh
 
+### Process Logging
+- `log_process_event` - Log epistemically significant moment in researcher-AI dialogue
+- `log_session_end` - Summarize and close a coding/review session
+
 ### Utility Tools
 - `list_files` - List files in a directory
 - `read_file` - Read contents of a file
 - `write_file` - Write content to a file (save analytical work between sessions)
+
+## PROCESS LOGGING
+
+The dialogic process — corrections, redirections, rejections, discoveries — is where interpretive authority is exercised. Existing tools capture products (codes, notes). Process logging captures the dialogue that produced them.
+
+**When to call `log_process_event`:**
+- Researcher corrects AI's pattern (type: `correction`)
+- Researcher redirects toward research question (type: `focus`)
+- Researcher rejects AI suggestion (type: `rejection`)
+- New pattern or insight emerges (type: `discovery`)
+- New coding convention established (type: `convention`)
+- Methodological decision made (type: `methodology`)
+
+**Always include `researcher_words`** — the researcher's exact words are primary data.
+
+**Auto-logged events** (no action needed):
+- `session_start` — logged by `code_start` and `review_start`
+- `codes_written` — logged by `code_write_segment`
+- `codes_revised` — logged by `review_revise_codes`
+
+**Before ending a session:** Call `log_session_end` with a summary of key analytical decisions and any unresolved questions.
 
 ## CRITICAL REMINDERS
 

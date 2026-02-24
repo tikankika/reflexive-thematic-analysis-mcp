@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.6.0] - 2026-02-24
+
+### Added
+- **Process logging infrastructure for dialogic reflexivity.** Captures the epistemically significant moments in researcher-AI dialogue that existing tools do not preserve — corrections, redirections, rejections, discoveries, conventions.
+  - `log_process_event` — manual tool for researcher-initiated events. Captures event type, researcher's exact words (in vivo), context, and before/after state.
+  - `log_session_end` — session summary with key decisions and unresolved questions.
+  - `ProcessLogger` core module (`src/core/process_logger.ts`) — append-only JSONL writer. One `_process_log.jsonl` file per transcript.
+  - `ProcessEvent` types (`src/types/process_log.ts`) — 12 event types covering researcher-initiated and auto-logged events.
+- **Auto-logging in existing tools:**
+  - `code_start` and `review_start` auto-log `session_start` events.
+  - `code_write_segment` auto-logs `codes_written` events (in both legacy and multi-segment modes).
+  - `review_revise_codes` auto-logs `codes_revised` events with before/after codes.
+  - All auto-logging is best-effort (try/catch) — primary operations never fail due to logging.
+- **`methodology/dialogic_reflexivity.md`** — methodology document covering the theoretical foundations (Bakhtin, Gadamer, Schon, postphenomenology) and practical guidance for preserving the dialogic process.
+- Soft validation: `log_process_event` warns (does not fail) when researcher-initiated event types lack `researcher_words`.
+
+---
+
 ## [0.5.2] - 2026-02-22
 
 ### Added
