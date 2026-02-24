@@ -4,6 +4,7 @@ import { SegmentReader } from '../core/segment_reader.js';
 import { SegmentReviser } from '../core/segment_reviser.js';
 import { NoteManager } from '../core/note_manager.js';
 import { CodeRevision } from '../types/review.js';
+import { ProcessLogger } from '../core/process_logger.js';
 
 /**
  * review_revise_codes - Revise codes for a segment during review
@@ -91,6 +92,21 @@ export async function reviewReviseCodes(args: {
   }
 
   await noteManager.save(notesPath, notesFile);
+
+  // Auto-log to process log
+  try {
+    const processLogger = new ProcessLogger();
+    await processLogger.log(file_path, 'codes_revised', {
+      phase: '2b',
+      context: {
+        segment: `segment_${segment_index}`,
+        codes_before: previousCodes,
+        codes_after: updatedCodes,
+      },
+    });
+  } catch {
+    // Don't fail the revision if logging fails
+  }
 
   return {
     success: true,

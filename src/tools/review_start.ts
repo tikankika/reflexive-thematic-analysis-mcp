@@ -4,6 +4,7 @@ import { SegmentReader } from '../core/segment_reader.js';
 import { NoteManager } from '../core/note_manager.js';
 import { MethodologyLoader } from '../core/methodology_loader.js';
 import { ProjectConfig } from '../core/project_config.js';
+import { ProcessLogger } from '../core/process_logger.js';
 
 /**
  * review_start - Initialize Phase 2b critical review session
@@ -77,6 +78,14 @@ export async function reviewStart(args: {
     }
   } catch {
     // Non-critical — status update is best-effort
+  }
+
+  // Auto-log session start
+  try {
+    const processLogger = new ProcessLogger();
+    await processLogger.log(file_path, 'session_start', { phase: '2b' });
+  } catch {
+    // Don't fail review if logging fails
   }
 
   // Load Phase 2b methodology

@@ -54,6 +54,10 @@ import { reviewMergeSegments } from './tools/review_merge_segments.js';
 // Phase 3 tools
 import { extractCodes } from './tools/phase3_extract_codes.js';
 
+// Process logging tools
+import { logProcessEvent } from './tools/log_process_event.js';
+import { logSessionEnd } from './tools/log_session_end.js';
+
 /**
  * MCP Server for Qualitative Analysis RTA (Braun & Clarke)
  */
@@ -64,7 +68,7 @@ class QualitativeAnalysisRTAServer {
     this.server = new Server(
       {
         name: 'reflexive-thematic-analysis-mcp',
-        version: '0.5.2',
+        version: '0.6.0',
       },
       {
         capabilities: {
@@ -636,6 +640,104 @@ class QualitativeAnalysisRTAServer {
             required: ['project_path'],
           },
         },
+        // === PROCESS LOGGING TOOLS ===
+        {
+          name: 'log_process_event',
+          description:
+            'Log a reflexive process event during coding or review. Call this when the ' +
+            'researcher corrects AI patterns, redirects analytical focus, rejects a ' +
+            'suggestion, discovers something AI cannot see, or establishes a new convention. ' +
+            'Captures the dialogic process that existing tools do not preserve.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              file_path: {
+                type: 'string',
+                description: 'Path to transcript file (context reference)',
+              },
+              type: {
+                type: 'string',
+                enum: [
+                  'correction',
+                  'focus',
+                  'rejection',
+                  'discovery',
+                  'convention',
+                  'methodology',
+                  'tool_issue',
+                  'meta_reflexive',
+                  'other',
+                ],
+                description: 'Type of epistemically significant event',
+              },
+              researcher_words: {
+                type: 'string',
+                description:
+                  "Researcher's exact words (in vivo from dialogue). Primary data — include whenever possible.",
+              },
+              description: {
+                type: 'string',
+                description: "Claude's summary of what happened",
+              },
+              phase: {
+                type: 'string',
+                description: 'Current RTA phase (e.g. "2a", "2b", "3")',
+              },
+              context: {
+                type: 'object',
+                description: 'Contextual reference (segment, chunk, codes)',
+                properties: {
+                  segment: { type: 'string' },
+                  chunk: { type: 'number' },
+                  codes_before: {
+                    type: 'array',
+                    items: { type: 'string' },
+                  },
+                  codes_after: {
+                    type: 'array',
+                    items: { type: 'string' },
+                  },
+                },
+              },
+            },
+            required: ['file_path', 'type'],
+          },
+        },
+        {
+          name: 'log_session_end',
+          description:
+            'End a coding or review session with a summary. Claude proposes a summary of ' +
+            'key analytical decisions; researcher can modify before confirming. Call this ' +
+            'before ending any coding or review session.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              file_path: {
+                type: 'string',
+                description: 'Path to transcript file (context reference)',
+              },
+              summary: {
+                type: 'string',
+                description: 'Summary of the session',
+              },
+              key_decisions: {
+                type: 'array',
+                items: { type: 'string' },
+                description: 'List of key analytical decisions made',
+              },
+              unresolved: {
+                type: 'array',
+                items: { type: 'string' },
+                description: 'Open questions for next session',
+              },
+              phase: {
+                type: 'string',
+                description: 'Current RTA phase',
+              },
+            },
+            required: ['file_path', 'summary', 'key_decisions'],
+          },
+        },
       ],
     }));
 
@@ -751,6 +853,15 @@ class QualitativeAnalysisRTAServer {
             result = await extractCodes(args as any);
             break;
 
+          // === PROCESS LOGGING TOOLS ===
+          case 'log_process_event':
+            result = await logProcessEvent(args as any);
+            break;
+
+          case 'log_session_end':
+            result = await logSessionEnd(args as any);
+            break;
+
           default:
             throw new Error(`Unknown tool: ${name}`);
         }
@@ -794,7 +905,7 @@ class QualitativeAnalysisRTAServer {
     await this.server.connect(transport);
 
     // Log to stderr (stdout is used for MCP protocol)
-    console.error('Reflexive Thematic Analysis MCP Server v0.5.2 running...');
+    console.error('Reflexive Thematic Analysis MCP Server v0.6.0 running...');
     console.error('Core: init, project_setup, add_line_index, methodology_load, list_files, read_file, write_file');
     console.error(
       'Phase 2a: code_start, code_read_next, code_write_segment, code_skip_chunk, code_status, code_verify, code_reset_status, code_clear_all, code_delete_segment'
@@ -803,6 +914,7 @@ class QualitativeAnalysisRTAServer {
       'Phase 2b: review_start, review_next, review_read_segment, review_write_note, review_revise_codes, review_status, review_split_segment, review_merge_segments'
     );
     console.error('Phase 3: extract_codes');
+    console.error('Process Logging: log_process_event, log_session_end');
   }
 }
 
