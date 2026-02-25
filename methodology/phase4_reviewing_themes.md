@@ -1,4 +1,4 @@
-# Phase 4: Reviewing Themes in AI-Augmented RTA
+# Phase 4: Reviewing Themes in Dialogic RTA
 
 ## Purpose
 
@@ -8,7 +8,7 @@ Phase 4 is where candidate themes are critically tested and often substantially 
 
 The researcher interrogates every candidate theme against both the coded data and the full dataset. Themes that don't work are reconceptualized, collapsed, split, or discarded. Byrne's own example shows this concretely — he completely broke down one of his major candidate themes and rebuilt it as three separate themes with fundamentally different organizing concepts.
 
-In AI-augmented contexts, Phase 4 carries an additional burden. If AI assisted with coding (Phase 2a) or theme generation (Phase 3), the researcher must now ask whether the thematic structure reflects genuine analytical insight or whether it has been shaped by AI's tendencies — its bias toward expected patterns, its preference for lexical grouping over meaning construction, its smoothing of complexity.
+In dialogic contexts, Phase 4 carries an additional burden. If AI assisted with coding (Phase 2a) or theme generation (Phase 3), the researcher must now ask whether the thematic structure reflects genuine analytical insight or whether it has been shaped by AI's tendencies — its bias toward expected patterns, its preference for lexical grouping over meaning construction, its smoothing of complexity.
 
 ---
 
@@ -124,7 +124,7 @@ Phase 4 review often necessitates returning to earlier phases:
 - **Return to Phase 2** if data items need recoding or new patterns emerge requiring additional codes
 - **Return to Phase 1** if contextual understanding needs checking
 
-In AI-augmented contexts, returning to Phase 2 has an additional dimension: re-reading AI-coded segments with the interpretive perspective gained through theme development. The researcher may now see things in the data that neither they nor AI captured in initial coding.
+In dialogic contexts, returning to Phase 2 has an additional dimension: re-reading AI-coded segments with the interpretive perspective gained through theme development. The researcher may now see things in the data that neither they nor AI captured in initial coding.
 
 ---
 
@@ -168,7 +168,7 @@ Phase 5 will define each theme precisely and craft final theme names. But the st
 - Byrne, D. (2022). A worked example of Braun and Clarke's approach to reflexive thematic analysis. *Quality & Quantity*, 56, 1391–1412.
 - Patton, M. Q. (1990). *Qualitative Evaluation and Research Methods* (2nd ed.). Sage.
 
-### AI-Augmented Qualitative Research
+### AI in Qualitative Research
 - Brailas, A. (2025). Artificial intelligence in qualitative research: Beyond outsourcing data analysis to the machine. *Psychology International*, 7(3), 78.
 - Ozuem, W., Willis, M., Ranfagni, S., & Omeish, F. (2025). Thematic analysis in an artificial intelligence-driven context: A stage-by-stage process. *International Journal of Qualitative Methods*, 24, 1–15.
 - Dröge, K. (2025). Why AI has a "proving the obvious" problem, and what we can do about it. *CAQDAS Networking Project Blog*.

@@ -2,7 +2,7 @@
 
 ## THE METHODOLOGY IS THE CORE
 
-This tool delivers a methodology for AI-augmented qualitative analysis. The file operations are infrastructure; the methodology documents are the intellectual substance. Your primary role is to help the researcher engage with the methodology and apply it to their data — not to process files efficiently.
+This tool delivers a methodology for dialogic qualitative analysis. The file operations are infrastructure; the methodology documents are the intellectual substance. Your primary role is to help the researcher engage with the methodology and apply it to their data — not to process files efficiently.
 
 When you load methodology documents, present them in full. The researcher reads them, not you. Do not summarise, excerpt, or paraphrase. The researcher's engagement with the methodology is what makes the subsequent coding analytically rigorous. Rushing past methodology to get to data is the single most damaging thing you can do in this workflow.
 

@@ -49,7 +49,7 @@ Then ask Claude to set up a project. You provide a project name, the location fo
 
 Before any coding begins, Claude loads the methodology for the current phase. This is the most important part of starting a session — more important than the technical setup, more important than getting to the data quickly.
 
-For Phase 2a, you will read the methodological framework and the initial coding guide together with Claude. These documents are substantial. They establish three foundational principles that govern AI-augmented analysis: the "proving the obvious" problem (AI reproduces expected patterns rather than surfacing what is analytically interesting), double reflexivity (monitoring both your own and AI's influence on interpretation), and AI as heuristic partner (treating proposals as starting points for interpretive engagement, not conclusions).
+For Phase 2a, you will read the methodological framework and the initial coding guide together with Claude. These documents are substantial. They establish three foundational principles that govern dialogic analysis: the "proving the obvious" problem (AI reproduces expected patterns rather than surfacing what is analytically interesting), double reflexivity (monitoring both your own and AI's influence on interpretation), and AI as heuristic partner (treating proposals as starting points for interpretive engagement, not conclusions).
 
 The methodology also addresses your specific epistemological position — what it means to code constructionistically with AI, how to maintain an experiential orientation when AI lacks access to experiential meaning, where AI is competent at semantic coding and where it fails at latent coding.
 

@@ -1,8 +1,8 @@
-# Phase 2a: Initial Coding in AI-Augmented RTA
+# Phase 2a: Initial Coding in Dialogic RTA
 
 ## Purpose
 
-Phase 2a is where the researcher generates initial codes through close engagement with the data. In AI-augmented RTA, this means either coding independently and using AI for refinement (human-first), or having AI propose codes that the researcher critically evaluates (AI-first). Both approaches are viable. Neither exempts the researcher from interpretive work.
+Phase 2a is where the researcher generates initial codes through close engagement with the data. In Dialogic RTA, this means either coding independently and using AI for refinement (human-first), or having AI propose codes that the researcher critically evaluates (AI-first). Both approaches are viable. Neither exempts the researcher from interpretive work.
 
 The foundational principles — "proving the obvious," double reflexivity, and AI as heuristic partner — are established in the Methodological Framework document and apply throughout this phase. Phase 2a is where they first become operational.
 
@@ -24,13 +24,13 @@ Byrne tracked code evolution across multiple iterations (Table 1, p. 1401):
 
 These revisions show analytical movement from description to interpretation, from specificity to pattern, from individual data item to dataset-level thinking. Tracking and documenting changes maintains transparency and provides waypoints if the researcher needs to backtrack.
 
-**In AI-augmented contexts**, recursivity has an additional dimension. When initial codes were co-created with AI, returning to earlier coding means revisiting not just the data but the AI-mediated encounter with that data. The researcher may see things differently the second time — not because the data changed, but because their interpretive capacity has developed beyond what AI proposed.
+**In dialogic contexts**, recursivity has an additional dimension. When initial codes were co-created with AI, returning to earlier coding means revisiting not just the data but the AI-mediated encounter with that data. The researcher may see things differently the second time — not because the data changed, but because their interpretive capacity has developed beyond what AI proposed.
 
 ---
 
 ## Two Approaches to Initial Coding
 
-The literature on AI-augmented qualitative research (Naeem et al. 2025, NguyenTrung 2025) supports two approaches, both compatible with RTA's reflexive principles if implemented with critical engagement.
+The literature on dialogic qualitative research (Naeem et al. 2025, NguyenTrung 2025) supports two approaches, both compatible with RTA's reflexive principles if implemented with critical engagement.
 
 ### The key distinction is sequencing, not quality.
 
@@ -146,7 +146,7 @@ AI-first coding requires the same multiple iterations as human-first coding:
 
 ## Reflexive Documentation
 
-Regardless of approach, reflexive documentation is essential. But reflexive documentation in AI-augmented analysis requires more than standard research journaling.
+Regardless of approach, reflexive documentation is essential. But reflexive documentation in dialogic analysis requires more than standard research journaling.
 
 ### Standard reflexivity (both approaches)
 
@@ -159,14 +159,14 @@ After each coding session, document:
 
 ### AI-mediation reflexivity (the second layer)
 
-This is the additional requirement for AI-augmented work:
+This is the additional requirement for dialogic work:
 
 - Where did you agree with AI and why? Was the agreement based on genuine interpretive assessment, or on AI's proposal sounding plausible?
 - Where did you disagree with AI and why? What did you see that AI didn't? What did AI see that you hadn't considered?
 - Did AI's proposals influence what you subsequently noticed in the data? Were you drawn to confirming AI's patterns?
 - Are there systematic tendencies in AI's coding that you should be aware of — topics it over-codes, nuances it misses, levels it favours?
 
-This double documentation — of your analytical process AND of AI's influence on that process — is what distinguishes methodologically rigorous AI-augmented analysis from AI-assisted analysis that merely claims human oversight.
+This double documentation — of your analytical process AND of AI's influence on that process — is what distinguishes methodologically rigorous dialogic analysis from AI-assisted analysis that merely claims human oversight.
 
 ### Reflexive notes: genuine thinking, not formulaic completion
 
@@ -282,7 +282,7 @@ These instructions govern AI's behaviour when assisting with coding.
 - Braun, V., & Clarke, V. (2022). *Thematic Analysis: A Practical Guide*. Sage.
 - Byrne, D. (2022). A worked example of Braun and Clarke's approach to reflexive thematic analysis. *Quality & Quantity*, 56, 1391–1412.
 
-### AI-Augmented Qualitative Research
+### AI in Qualitative Research
 - Brailas, A. (2025). Artificial intelligence in qualitative research: Beyond outsourcing data analysis to the machine. *Psychology International*, 7(3), 78.
 - Ozuem, W., Willis, M., Ranfagni, S., & Omeish, F. (2025). Thematic analysis in an artificial intelligence-driven context: A stage-by-stage process. *International Journal of Qualitative Methods*, 24, 1–15.
 - Al-Fattal, A., & Singh, J. (2025). Comparative reflections on human-driven and generative artificial intelligence-assisted thematic analysis: A collaborative autoethnography. *International Journal of Qualitative Methods*, 24, 1–10.

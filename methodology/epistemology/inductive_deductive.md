@@ -1,4 +1,4 @@
-# Inductive versus Deductive Analysis in AI-Augmented RTA
+# Inductive versus Deductive Analysis in Dialogic RTA
 
 ---
 

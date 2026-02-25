@@ -1,8 +1,8 @@
-# Dialogic Reflexivity in AI-Augmented RTA
+# Dialogic Reflexivity in Dialogic RTA
 
 ## Purpose
 
-Every phase of AI-augmented RTA produces analytical dialogue between researcher and AI — proposals, corrections, redirections, rejections, discoveries. This dialogue is where interpretive authority is exercised. It is the reflexive process itself.
+Every phase of Dialogic RTA produces analytical dialogue between researcher and AI — proposals, corrections, redirections, rejections, discoveries. This dialogue is where interpretive authority is exercised. It is the reflexive process itself.
 
 Dialogic reflexivity is the systematic practice of **preserving and reflecting on this dialogue** as a methodological artefact. It is not a separate phase. It is a cross-cutting practice that operates within and between all six phases of RTA, wherever researcher and AI engage in analytical work.
 
@@ -104,17 +104,17 @@ _process_log.jsonl  →  indexes  →  chat_exports/
 
 ## Why This Matters: The Epistemological Paradox
 
-AI-augmented RTA produces three categories of analytical artefact:
+Dialogic RTA produces three categories of analytical artefact:
 
 1. **Products** — coded transcripts, themes, theme maps, the final report
 2. **Process documentation** — reflexive notes, code revision histories, review files
 3. **The dialogic process itself** — the conversation between researcher and AI in which analytical decisions are made, challenged, revised, and justified
 
-Categories 1 and 2 are preserved by existing tools and practices. Category 3 — which constitutes the actual reflexive work in AI-augmented analysis — has, without the practices described above, no systematic infrastructure for preservation or analytical treatment.
+Categories 1 and 2 are preserved by existing tools and practices. Category 3 — which constitutes the actual reflexive work in Dialogic RTA — has, without the practices described above, no systematic infrastructure for preservation or analytical treatment.
 
 This matters because the dialogic process contains methodologically crucial knowledge that exists nowhere else: the researcher's corrections of AI bias, the epistemological reasoning behind coding decisions, the discovery of contextual factors AI cannot access, the researcher's insistence on analytical positions that resist AI's computational tendencies. These are not incidental exchanges. They are the medium through which interpretive authority is exercised.
 
-If the dialogic process is not preserved, AI-augmented RTA faces an epistemological paradox: the methodology claims to make interpretive reasoning more explicit through dialogue, while the infrastructure preserves only the products of that dialogue, not the dialogue itself. The result is worse than traditional RTA — we have the illusion of transparency without actual preservation of the transparency that was produced.
+If the dialogic process is not preserved, Dialogic RTA faces an epistemological paradox: the methodology claims to make interpretive reasoning more explicit through dialogue, while the infrastructure preserves only the products of that dialogue, not the dialogue itself. The result is worse than traditional RTA — we have the illusion of transparency without actual preservation of the transparency that was produced.
 
 ---
 
@@ -126,9 +126,9 @@ The practices described above rest on theoretical commitments that require artic
 
 Reflexivity in qualitative research has traditionally been conceived as a **monologic** practice. The researcher reflects on their own assumptions, biases, and interpretive commitments — alone, in a research journal, through introspection. Braun and Clarke (2019, 2022) frame reflexivity as the researcher's awareness that their subjectivity shapes the analysis: "subjectivity as a resource, not a problem to be managed."
 
-This framing assumes a single interpreting subject. AI-augmented analysis disrupts this assumption. When the researcher works in dialogue with AI, the interpretive process is no longer contained within a single mind. It unfolds **between** two analytical agents — one human, one computational — through conversation. The reflexive question shifts from "how am I shaping this analysis?" to "how is this analysis being shaped through our dialogue?"
+This framing assumes a single interpreting subject. Dialogic RTA disrupts this assumption. When the researcher works in dialogue with AI, the interpretive process is no longer contained within a single mind. It unfolds **between** two analytical agents — one human, one computational — through conversation. The reflexive question shifts from "how am I shaping this analysis?" to "how is this analysis being shaped through our dialogue?"
 
-This shift has precedent in qualitative methodology. Collaborative reflexivity in team-based research (Barry et al., 1999; Finlay, 2002) recognizes that when multiple researchers analyse data together, the reflexive process becomes intersubjective — meaning is negotiated, not simply generated. AI-augmented analysis extends this logic to human-machine dialogue, while recognizing that AI is not an equivalent intersubjective partner but a computational system with specific tendencies and limitations.
+This shift has precedent in qualitative methodology. Collaborative reflexivity in team-based research (Barry et al., 1999; Finlay, 2002) recognizes that when multiple researchers analyse data together, the reflexive process becomes intersubjective — meaning is negotiated, not simply generated. Dialogic RTA extends this logic to human-machine dialogue, while recognizing that AI is not an equivalent intersubjective partner but a computational system with specific tendencies and limitations.
 
 ### Bakhtin: Meaning as dialogic
 
@@ -136,28 +136,28 @@ Bakhtin's (1981, 1986) theory of dialogism provides the deepest theoretical grou
 
 For Bakhtin, meaning does not reside in individual utterances. It emerges in the **responsive relationship** between utterances — in the space between speaker and listener, between question and answer, between proposal and evaluation. Every utterance is shaped by the anticipated response; every response reshapes the meaning of what preceded it.
 
-This maps directly onto the AI-augmented coding process. When AI proposes a code, the proposal's meaning is incomplete until the researcher responds — accepting, modifying, or rejecting it. And the researcher's response is itself shaped by AI's proposal: the researcher would not have articulated certain interpretive positions without the provocation of AI's suggestion.
+This maps directly onto the Dialogic RTA coding process. When AI proposes a code, the proposal's meaning is incomplete until the researcher responds — accepting, modifying, or rejecting it. And the researcher's response is itself shaped by AI's proposal: the researcher would not have articulated certain interpretive positions without the provocation of AI's suggestion.
 
 Three Bakhtinian concepts are particularly relevant:
 
 **Responsive understanding.** Bakhtin (1986) argues that genuine understanding is always responsive — it involves taking a position toward what is understood. When the researcher evaluates AI's proposed code, they are not passively assessing correctness but actively constructing meaning through their evaluative response. The code that enters the analysis is neither AI's proposal nor the researcher's independent construction — it is the product of responsive engagement.
 
-**The utterance as unit.** For Bakhtin, the fundamental unit of communication is not the sentence but the utterance — a speech act that anticipates response and is shaped by the discourse that preceded it. In AI-augmented RTA, the fundamental analytical unit is not the individual code but the **dialogic exchange**: AI's proposal, the researcher's evaluation, the resulting revision. Preserving only the final code is like preserving only the last sentence of a conversation — technically complete but contextually empty.
+**The utterance as unit.** For Bakhtin, the fundamental unit of communication is not the sentence but the utterance — a speech act that anticipates response and is shaped by the discourse that preceded it. In Dialogic RTA, the fundamental analytical unit is not the individual code but the **dialogic exchange**: AI's proposal, the researcher's evaluation, the resulting revision. Preserving only the final code is like preserving only the last sentence of a conversation — technically complete but contextually empty.
 
-**Heteroglossia.** Bakhtin's concept of heteroglossia — the simultaneous coexistence of multiple voices and perspectives within discourse — illuminates the composite subjectivity of AI-augmented analysis. The analytical voice is not singular. It carries traces of AI's computational patterns, the researcher's interpretive commitments, and the dialogue through which these were negotiated.
+**Heteroglossia.** Bakhtin's concept of heteroglossia — the simultaneous coexistence of multiple voices and perspectives within discourse — illuminates the composite subjectivity of Dialogic RTA. The analytical voice is not singular. It carries traces of AI's computational patterns, the researcher's interpretive commitments, and the dialogue through which these were negotiated.
 
 ### Gadamer: Dialogue as the medium of understanding
 
 Gadamer's (1960/2004) hermeneutics reinforces and extends the Bakhtinian framework. For Gadamer, understanding is not a method to be applied but an event that occurs in dialogue. The concept of **Horizontverschmelzung** (fusion of horizons) describes how understanding emerges when different perspectives — each with their own pre-understandings, assumptions, and interpretive frameworks — engage in genuine conversation.
 
-In AI-augmented RTA, two "horizons" meet:
+In Dialogic RTA, two "horizons" meet:
 
 - **The researcher's horizon:** Theoretical commitments, contextual knowledge, epistemological position, familiarity with the data, professional experience, cultural understanding
 - **AI's horizon:** Statistical patterns from training data, tendency toward balanced structures, lexical pattern recognition, computational agreeableness, absence of situated context
 
 Understanding — in the form of analytical codes and themes — emerges not from either horizon alone but from their encounter. The codes that survive the dialogic process carry the imprint of both horizons, refined through negotiation.
 
-Critically, Gadamer insists that genuine dialogue requires **openness to being changed by the encounter.** The researcher who engages seriously with AI's proposals is not simply checking them against pre-established criteria — they are allowing AI's "seeing" to expand their own analytical vision, while simultaneously insisting on interpretive standards that AI cannot generate from within its computational horizon. This mutual transformation is the productive core of AI-augmented analysis.
+Critically, Gadamer insists that genuine dialogue requires **openness to being changed by the encounter.** The researcher who engages seriously with AI's proposals is not simply checking them against pre-established criteria — they are allowing AI's "seeing" to expand their own analytical vision, while simultaneously insisting on interpretive standards that AI cannot generate from within its computational horizon. This mutual transformation is the productive core of Dialogic RTA.
 
 ### Schön: Reflection-in-action and reflection-on-action
 
@@ -169,15 +169,15 @@ Schön's (1983) distinction between two modes of reflective practice provides th
 
 Both modes are methodologically necessary. Reflection-in-action produces the corrections, redirections, and epistemological interventions that maintain analytical quality during the session. Reflection-on-action produces the meta-analytical awareness that informs future sessions and contributes to the audit trail.
 
-Schön also introduces the concept of the **reflective practitioner** — someone who does not simply apply method but reflects on and adapts their practice in response to the situation. AI-augmented RTA requires this reflexive adaptability: the researcher cannot follow a fixed protocol because AI's contributions are unpredictable, context-dependent, and require situated judgement.
+Schön also introduces the concept of the **reflective practitioner** — someone who does not simply apply method but reflects on and adapts their practice in response to the situation. Dialogic RTA requires this reflexive adaptability: the researcher cannot follow a fixed protocol because AI's contributions are unpredictable, context-dependent, and require situated judgement.
 
 ### Postphenomenology: Technology as mediating experience
 
 Ihde's (1990) and Verbeek's (2005, 2011) postphenomenological framework theorizes how technologies mediate human experience and perception — not as neutral instruments but as active shapers of what can be seen, thought, and done.
 
-In AI-augmented RTA, the AI tool mediates the researcher's encounter with data. It does not simply transmit or process — it **transforms** the analytical experience. Through AI's proposals, the researcher sees patterns they might not have seen alone. Through AI's biases, certain patterns are foregrounded while others are suppressed. Through the dialogic form itself, the researcher is compelled to articulate interpretive reasoning that might otherwise remain tacit.
+In Dialogic RTA, the AI tool mediates the researcher's encounter with data. It does not simply transmit or process — it **transforms** the analytical experience. Through AI's proposals, the researcher sees patterns they might not have seen alone. Through AI's biases, certain patterns are foregrounded while others are suppressed. Through the dialogic form itself, the researcher is compelled to articulate interpretive reasoning that might otherwise remain tacit.
 
-Postphenomenology identifies multiple human-technology relations. AI-augmented RTA involves at least two:
+Postphenomenology identifies multiple human-technology relations. Dialogic RTA involves at least two:
 
 **Hermeneutic relation** (human → [technology–world]): The researcher interprets the data *through* AI's mediation. AI's codes and suggestions become the "text" through which the researcher reads the data. The risk: AI's reading becomes the researcher's reading without adequate critical distance.
 
@@ -198,7 +198,7 @@ What this document adds is the recognition that both concerns require **infrastr
 
 ## Three Levels of Reflexivity
 
-AI-augmented RTA operates on three reflexive levels. Each requires different documentation and different analytical attention:
+Dialogic RTA operates on three reflexive levels. Each requires different documentation and different analytical attention:
 
 ### Level 1: Reflexivity toward data
 *What patterns do I see? What am I constructing from this data?*
@@ -208,14 +208,14 @@ This is standard RTA reflexivity. It is partially captured in codes, reflexive n
 ### Level 2: Reflexivity toward the researcher
 *How is my positioning — theoretical, professional, personal — shaping what I see?*
 
-This is what Braun and Clarke (2019) mean by "subjectivity as a resource." It requires explicit researcher positionality and awareness of interpretive commitments. In AI-augmented work, it includes the researcher's relationship to AI as a tool — comfort level, trust patterns, tendency to defer or resist.
+This is what Braun and Clarke (2019) mean by "subjectivity as a resource." It requires explicit researcher positionality and awareness of interpretive commitments. In Dialogic RTA, it includes the researcher's relationship to AI as a tool — comfort level, trust patterns, tendency to defer or resist.
 
 ### Level 3: Reflexivity toward AI mediation
 *How is the AI tool shaping what gets coded, what gets missed, and what gets corrected?*
 
-This is specific to AI-augmented analysis and is the primary concern of this document. It asks not just "what did I decide?" but "what would I have decided without AI's mediation, and what does the difference tell me?"
+This is specific to Dialogic RTA and is the primary concern of this document. It asks not just "what did I decide?" but "what would I have decided without AI's mediation, and what does the difference tell me?"
 
-Level 3 reflexivity has a further dimension: **meta-reflexivity** — reflexivity about the conditions under which the reflexive process itself operates. This is what occurs when the researcher recognizes that the dialogic process constituting their reflexive work exists in a medium (the chat conversation) that is not systematically preserved. Identifying the gap between methodology and infrastructure is itself a reflexive act — and one that only becomes possible through sustained engagement with AI-augmented practice.
+Level 3 reflexivity has a further dimension: **meta-reflexivity** — reflexivity about the conditions under which the reflexive process itself operates. This is what occurs when the researcher recognizes that the dialogic process constituting their reflexive work exists in a medium (the chat conversation) that is not systematically preserved. Identifying the gap between methodology and infrastructure is itself a reflexive act — and one that only becomes possible through sustained engagement with dialogic practice.
 
 ---
 

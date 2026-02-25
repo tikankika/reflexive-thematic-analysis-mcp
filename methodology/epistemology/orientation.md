@@ -1,4 +1,4 @@
-# Experiential versus Critical Orientation in AI-Augmented RTA
+# Experiential versus Critical Orientation in Dialogic RTA
 
 ---
 

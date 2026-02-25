@@ -1,4 +1,4 @@
-# Phase 6: Producing the Report in AI-Augmented RTA
+# Phase 6: Producing the Report in Dialogic RTA
 
 ## Purpose
 
@@ -10,7 +10,7 @@ The researcher has been writing throughout — reflexive memos, code definitions
 
 The task, as Braun and Clarke (2006, p. 93) describe it: "to tell the complicated story of your data in a way which convinces the reader of the merit and validity of your analysis."
 
-In AI-augmented contexts, Phase 6 introduces the most visible risk to analytical quality: the flattening of interpretive depth through AI-assisted writing. AI produces fluent, organized, grammatically polished prose. It also produces prose that is characteristically generic — it sounds like analysis without doing the work of analysis. The researcher must maintain their own analytical voice throughout the write-up, and that voice must carry the interpretive depth that distinguishes reflexive TA from surface-level description.
+In dialogic contexts, Phase 6 introduces the most visible risk to analytical quality: the flattening of interpretive depth through AI-assisted writing. AI produces fluent, organized, grammatically polished prose. It also produces prose that is characteristically generic — it sounds like analysis without doing the work of analysis. The researcher must maintain their own analytical voice throughout the write-up, and that voice must carry the interpretive depth that distinguishes reflexive TA from surface-level description.
 
 ---
 
@@ -72,7 +72,7 @@ Theme ordering was planned in Phase 5. In the writing process, the planned order
 
 ## Transparency About AI Use
 
-The Methods section must articulate how AI was used — not as disclosure of a limitation, but as description of a methodology. AI-augmented RTA is a specific analytical approach with its own logic, safeguards, and quality criteria. Describing it clearly is a contribution to the emerging methodological literature on AI in qualitative research.
+The Methods section must articulate how AI was used — not as disclosure of a limitation, but as description of a methodology. Dialogic RTA is a specific analytical approach with its own logic, safeguards, and quality criteria. Describing it clearly is a contribution to the emerging methodological literature on AI in qualitative research.
 
 The framing matters. "AI did it and I checked" describes a quality assurance process. What actually happened — a sustained dialogue where AI's computational proposals were evaluated, challenged, and often rejected through the researcher's interpretive engagement — is a *method*. The write-up should make this method visible: which phases involved AI, what AI's role was, how the researcher maintained interpretive authority, and what the reflexive documentation reveals about AI's influence on the analysis. The reader should understand not just that AI was used but how it was used to produce more transparent, more explicitly reasoned analysis than traditional approaches often achieve.
 
@@ -141,7 +141,7 @@ The analysis is complete when:
 - Byrne, D. (2022). A worked example of Braun and Clarke's approach to reflexive thematic analysis. *Quality & Quantity*, 56, 1391–1412.
 - Terry, G., Hayfield, N., Clarke, V., & Braun, V. (2017). Thematic analysis. In C. Willig & W. Stainton Rogers (Eds.), *The SAGE Handbook of Qualitative Research in Psychology* (2nd ed., pp. 17–37). Sage.
 
-### AI-Augmented Qualitative Research
+### AI in Qualitative Research
 - Brailas, A. (2025). Artificial intelligence in qualitative research: Beyond outsourcing data analysis to the machine. *Psychology International*, 7(3), 78.
 - Ozuem, W., Willis, M., Ranfagni, S., & Omeish, F. (2025). Thematic analysis in an artificial intelligence-driven context: A stage-by-stage process. *International Journal of Qualitative Methods*, 24, 1–15.
 - Dröge, K. (2025). Why AI has a "proving the obvious" problem, and what we can do about it. *CAQDAS Networking Project Blog*.

@@ -1,4 +1,4 @@
-# Phase 2b: Critical Coding Review — AI-Augmented RTA
+# Phase 2b: Critical Coding Review — Dialogic RTA
 
 ## Purpose
 
@@ -10,7 +10,7 @@ Phase 2b is not a rubber-stamp. It is where the researcher becomes an **active a
 
 ## Theoretical Foundation
 
-### Why Phase 2b exists in AI-augmented RTA
+### Why Phase 2b exists in Dialogic RTA
 
 In traditional (non-AI) reflexive thematic analysis, the researcher codes inductively by reading data closely and generating codes through interpretive engagement (Braun & Clarke, 2006, 2022). The iterative nature of coding — reading, coding, re-reading, revising — naturally builds the researcher's deep familiarity with the data.
 
@@ -37,7 +37,7 @@ Ozuem et al. (2025) propose the RIPES model (Reflexivity, Interpretation, Proced
 1. **Reflexivity toward one's own biases** — the researcher's theoretical positioning, assumptions, and interpretive lens (standard in all RTA)
 2. **Reflexivity toward AI mediation** — how the AI tool's processing shapes, filters, or distorts the analytical encounter
 
-This second layer is unique to AI-augmented work. The researcher must ask: Does this code reflect something genuinely present in the data, or has the AI imposed a pattern from its training data? Has the AI's "way of seeing" privileged formal regularities at the expense of interpretive nuance?
+This second layer is unique to dialogic work. The researcher must ask: Does this code reflect something genuinely present in the data, or has the AI imposed a pattern from its training data? Has the AI's "way of seeing" privileged formal regularities at the expense of interpretive nuance?
 
 Brailas (2025) frames this as treating AI not as a "neutral instrument" but as an **"intra-active participant"** in meaning construction. The researcher–AI–data triad mutually constitutes the analytical process. Phase 2b is where the researcher makes this mutual constitution visible and exercises critical oversight.
 
@@ -60,7 +60,7 @@ Byrne (2022) demonstrates that initial coding in RTA involves **multiple iterati
 - **Iteration 2:** Consolidation and refinement — collapse similar codes, check consistency, clarify definitions
 - **Iteration 3:** Quality and theory check — alignment with theoretical position, appropriate semantic/latent balance, relevance to research questions
 
-Phase 2b maps onto iterations 2 and 3 in an AI-augmented context. Where Byrne's iterations assume the same researcher re-reads and revises their own codes, Phase 2b specifically addresses the situation where initial codes were co-created with AI assistance and require the researcher's active critical engagement before proceeding to theme generation.
+Phase 2b maps onto iterations 2 and 3 in a dialogic context. Where Byrne's iterations assume the same researcher re-reads and revises their own codes, Phase 2b specifically addresses the situation where initial codes were co-created with AI assistance and require the researcher's active critical engagement before proceeding to theme generation.
 
 Byrne's quality check questions are directly applicable:
 
@@ -287,7 +287,7 @@ The reflexive notes produced in Phase 2b serve as part of the **audit trail** �
 - Braun, V., & Clarke, V. (2022). *Thematic Analysis: A Practical Guide*. Sage.
 - Byrne, D. (2022). A worked example of Braun and Clarke's approach to reflexive thematic analysis. *Quality & Quantity*, 56, 1391–1412.
 
-### AI-augmented qualitative research
+### AI in qualitative research
 - Brailas, A. (2025). Artificial intelligence in qualitative research: Beyond outsourcing data analysis to the machine. *Psychology International*, 7(3), 78.
 - Ozuem, W., Willis, M., Ranfagni, S., & Omeish, F. (2025). Thematic analysis in an artificial intelligence-driven context: A stage-by-stage process. *International Journal of Qualitative Methods*, 24, 1–15.
 - Al-Fattal, A., & Singh, J. (2025). Comparative reflections on human-driven and generative artificial intelligence-assisted thematic analysis: A collaborative autoethnography. *International Journal of Qualitative Methods*, 24, 1–10.

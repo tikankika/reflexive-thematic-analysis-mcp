@@ -1,4 +1,4 @@
-# Phase 5: Defining and Naming Themes in AI-Augmented RTA
+# Phase 5: Defining and Naming Themes in Dialogic RTA
 
 ## Purpose
 
@@ -8,7 +8,7 @@ As Byrne explains (2022, p. 1407):
 
 > "At this phase, the researcher is tasked with presenting a detailed analysis of the thematic framework. Each individual theme and sub-theme is to be expressed in relation to both the dataset and the research question(s)."
 
-In AI-augmented contexts, Phase 5 is where a subtle but significant risk emerges: the colonization of the researcher's analytical language by AI. If AI has been a dialogic partner throughout coding and theme generation, its vocabulary — characteristically fluent, generically precise, analytically flat — may have seeped into how the researcher thinks about and names their themes. Phase 5 is where the researcher reclaims full ownership of the analytical voice.
+In dialogic contexts, Phase 5 is where a subtle but significant risk emerges: the colonization of the researcher's analytical language by AI. If AI has been a dialogic partner throughout coding and theme generation, its vocabulary — characteristically fluent, generically precise, analytically flat — may have seeped into how the researcher thinks about and names their themes. Phase 5 is where the researcher reclaims full ownership of the analytical voice.
 
 ---
 
@@ -104,7 +104,7 @@ Data extracts are integral to the analytical argument. The researcher interprets
 
 **The straightforward test** (Terry et al., 2017): if the extract can be removed and the write-up still makes sense → illustrative. If the extract is removed and the write-up no longer makes sense → analytical.
 
-**In AI-augmented contexts:** AI can produce fluent illustrative write-up — describing what participants said, organized under themes. What AI cannot produce is genuine analytical writing — interpretation that connects specific data to theoretical insight through the researcher's own engagement. Phase 5 preparation should orient toward analytical treatment, because this is where the researcher's interpretive contribution is most visible and most necessary.
+**In dialogic contexts:** AI can produce fluent illustrative write-up — describing what participants said, organized under themes. What AI cannot produce is genuine analytical writing — interpretation that connects specific data to theoretical insight through the researcher's own engagement. Phase 5 preparation should orient toward analytical treatment, because this is where the researcher's interpretive contribution is most visible and most necessary.
 
 ---
 
@@ -169,6 +169,6 @@ Before moving to Phase 6:
 - Byrne, D. (2022). A worked example of Braun and Clarke's approach to reflexive thematic analysis. *Quality & Quantity*, 56, 1391–1412.
 - Terry, G., Hayfield, N., Clarke, V., & Braun, V. (2017). Thematic analysis. In C. Willig & W. Stainton Rogers (Eds.), *The SAGE Handbook of Qualitative Research in Psychology* (2nd ed., pp. 17–37). Sage.
 
-### AI-Augmented Qualitative Research
+### AI in Qualitative Research
 - Brailas, A. (2025). Artificial intelligence in qualitative research: Beyond outsourcing data analysis to the machine. *Psychology International*, 7(3), 78.
 - Ozuem, W., Willis, M., Ranfagni, S., & Omeish, F. (2025). Thematic analysis in an artificial intelligence-driven context: A stage-by-stage process. *International Journal of Qualitative Methods*, 24, 1–15.

@@ -9,7 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.6.0] - 2026-02-24
 
+### Changed
+- **Terminology: "AI-Augmented RTA" → "Dialogic Reflexive Thematic Analysis" across entire repository.** The term "Dialogic" replaces "AI-Augmented" because analytical meaning is constructed through multi-layered dialogue — between researcher and AI, researcher and data, and researcher and their own interpretive commitments. The dialogue *is* the method, not a means to the method. Updated in: all 6 phase documents, all 4 epistemology documents, README, package.json, CONTRIBUTING, RESEARCH_WORKFLOW, ROADMAP, init-instructions. Reference section headers changed from "AI-Augmented Qualitative Research" to "AI in Qualitative Research". The two remaining "AI-Augmented" references in `constructionist.md` are intentional — they explain the rationale for the terminological change.
+- **`methodology/rta_overview.md` replaced by `methodology/README.md`** — researcher-facing guide to the methodology. Introduces four foundational principles (adding dialogic reflexivity as the fourth), reading order, and document map. The previous `rta_overview.md` was an abstract framework document; the new README addresses the researcher directly. Original content preserved in git history; `rta_overview.md` now contains a redirect.
+- **`methodology/epistemology/constructionist.md` fused** with operational content from `Section_3.1.1_Epistemology_Guide.md` (Nextcloud). New sections: "A Note on Terminology" (introducing Dialogic RTA), "Positioning Your Analysis" (four questions), "Orienting the Dialogic Partnership" (AI familiarization as epistemological practice), "Documenting the Epistemological Dialogue", "Readiness Check". Scaffold placeholders (`[YOUR ANSWER]`) transformed to methodological instructions.
+- **`package.json`** description and keywords updated: "AI-augmented" → "Dialogic", keyword "ai-augmented" → "dialogic".
+
 ### Added
+- **Status section in repository README** — honest about methodology maturity: tool infrastructure tested in practice, methodology documents are working documents with unverified references, terminological framework and fourth principle are recent developments, Phase 3–6 not tested in practice. "This is an active research project, not a finished product."
 - **Process logging infrastructure for dialogic reflexivity.** Captures the epistemically significant moments in researcher-AI dialogue that existing tools do not preserve — corrections, redirections, rejections, discoveries, conventions.
   - `log_process_event` — manual tool for researcher-initiated events. Captures event type, researcher's exact words (in vivo), context, and before/after state.
   - `log_session_end` — session summary with key decisions and unresolved questions.

@@ -1,4 +1,4 @@
-# Semantic versus Latent Coding in AI-Augmented RTA
+# Semantic versus Latent Coding in Dialogic RTA
 
 ---
 
@@ -70,7 +70,7 @@ This is where AI's capabilities and limitations are most sharply differentiated.
 
 Under constructionist epistemology, even semantic coding is an act of construction. The researcher does not simply "find" surface meanings — they decide what is meaningful, how to label it, and where segment boundaries fall. Semantic codes are not neutral descriptions but interpretive choices about what matters.
 
-This has a specific implication for AI-augmented work: AI's semantic proposals are not "objective" baselines that the researcher then interprets. They are one set of constructions — shaped by training data patterns — that the researcher evaluates against their own. Accepting an AI semantic code is still an interpretive decision, not a neutral starting point.
+This has a specific implication for dialogic work: AI's semantic proposals are not "objective" baselines that the researcher then interprets. They are one set of constructions — shaped by training data patterns — that the researcher evaluates against their own. Accepting an AI semantic code is still an interpretive decision, not a neutral starting point.
 
 Latent coding makes the constructive nature of analysis more visible. The researcher is explicitly constructing interpretations that go beyond what participants said. Under constructionism, this is not a methodological weakness but the point of the analysis — the researcher brings interpretive resources (theoretical knowledge, contextual understanding, reflexive awareness) that enable them to construct meaning that neither the participants nor AI could produce alone.
 

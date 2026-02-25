@@ -44,6 +44,6 @@ These principles guide what gets built and what does not.
 
 **Infrastructure, not analysis.** The tool handles file operations, progress tracking, and methodology loading. Analytical logic — what constitutes a good code, when to split a segment, how to construct a theme — belongs in the methodology documents and the researcher's judgment.
 
-**Methodology-agnostic tools, opinionated methodology.** The tool infrastructure works with any qualitative approach. The included methodology takes a clear position grounded in Braun & Clarke's RTA and recent literature on AI-augmented analysis. These are separate concerns.
+**Methodology-agnostic tools, opinionated methodology.** The tool infrastructure works with any qualitative approach. The included methodology takes a clear position grounded in Braun & Clarke's RTA and recent literature on dialogic analysis. These are separate concerns.
 
 **Plain text, open formats.** All outputs are markdown. No proprietary formats, no lock-in, no database dependencies. A researcher who stops using this tool keeps all their work in readable files.

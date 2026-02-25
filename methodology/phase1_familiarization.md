@@ -1,14 +1,14 @@
-# Phase 1: Data Familiarization in AI-Augmented RTA
+# Phase 1: Data Familiarization in Dialogic RTA
 
 ## Purpose
 
-Familiarization establishes the researcher's independent interpretive relationship with the data before AI-augmented analysis begins. This phase is preparatory, not analytical — it creates the conditions under which the researcher can exercise genuine interpretive authority in Phases 2–6.
+Familiarization establishes the researcher's independent interpretive relationship with the data before dialogic analysis begins. This phase is preparatory, not analytical — it creates the conditions under which the researcher can exercise genuine interpretive authority in Phases 2–6.
 
 Byrne (2022, p. 1399) is direct about what this requires:
 
 > "This phase can be quite time consuming and requires a degree of patience. However, it is important to afford equal consideration across the entire depth and breadth of the dataset."
 
-In AI-augmented contexts, familiarization has an additional function: it protects against the specific risk of outsourcing interpretive engagement to AI. A researcher who enters Phase 2 without intimate knowledge of the data has no basis from which to evaluate AI's proposals — every suggestion will seem plausible because the researcher lacks the contextual awareness to recognise when something is wrong.
+In dialogic contexts, familiarization has an additional function: it protects against the specific risk of outsourcing interpretive engagement to AI. A researcher who enters Phase 2 without intimate knowledge of the data has no basis from which to evaluate AI's proposals — every suggestion will seem plausible because the researcher lacks the contextual awareness to recognise when something is wrong.
 
 ---
 
@@ -56,7 +56,7 @@ A researcher who has completed weak familiarization enters Phase 2 reliant on AI
 
 Reflexive documentation during familiarization serves two purposes. First, it creates a record of the researcher's independent observations before AI-mediated analysis begins — a baseline against which AI's subsequent influence can be assessed. Second, it captures the dialogic scaffolding process: what the researcher asked AI, what AI responded, and how the researcher evaluated that response. This documentation forms part of the reflexive audit trail that runs through all phases.
 
-Ozuem et al. (2025) argue that researchers in AI-augmented contexts should "document both human-led and AI-supported analytic actions in detail to ensure clarity in how codes and themes were identified, revised, or validated." This begins in Phase 1, not Phase 2.
+Ozuem et al. (2025) argue that researchers in dialogic contexts should "document both human-led and AI-supported analytic actions in detail to ensure clarity in how codes and themes were identified, revised, or validated." This begins in Phase 1, not Phase 2.
 
 The documentation need not follow a rigid format. What matters is that the researcher records their independent observations, their dialogic interactions with AI, and their reflexive assessment of how AI scaffolding affected their developing understanding. The goal is transparency about the conditions under which analytical work subsequently proceeds.
 

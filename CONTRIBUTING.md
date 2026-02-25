@@ -46,7 +46,7 @@ Open a GitHub Issue with:
 
 ## Methodology contributions
 
-The methodology suite implements Braun & Clarke's Reflexive Thematic Analysis (2006, 2022), adapted for AI-augmented analysis. Proposed changes to methodology documents should reference relevant RTA literature and explain how the change addresses a genuine analytical concern. The methodology is opinionated by design — it takes clear positions grounded in the literature rather than offering neutral summaries.
+The methodology suite implements Braun & Clarke's Reflexive Thematic Analysis (2006, 2022), adapted for dialogic analysis. Proposed changes to methodology documents should reference relevant RTA literature and explain how the change addresses a genuine analytical concern. The methodology is opinionated by design — it takes clear positions grounded in the literature rather than offering neutral summaries.
 
 ## License
 

@@ -1,4 +1,4 @@
-# Phase 3: Generating Themes in AI-Augmented RTA
+# Phase 3: Generating Themes in Dialogic RTA
 
 ## Purpose
 
@@ -8,7 +8,7 @@ Phase 3 marks a fundamental shift in analytical focus. The researcher moves from
 
 The question is no longer "what pattern does this data item show?" but "what patterns exist across my entire dataset when I look at all these codes together?" This is where the analytical work becomes explicitly interpretive and creative — the researcher actively construes relationships between codes and constructs themes that capture meaningful patterns.
 
-In AI-augmented contexts, this is also where the "proving the obvious" problem becomes most acute. AI excels at grouping similar codes — but similarity is not meaning. The risk is that AI-proposed theme clusters reflect surface-level lexical grouping rather than genuine patterns of shared meaning constructed through interpretive engagement.
+In dialogic contexts, this is also where the "proving the obvious" problem becomes most acute. AI excels at grouping similar codes — but similarity is not meaning. The risk is that AI-proposed theme clusters reflect surface-level lexical grouping rather than genuine patterns of shared meaning constructed through interpretive engagement.
 
 ---
 
@@ -26,7 +26,7 @@ This is fundamentally different from "domain summaries" — summaries of what pa
 
 The importance of a theme is not determined by frequency — how many codes it contains or how often something appears. Constructionist epistemology means meaningfulness matters more than recurrence. A theme supported by fewer codes but capturing something particularly significant for the research questions may be more important than a quantitatively "bigger" theme that describes something common but analytically shallow.
 
-**In AI-augmented contexts:** AI is biased toward frequency. It will naturally foreground patterns that recur across many codes and many data items. The researcher must actively resist this bias and ask: is this theme meaningful, or just common? A theme supported by three codes from three different participants, each capturing a moment of genuine interpretive tension, may be more analytically productive than a theme supported by thirty codes that all describe the same surface-level observation.
+**In dialogic contexts:** AI is biased toward frequency. It will naturally foreground patterns that recur across many codes and many data items. The researcher must actively resist this bias and ask: is this theme meaningful, or just common? A theme supported by three codes from three different participants, each capturing a moment of genuine interpretive tension, may be more analytically productive than a theme supported by thirty codes that all describe the same surface-level observation.
 
 ---
 
@@ -189,7 +189,7 @@ Hold your candidate themes lightly. Phase 4 will test them.
 - Byrne, D. (2022). A worked example of Braun and Clarke's approach to reflexive thematic analysis. *Quality & Quantity*, 56, 1391–1412.
 - Patton, M. Q. (1990). *Qualitative Evaluation and Research Methods* (2nd ed.). Sage.
 
-### AI-Augmented Qualitative Research
+### AI in Qualitative Research
 - Brailas, A. (2025). Artificial intelligence in qualitative research: Beyond outsourcing data analysis to the machine. *Psychology International*, 7(3), 78.
 - Ozuem, W., Willis, M., Ranfagni, S., & Omeish, F. (2025). Thematic analysis in an artificial intelligence-driven context: A stage-by-stage process. *International Journal of Qualitative Methods*, 24, 1–15.
 - Dröge, K. (2025). Why AI has a "proving the obvious" problem, and what we can do about it. *CAQDAS Networking Project Blog*.
