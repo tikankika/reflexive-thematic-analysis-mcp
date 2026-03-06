@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [Unreleased]
+
+### Added
+- **RFC-001: Cowork Plugin vs MCP Analysis** (`docs/rfcs/RFC-001-cowork-plugin.md`) — systematic evaluation of whether a Cowork plugin should complement the MCP server. Conclusion: **plugin rejected in favor of MCP improvements**. Key findings:
+  - Plugin's unique value evaporates after applying methodological constraints — persistent methodology in skills conflicts with the dialogic principle that methodology_load() is a shared reading moment between researcher and Claude
+  - "Proving the obvious" risk amplified by persistent AI methodology knowledge
+  - Researcher authority requires the conscious act of loading methodology together, not background automation
+  - All useful plugin features (workflow status, session reflection, process log summary) are better implemented as MCP tools
+- **Recommended MCP improvements** (from RFC-001 analysis):
+  - `workflow_status()` — show current phase, progress, suggest next step
+  - `session_reflection()` — structured reflection prompts with auto-logging
+  - `process_log_summary()` — surface recent corrections, decisions, patterns
+  - Enhanced `methodology_load()` scaffolding for Phase 4-6
+
+---
+
 ## [0.6.0] - 2026-02-24
 
 ### Changed
