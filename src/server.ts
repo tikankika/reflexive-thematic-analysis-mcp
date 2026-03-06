@@ -12,6 +12,7 @@
  * Tool Categories:
  * - Core (no prefix): init, project_setup, add_line_index, methodology_load
  * - Phase 2a (prefix phase2a_): code_start, code_read_next, code_write_segment, etc.
+ * - Workflow: workflow_status, session_reflection, process_log_summary
  */
 
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
@@ -54,6 +55,11 @@ import { reviewMergeSegments } from './tools/review_merge_segments.js';
 // Phase 3 tools
 import { extractCodes } from './tools/phase3_extract_codes.js';
 
+// Workflow tools
+import { workflowStatus } from './tools/workflow_status.js';
+import { sessionReflection } from './tools/session_reflection.js';
+import { processLogSummary } from './tools/process_log_summary.js';
+
 // Process logging tools
 import { logProcessEvent } from './tools/log_process_event.js';
 import { logSessionEnd } from './tools/log_session_end.js';
@@ -68,7 +74,7 @@ class QualitativeAnalysisRTAServer {
     this.server = new Server(
       {
         name: 'reflexive-thematic-analysis-mcp',
-        version: '0.6.0',
+        version: '0.6.1',
       },
       {
         capabilities: {
@@ -640,6 +646,74 @@ class QualitativeAnalysisRTAServer {
             required: ['project_path'],
           },
         },
+        // === WORKFLOW TOOLS ===
+        {
+          name: 'workflow_status',
+          description:
+            'Show project-wide RTA progress. Lists all transcripts with status, ' +
+            'calculates phase progress, and recommends next step. ' +
+            'Requires init() to be called first.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              project_path: {
+                type: 'string',
+                description:
+                  'Path to project directory (contains rta_config.yaml). Optional if config path is in session.',
+              },
+            },
+            required: [],
+          },
+        },
+        {
+          name: 'session_reflection',
+          description:
+            'Generate structured reflection questions based on process log data. ' +
+            'Reads the process log, counts events by type (corrections, rejections, discoveries), ' +
+            'and returns questions grounded in the session\'s actual data. ' +
+            'Use before calling log_session_end. Requires init() first.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              file_path: {
+                type: 'string',
+                description: 'Path to transcript file',
+              },
+              phase: {
+                type: 'string',
+                description: 'Current RTA phase (e.g., "2a", "2b", "3")',
+              },
+            },
+            required: ['file_path'],
+          },
+        },
+        {
+          name: 'process_log_summary',
+          description:
+            'Surface process log events with optional filtering. ' +
+            'Reads _process_log.jsonl, filters by event type or last N events, ' +
+            'groups by type with counts, and shows patterns (corrections, rejections, discoveries). ' +
+            'Requires init() first.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              file_path: {
+                type: 'string',
+                description: 'Path to transcript file',
+              },
+              filter_type: {
+                type: 'string',
+                description:
+                  'Filter by event type (e.g., "correction", "rejection", "discovery")',
+              },
+              last_n: {
+                type: 'number',
+                description: 'Show only the last N events',
+              },
+            },
+            required: ['file_path'],
+          },
+        },
         // === PROCESS LOGGING TOOLS ===
         {
           name: 'log_process_event',
@@ -853,6 +927,19 @@ class QualitativeAnalysisRTAServer {
             result = await extractCodes(args as any);
             break;
 
+          // === WORKFLOW TOOLS ===
+          case 'workflow_status':
+            result = await workflowStatus(args as any);
+            break;
+
+          case 'session_reflection':
+            result = await sessionReflection(args as any);
+            break;
+
+          case 'process_log_summary':
+            result = await processLogSummary(args as any);
+            break;
+
           // === PROCESS LOGGING TOOLS ===
           case 'log_process_event':
             result = await logProcessEvent(args as any);
@@ -905,7 +992,7 @@ class QualitativeAnalysisRTAServer {
     await this.server.connect(transport);
 
     // Log to stderr (stdout is used for MCP protocol)
-    console.error('Reflexive Thematic Analysis MCP Server v0.6.0 running...');
+    console.error('Reflexive Thematic Analysis MCP Server v0.6.1 running...');
     console.error('Core: init, project_setup, add_line_index, methodology_load, list_files, read_file, write_file');
     console.error(
       'Phase 2a: code_start, code_read_next, code_write_segment, code_skip_chunk, code_status, code_verify, code_reset_status, code_clear_all, code_delete_segment'
@@ -914,6 +1001,7 @@ class QualitativeAnalysisRTAServer {
       'Phase 2b: review_start, review_next, review_read_segment, review_write_note, review_revise_codes, review_status, review_split_segment, review_merge_segments'
     );
     console.error('Phase 3: extract_codes');
+    console.error('Workflow: workflow_status, session_reflection, process_log_summary');
     console.error('Process Logging: log_process_event, log_session_end');
   }
 }

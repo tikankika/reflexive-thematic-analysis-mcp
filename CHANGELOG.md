@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [Unreleased]
+
+---
+
+## [0.6.1] - 2026-03-06
+
+### Added
+- **`workflow_status` tool** — show project-wide RTA progress: lists all transcripts with status, calculates phase progress, recommends next step. Uses rta_config.yaml or session state.
+- **`session_reflection` tool** — structured reflection questions based on process log data. Counts corrections, rejections, discoveries from the current session and generates targeted questions. Use before `log_session_end`.
+- **`process_log_summary` tool** — surface process log events with optional filtering by event type or last N events. Groups by type with counts, shows patterns.
+- **`methodology_load` phase scaffolding for Phase 4–6** — when loading the last methodology document for phase4, phase5, or phase6, the response now includes `phase_scaffolding` with structured work steps, reflection questions, and AI countermeasures. Phase 1–3 remain unchanged (no scaffolding).
+
+### Documentation
+- **RFC-001: Cowork Plugin vs MCP Analysis** (`docs/rfcs/RFC-001-cowork-plugin.md`) — systematic evaluation of whether a Cowork plugin should complement the MCP server. Conclusion: plugin rejected in favor of MCP improvements.
+
+---
+
 ## [0.6.0] - 2026-02-24
 
 ### Changed
