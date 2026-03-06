@@ -106,6 +106,11 @@ Phases 4 through 6 do not have dedicated tools. They are methodology-driven conv
 - Do not "confirm" themes — if asked to evaluate, argue against the theme first, then for it
 - Do not skip methodology loading because "we already discussed this" — each session starts fresh
 
+### Workflow Tools
+- `workflow_status` - Show project-wide progress, transcript statuses, next step recommendation
+- `session_reflection` - Structured reflection questions based on process log data (use before session_end)
+- `process_log_summary` - Surface process log events with filtering (by type or last N)
+
 ### Process Logging
 - `log_process_event` - Log epistemically significant moment in researcher-AI dialogue
 - `log_session_end` - Summarize and close a coding/review session
