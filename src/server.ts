@@ -340,6 +340,16 @@ class QualitativeAnalysisRTAServer {
                       description:
                         'Codes for this specific semantic segment (e.g., ["#kod1_lins1", "#kod2_lins2"]). Can be empty array.',
                     },
+                    title: {
+                      type: 'string',
+                      description:
+                        'Segment title for coding log (e.g., "SPEAKER_06 & SPEAKER_07 (0361–0366) — Elevers AI-användning").',
+                    },
+                    reflexive_note: {
+                      type: 'string',
+                      description:
+                        'Reflexive note for this specific segment. Saved to coding log.',
+                    },
                   },
                   required: ['start_line', 'end_line', 'codes'],
                 },
@@ -359,7 +369,7 @@ class QualitativeAnalysisRTAServer {
               segment_title: {
                 type: 'string',
                 description:
-                  'Human-readable title for the coding log entry (e.g., "SPEAKER_06 (0281–0295) — Elever söker direktsvar").',
+                  'Chunk-level title for the coding log (e.g., "Chunk 7 — AI-detektion, förbud→lösning"). Per-segment titles go in each segment\'s "title" field.',
               },
               researcher_decision: {
                 type: 'string',
