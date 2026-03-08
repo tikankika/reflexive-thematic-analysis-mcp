@@ -79,19 +79,6 @@ export class CodingLogWriter {
       lines.push('');
     }
 
-    // Chunk-level reflexive note
-    if (params.reflexive_note) {
-      lines.push('### Reflexion');
-      lines.push(params.reflexive_note);
-      lines.push('');
-    }
-
-    if (params.coding_rationale) {
-      lines.push('### Motivering');
-      lines.push(params.coding_rationale);
-      lines.push('');
-    }
-
     lines.push('---');
     lines.push('');
 

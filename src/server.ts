@@ -351,16 +351,6 @@ class QualitativeAnalysisRTAServer {
                 description:
                   '[NEW MODE - v0.2.0] Array of semantic segments to write. Each segment has explicit line range and codes, marked with /segment markers. Segments will be auto-sorted and validated for overlaps. Use this OR codes, not both.',
               },
-              reflexive_note: {
-                type: 'string',
-                description:
-                  'Reflexive note about this coding batch — analytical observations, epistemological reflections. Saved to coding log for colleague review.',
-              },
-              coding_rationale: {
-                type: 'string',
-                description:
-                  'Why this segment was selected/coded — rationale for coding decisions. Saved to coding log.',
-              },
               segment_title: {
                 type: 'string',
                 description:

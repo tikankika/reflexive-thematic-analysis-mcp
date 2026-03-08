@@ -32,12 +32,10 @@ export async function codeWriteSegment(args: {
   file_path: string;
   codes?: string[];
   segments?: CodeSegmentInput[];
-  reflexive_note?: string;
-  coding_rationale?: string;
   segment_title?: string;
   researcher_decision?: string;
 }): Promise<any> {
-  const { file_path, codes, segments, reflexive_note, coding_rationale, segment_title, researcher_decision } = args;
+  const { file_path, codes, segments, segment_title, researcher_decision } = args;
 
   const writer = new SegmentWriter();
   const statusManager = new StatusManager();
@@ -57,8 +55,8 @@ export async function codeWriteSegment(args: {
     );
   }
 
-  // Coding log params (shared across modes)
-  const logParams = { reflexive_note, coding_rationale, segment_title, researcher_decision };
+  // Coding log params
+  const logParams = { segment_title, researcher_decision };
 
   // Route to appropriate mode
   if (segments !== undefined) {
@@ -77,10 +75,8 @@ export async function codeWriteSegment(args: {
  * @param statusManager - StatusManager instance
  * @returns Result object
  */
-/** Optional coding log parameters (top-level, shared across all segments in a batch) */
+/** Optional coding log parameters (top-level) */
 interface CodingLogParams {
-  reflexive_note?: string;
-  coding_rationale?: string;
   segment_title?: string;
   researcher_decision?: string;
 }
@@ -133,8 +129,6 @@ async function writeMultiSegmentMode(
     await codingLogWriter.appendChunk(codingLogPath, segments, {
       chunk_title: logParams.segment_title,
       researcher_decision: logParams.researcher_decision,
-      reflexive_note: logParams.reflexive_note,
-      coding_rationale: logParams.coding_rationale,
     });
   } catch {
     // Don't fail the write if coding log fails
@@ -233,8 +227,6 @@ async function writeLegacyMode(
     await codingLogWriter.appendChunk(codingLogPath, [legacySegment], {
       chunk_title: logParams.segment_title,
       researcher_decision: logParams.researcher_decision,
-      reflexive_note: logParams.reflexive_note,
-      coding_rationale: logParams.coding_rationale,
     });
   } catch {
     // Don't fail the write if coding log fails
