@@ -3,7 +3,7 @@ import { SegmentWriter } from '../core/segment_writer.js';
 import { StatusManager } from '../core/status_manager.js';
 import { CodeSegmentInput } from '../types/chunk.js';
 import { ProcessLogger } from '../core/process_logger.js';
-import { CodingLogWriter, CodingLogEntry } from '../core/coding_log_writer.js';
+import { CodingLogWriter } from '../core/coding_log_writer.js';
 
 /**
  * code_write_segment - Write codes for segment(s)
@@ -126,29 +126,16 @@ async function writeMultiSegmentMode(
     // Don't fail the write if logging fails
   }
 
-  // Auto-append to coding log — one entry per segment (best-effort)
+  // Auto-append to coding log — hierarchical chunk > segments (best-effort)
   try {
     const codingLogWriter = new CodingLogWriter();
     const codingLogPath = codingLogWriter.getLogPath(file_path);
-    for (const seg of segments) {
-      const entry: CodingLogEntry = {
-        line_range: `${seg.start_line}–${seg.end_line}`,
-        researcher_decision: logParams.researcher_decision,
-        codes: seg.codes,
-      };
-      await codingLogWriter.append(codingLogPath, entry);
-    }
-    // Append chunk-level reflexive note and rationale as separate entry (if provided)
-    if (logParams.reflexive_note || logParams.coding_rationale) {
-      const metaEntry: CodingLogEntry = {
-        segment_title: logParams.segment_title || `Reflexion ${segments[0]?.start_line}–${segments[segments.length - 1]?.end_line}`,
-        line_range: `${segments[0]?.start_line}–${segments[segments.length - 1]?.end_line}`,
-        codes: [],
-        reflexive_note: logParams.reflexive_note,
-        coding_rationale: logParams.coding_rationale,
-      };
-      await codingLogWriter.append(codingLogPath, metaEntry);
-    }
+    await codingLogWriter.appendChunk(codingLogPath, segments, {
+      chunk_title: logParams.segment_title,
+      researcher_decision: logParams.researcher_decision,
+      reflexive_note: logParams.reflexive_note,
+      coding_rationale: logParams.coding_rationale,
+    });
   } catch {
     // Don't fail the write if coding log fails
   }
@@ -238,15 +225,17 @@ async function writeLegacyMode(
   try {
     const codingLogWriter = new CodingLogWriter();
     const codingLogPath = codingLogWriter.getLogPath(file_path);
-    const entry: CodingLogEntry = {
-      segment_title: logParams.segment_title,
-      line_range: `${fileStartLine}–${fileEndLine}`,
-      researcher_decision: logParams.researcher_decision,
+    const legacySegment = {
+      start_line: String(fileStartLine),
+      end_line: String(fileEndLine),
       codes,
+    };
+    await codingLogWriter.appendChunk(codingLogPath, [legacySegment], {
+      chunk_title: logParams.segment_title,
+      researcher_decision: logParams.researcher_decision,
       reflexive_note: logParams.reflexive_note,
       coding_rationale: logParams.coding_rationale,
-    };
-    await codingLogWriter.append(codingLogPath, entry);
+    });
   } catch {
     // Don't fail the write if coding log fails
   }

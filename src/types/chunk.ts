@@ -104,6 +104,18 @@ export interface CodeSegmentInput {
    * @note Can be empty array (segment markers only)
    */
   codes: string[];
+
+  /**
+   * Segment title for coding log (optional)
+   * @example "SPEAKER_06 & SPEAKER_07 (0361–0366) — Elevers AI-användning"
+   */
+  title?: string;
+
+  /**
+   * Reflexive note for this specific segment (optional, for coding log)
+   * @example "SPEAKER_06 introducerar 'dumanvändning' men korrigerar sig..."
+   */
+  reflexive_note?: string;
 }
 
 /**
