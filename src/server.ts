@@ -305,7 +305,7 @@ class QualitativeAnalysisRTAServer {
         {
           name: 'phase2a_code_write_segment',
           description:
-            'Write codes for semantic segment(s). Automatically saves a coding log entry (readable markdown) alongside the transcript for colleague review. A "segment" here is a meaningful coding unit (variable size, marked with /segment). Supports TWO MODES: (1) LEGACY (v0.1.0): single chunk using STATUS boundaries - provide "codes" array. (2) NEW (v0.2.0): multiple small semantic segments with explicit line ranges - provide "segments" array. Use NEW mode when you have identified specific meaningful units (quotes, exchanges, thematic chunks) to code precisely. Use LEGACY mode for standard sequential chunk-based coding.',
+            'Write codes for semantic segment(s). Automatically saves a coding log (_coding_log.md) for colleague review. IMPORTANT: Include log_text in each segment with the full analytical text (title, quotes, codes by level, reflexive note). Supports TWO MODES: (1) LEGACY (v0.1.0): single chunk using STATUS boundaries - provide "codes" array. (2) NEW (v0.2.0): multiple small semantic segments with explicit line ranges - provide "segments" array.',
           inputSchema: {
             type: 'object',
             properties: {

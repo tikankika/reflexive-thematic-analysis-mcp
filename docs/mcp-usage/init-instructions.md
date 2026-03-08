@@ -141,6 +141,34 @@ The dialogic process — corrections, redirections, rejections, discoveries — 
 
 **Before ending a session:** Call `log_session_end` with a summary of key analytical decisions and any unresolved questions.
 
+## CODING LOG
+
+When calling `code_write_segment`, include a `log_text` field in EACH segment with the full analytical text. This creates a human-readable coding log (`_coding_log.md`) for colleague review.
+
+**Each segment MUST include `log_text` with:**
+- Segment title (speakers, line range, description)
+- Key quotes from the transcript
+- Codes split by level (NIVÅ 1 semantisk, NIVÅ 2 latent)
+- Reflexive note
+
+**Example:**
+```
+segments: [
+  {
+    start_line: "0612",
+    end_line: "0617",
+    codes: ["#elever_döljer_AI__semantisk", "#tystnadskultur__latent"],
+    log_text: "SPEAKER_09 (0612–0617) — Elever döljer AI-användning\n\"Det var många av er som sa att man märker att de gör det dolt.\"\nNIVÅ 1 (semantisk): #elever_döljer_AI__semantisk\nNIVÅ 2 (latent): #tystnadskultur__latent\nREFLEXIV NOT: Moderatorn sammanfattar vad grupperna rapporterat..."
+  }
+]
+```
+
+Also set `segment_title` (top-level) with the chunk title, e.g. "Chunk 5 — Riktlinjediskussion."
+
+## REFLEXIVE NOTES
+
+Use `reflexive_note` to save the researcher's own reflections at any time. Saved to `_process_memos/` at project root. Usable in any phase.
+
 ## CRITICAL REMINDERS
 
 1. **CHUNK** = Technical reading unit (60-100 lines)
