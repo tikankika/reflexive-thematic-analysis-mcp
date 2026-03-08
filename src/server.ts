@@ -340,15 +340,10 @@ class QualitativeAnalysisRTAServer {
                       description:
                         'Codes for this specific semantic segment (e.g., ["#kod1_lins1", "#kod2_lins2"]). Can be empty array.',
                     },
-                    title: {
+                    log_text: {
                       type: 'string',
                       description:
-                        'Segment title for coding log (e.g., "SPEAKER_06 & SPEAKER_07 (0361–0366) — Elevers AI-användning").',
-                    },
-                    reflexive_note: {
-                      type: 'string',
-                      description:
-                        'Reflexive note for this specific segment. Saved to coding log.',
+                        'Full analytical text for this segment — written as-is to the coding log. Include title, quotes, NIVÅ 1/2 codes, and reflexive note. Everything in one field.',
                     },
                   },
                   required: ['start_line', 'end_line', 'codes'],

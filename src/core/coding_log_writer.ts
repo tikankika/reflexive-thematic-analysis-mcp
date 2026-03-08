@@ -9,11 +9,11 @@ import { CodeSegmentInput } from '../types/chunk.js';
  * format for colleague review (Tier 2 in dialogic reflexivity model).
  *
  * Format:
- *   ## Chunk N: title
- *   ### Segment 1: title (start–end)
- *   #### Koder
- *   #### Reflexiv not
- *   ### Segment 2: ...
+ *   ## Chunk title
+ *   ### Segment 1
+ *   [full analytical text as-is]
+ *   ### Segment 2
+ *   [full analytical text as-is]
  *   ---
  *
  * File naming: [transcript_name]_coding_log.md
@@ -22,27 +22,20 @@ import { CodeSegmentInput } from '../types/chunk.js';
 
 /** Chunk-level metadata for the coding log */
 export interface ChunkLogParams {
-  /** Chunk title, e.g. "Chunk 7 — AI-detektion, förbud→lösning" */
   chunk_title?: string;
-  /** Researcher decision for the whole chunk */
   researcher_decision?: string;
-  /** Chunk-level reflexive note (overall reflection) */
   reflexive_note?: string;
-  /** Chunk-level coding rationale */
   coding_rationale?: string;
 }
 
 export class CodingLogWriter {
-  /**
-   * Derive the coding log path from a transcript path.
-   */
   getLogPath(transcriptPath: string): string {
     return transcriptPath.replace(/\.md$/, '_coding_log.md');
   }
 
   /**
-   * Append a full chunk entry with per-segment detail.
-   * Each segment gets its own ### heading with codes and reflexive note.
+   * Append a chunk entry. Each segment's log_text is written as-is.
+   * Falls back to listing codes if log_text is not provided.
    */
   async appendChunk(
     logPath: string,
@@ -67,47 +60,38 @@ export class CodingLogWriter {
     // Per-segment entries
     for (let i = 0; i < segments.length; i++) {
       const seg = segments[i];
-      const segRange = `${seg.start_line}–${seg.end_line}`;
-      const segTitle = seg.title || `Segment ${i + 1} (${segRange})`;
-      lines.push(`### ${segTitle}`);
-      lines.push(`**Rader:** ${segRange}`);
+      lines.push(`### Segment ${i + 1}`);
 
-      // Codes
-      lines.push('');
-      lines.push('#### Koder');
-      if (seg.codes.length > 0) {
-        for (const code of seg.codes) {
-          lines.push(`- ${code}`);
-        }
+      if (seg.log_text) {
+        // Full analytical text — write as-is
+        lines.push(seg.log_text);
       } else {
-        lines.push('*(inga koder)*');
-      }
-
-      // Per-segment reflexive note
-      if (seg.reflexive_note) {
-        lines.push('');
-        lines.push('#### Reflexiv not');
-        lines.push(seg.reflexive_note);
+        // Fallback: just list codes
+        const segRange = `${seg.start_line}–${seg.end_line}`;
+        lines.push(`**Rader:** ${segRange}`);
+        if (seg.codes.length > 0) {
+          for (const code of seg.codes) {
+            lines.push(`- ${code}`);
+          }
+        }
       }
 
       lines.push('');
     }
 
-    // Chunk-level reflexive note (overall)
+    // Chunk-level reflexive note
     if (params.reflexive_note) {
       lines.push('### Reflexion');
       lines.push(params.reflexive_note);
       lines.push('');
     }
 
-    // Chunk-level rationale
     if (params.coding_rationale) {
       lines.push('### Motivering');
       lines.push(params.coding_rationale);
       lines.push('');
     }
 
-    // Separator
     lines.push('---');
     lines.push('');
 

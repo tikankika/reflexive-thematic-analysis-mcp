@@ -106,16 +106,12 @@ export interface CodeSegmentInput {
   codes: string[];
 
   /**
-   * Segment title for coding log (optional)
-   * @example "SPEAKER_06 & SPEAKER_07 (0361–0366) — Elevers AI-användning"
+   * Full analytical text for this segment (for coding log).
+   * Contains everything: title, quotes, codes by level, reflexive note.
+   * Written as-is to the coding log — no parsing or restructuring.
+   * @example "SPEAKER_09 (0612–0617) — Elever döljer AI\n\"Det var många...\"\nNIVÅ 1: ...\nREFLEXIV NOT: ..."
    */
-  title?: string;
-
-  /**
-   * Reflexive note for this specific segment (optional, for coding log)
-   * @example "SPEAKER_06 introducerar 'dumanvändning' men korrigerar sig..."
-   */
-  reflexive_note?: string;
+  log_text?: string;
 }
 
 /**
