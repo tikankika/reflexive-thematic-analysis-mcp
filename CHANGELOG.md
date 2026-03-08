@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- **Example protocol files prefixed with `EXAMPLE_`** — `protocols/coding_protocol_disruptive_3rq.md` → `EXAMPLE_coding_protocol_disruptive_3rq.md`, `coding_protocol_sensemaking_v1.md` → `EXAMPLE_coding_protocol_sensemaking_v1.md`. Clarifies that these are format examples; researchers create their own protocols alongside them. Updated references in `methodology_loader.ts`, `code_start.ts`, and `protocols/README.md`.
+
+### Documentation
+- **RFC-001 status updated to Accepted** — Cowork plugin analysis concluded: plugin rejected, MCP improvements (v0.6.1) implemented instead.
+
 ---
 
 ## [0.6.1] - 2026-03-06

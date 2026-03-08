@@ -12,8 +12,8 @@ The methodology documents (in `../methodology/`) describe the analytical framewo
 
 | Protocol | Research focus | Structure |
 |---|---|---|
-| `coding_protocol_disruptive_3rq.md` | Three integrated research questions on generative AI as disruptive technology in Swedish upper secondary education | Two-level coding (semantic + latent) across RQ1 (student AI use), RQ2 (teacher practice), RQ3 (learning impact) |
-| `coding_protocol_sensemaking_v1.md` | Teacher sensemaking around knowledge, learning, and assessment | Two-level coding with epistemic lens — how teachers construct meaning around what AI does to knowing, learning, and assessing |
+| `EXAMPLE_coding_protocol_disruptive_3rq.md` | Three integrated research questions on generative AI as disruptive technology in Swedish upper secondary education | Two-level coding (semantic + latent) across RQ1 (student AI use), RQ2 (teacher practice), RQ3 (learning impact) |
+| `EXAMPLE_coding_protocol_sensemaking_v1.md` | Teacher sensemaking around knowledge, learning, and assessment | Two-level coding with epistemic lens — how teachers construct meaning around what AI does to knowing, learning, and assessing |
 
 ## Creating new protocols
 
