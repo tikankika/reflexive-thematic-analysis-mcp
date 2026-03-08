@@ -63,6 +63,7 @@ import { processLogSummary } from './tools/process_log_summary.js';
 // Process logging tools
 import { logProcessEvent } from './tools/log_process_event.js';
 import { logSessionEnd } from './tools/log_session_end.js';
+import { reflexiveNote } from './tools/reflexive_note.js';
 
 /**
  * MCP Server for Qualitative Analysis RTA (Braun & Clarke)
@@ -304,7 +305,7 @@ class QualitativeAnalysisRTAServer {
         {
           name: 'phase2a_code_write_segment',
           description:
-            'Write codes for semantic segment(s). A "segment" here is a meaningful coding unit (variable size, marked with /segment). Supports TWO MODES: (1) LEGACY (v0.1.0): single chunk using STATUS boundaries - provide "codes" array. (2) NEW (v0.2.0): multiple small semantic segments with explicit line ranges - provide "segments" array. Use NEW mode when you have identified specific meaningful units (quotes, exchanges, thematic chunks) to code precisely. Use LEGACY mode for standard sequential chunk-based coding.',
+            'Write codes for semantic segment(s). Automatically saves a coding log entry (readable markdown) alongside the transcript for colleague review. A "segment" here is a meaningful coding unit (variable size, marked with /segment). Supports TWO MODES: (1) LEGACY (v0.1.0): single chunk using STATUS boundaries - provide "codes" array. (2) NEW (v0.2.0): multiple small semantic segments with explicit line ranges - provide "segments" array. Use NEW mode when you have identified specific meaningful units (quotes, exchanges, thematic chunks) to code precisely. Use LEGACY mode for standard sequential chunk-based coding.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -344,6 +345,26 @@ class QualitativeAnalysisRTAServer {
                 },
                 description:
                   '[NEW MODE - v0.2.0] Array of semantic segments to write. Each segment has explicit line range and codes, marked with /segment markers. Segments will be auto-sorted and validated for overlaps. Use this OR codes, not both.',
+              },
+              reflexive_note: {
+                type: 'string',
+                description:
+                  'Reflexive note about this coding batch — analytical observations, epistemological reflections. Saved to coding log for colleague review.',
+              },
+              coding_rationale: {
+                type: 'string',
+                description:
+                  'Why this segment was selected/coded — rationale for coding decisions. Saved to coding log.',
+              },
+              segment_title: {
+                type: 'string',
+                description:
+                  'Human-readable title for the coding log entry (e.g., "SPEAKER_06 (0281–0295) — Elever söker direktsvar").',
+              },
+              researcher_decision: {
+                type: 'string',
+                description:
+                  'Researcher decision on proposed codes: "accepted", "modified", "rejected", or free-text comment.',
               },
             },
             required: ['file_path'],
@@ -778,6 +799,36 @@ class QualitativeAnalysisRTAServer {
           },
         },
         {
+          name: 'reflexive_note',
+          description:
+            'Save a reflexive note from the researcher. For thoughts, doubts, insights, ' +
+            'bias reflections — the researcher\'s own voice. Usable in any phase, at any time. ' +
+            'Saved to _process_memos/ directory alongside the transcript. ' +
+            'Requires init() first.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              file_path: {
+                type: 'string',
+                description: 'Path to transcript file (context reference)',
+              },
+              note: {
+                type: 'string',
+                description: 'The researcher\'s reflexive note text (markdown supported)',
+              },
+              phase: {
+                type: 'string',
+                description: 'Current RTA phase (e.g., "1", "2a", "2b", "3")',
+              },
+              context: {
+                type: 'string',
+                description: 'Optional context (e.g., "efter kodning av chunk 5")',
+              },
+            },
+            required: ['file_path', 'note'],
+          },
+        },
+        {
           name: 'log_session_end',
           description:
             'End a coding or review session with a summary. Claude proposes a summary of ' +
@@ -941,6 +992,10 @@ class QualitativeAnalysisRTAServer {
             break;
 
           // === PROCESS LOGGING TOOLS ===
+          case 'reflexive_note':
+            result = await reflexiveNote(args as any);
+            break;
+
           case 'log_process_event':
             result = await logProcessEvent(args as any);
             break;
@@ -1002,7 +1057,7 @@ class QualitativeAnalysisRTAServer {
     );
     console.error('Phase 3: extract_codes');
     console.error('Workflow: workflow_status, session_reflection, process_log_summary');
-    console.error('Process Logging: log_process_event, log_session_end');
+    console.error('Process Logging: reflexive_note, log_process_event, log_session_end');
   }
 }
 

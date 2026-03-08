@@ -3,6 +3,7 @@ import { SegmentWriter } from '../core/segment_writer.js';
 import { StatusManager } from '../core/status_manager.js';
 import { CodeSegmentInput } from '../types/chunk.js';
 import { ProcessLogger } from '../core/process_logger.js';
+import { CodingLogWriter, CodingLogEntry } from '../core/coding_log_writer.js';
 
 /**
  * code_write_segment - Write codes for segment(s)
@@ -31,8 +32,12 @@ export async function codeWriteSegment(args: {
   file_path: string;
   codes?: string[];
   segments?: CodeSegmentInput[];
+  reflexive_note?: string;
+  coding_rationale?: string;
+  segment_title?: string;
+  researcher_decision?: string;
 }): Promise<any> {
-  const { file_path, codes, segments } = args;
+  const { file_path, codes, segments, reflexive_note, coding_rationale, segment_title, researcher_decision } = args;
 
   const writer = new SegmentWriter();
   const statusManager = new StatusManager();
@@ -52,11 +57,14 @@ export async function codeWriteSegment(args: {
     );
   }
 
+  // Coding log params (shared across modes)
+  const logParams = { reflexive_note, coding_rationale, segment_title, researcher_decision };
+
   // Route to appropriate mode
   if (segments !== undefined) {
-    return await writeMultiSegmentMode(file_path, segments, writer, statusManager);
+    return await writeMultiSegmentMode(file_path, segments, writer, statusManager, logParams);
   } else {
-    return await writeLegacyMode(file_path, codes!, writer, statusManager);
+    return await writeLegacyMode(file_path, codes!, writer, statusManager, logParams);
   }
 }
 
@@ -69,11 +77,20 @@ export async function codeWriteSegment(args: {
  * @param statusManager - StatusManager instance
  * @returns Result object
  */
+/** Optional coding log parameters (top-level, shared across all segments in a batch) */
+interface CodingLogParams {
+  reflexive_note?: string;
+  coding_rationale?: string;
+  segment_title?: string;
+  researcher_decision?: string;
+}
+
 async function writeMultiSegmentMode(
   file_path: string,
   segments: CodeSegmentInput[],
   writer: SegmentWriter,
-  statusManager: StatusManager
+  statusManager: StatusManager,
+  logParams: CodingLogParams
 ): Promise<any> {
   // Write all segments using new multi-segment API
   const result = await writer.writeMultipleSegments(file_path, segments);
@@ -109,6 +126,27 @@ async function writeMultiSegmentMode(
     // Don't fail the write if logging fails
   }
 
+  // Auto-append to coding log (best-effort)
+  try {
+    const allCodes = segments.flatMap(s => s.codes);
+    const lineRange = segments.length > 0
+      ? `${segments[0].start_line}–${segments[segments.length - 1].end_line}`
+      : undefined;
+    const codingLogWriter = new CodingLogWriter();
+    const codingLogPath = codingLogWriter.getLogPath(file_path);
+    const entry: CodingLogEntry = {
+      segment_title: logParams.segment_title,
+      line_range: lineRange,
+      researcher_decision: logParams.researcher_decision,
+      codes: allCodes,
+      reflexive_note: logParams.reflexive_note,
+      coding_rationale: logParams.coding_rationale,
+    };
+    await codingLogWriter.append(codingLogPath, entry);
+  } catch {
+    // Don't fail the write if coding log fails
+  }
+
   return {
     segments_written: result.segments_written,
     codes_written: result.total_codes_written,
@@ -132,7 +170,8 @@ async function writeLegacyMode(
   file_path: string,
   codes: string[],
   writer: SegmentWriter,
-  statusManager: StatusManager
+  statusManager: StatusManager,
+  logParams: CodingLogParams
 ): Promise<any> {
   // Validate codes
   if (!codes || codes.length === 0) {
@@ -187,6 +226,23 @@ async function writeLegacyMode(
     });
   } catch {
     // Don't fail the write if logging fails
+  }
+
+  // Auto-append to coding log (best-effort)
+  try {
+    const codingLogWriter = new CodingLogWriter();
+    const codingLogPath = codingLogWriter.getLogPath(file_path);
+    const entry: CodingLogEntry = {
+      segment_title: logParams.segment_title,
+      line_range: `${fileStartLine}–${fileEndLine}`,
+      researcher_decision: logParams.researcher_decision,
+      codes,
+      reflexive_note: logParams.reflexive_note,
+      coding_rationale: logParams.coding_rationale,
+    };
+    await codingLogWriter.append(codingLogPath, entry);
+  } catch {
+    // Don't fail the write if coding log fails
   }
 
   return {
