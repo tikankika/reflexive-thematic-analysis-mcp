@@ -9,11 +9,31 @@ import { ProcessLogger } from '../core/process_logger.js';
  * The researcher's own voice: thoughts, doubts, insights, bias reflections.
  * Generic tool — usable in any phase, at any time.
  *
- * Saves to _process_memos/ relative to the transcript's directory.
+ * Saves to _process_memos/ at project root (beside rta_config.yaml).
+ * Falls back to transcript directory if project root not found.
  * Also cross-references in the process log (type: meta_reflexive).
  *
  * Tier 3 in the dialogic reflexivity model.
  */
+
+/**
+ * Find project root by walking up from a path looking for rta_config.yaml.
+ */
+async function findProjectRoot(startPath: string): Promise<string | null> {
+  let dir = path.dirname(startPath);
+  for (let i = 0; i < 10; i++) {
+    try {
+      await fs.access(path.join(dir, 'rta_config.yaml'));
+      return dir;
+    } catch {
+      const parent = path.dirname(dir);
+      if (parent === dir) break; // filesystem root
+      dir = parent;
+    }
+  }
+  return null;
+}
+
 export async function reflexiveNote(args: {
   file_path: string;
   note: string;
@@ -28,9 +48,10 @@ export async function reflexiveNote(args: {
     throw new Error('Note text is required');
   }
 
-  // Derive memo directory from transcript path
-  const transcriptDir = path.dirname(file_path);
-  const memoDir = path.join(transcriptDir, '_process_memos');
+  // Find project root (where rta_config.yaml lives), fall back to transcript dir
+  const projectRoot = await findProjectRoot(file_path);
+  const baseDir = projectRoot || path.dirname(file_path);
+  const memoDir = path.join(baseDir, '_process_memos');
 
   // Create directory if needed
   await fs.mkdir(memoDir, { recursive: true });

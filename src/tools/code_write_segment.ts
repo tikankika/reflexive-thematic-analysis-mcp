@@ -126,23 +126,29 @@ async function writeMultiSegmentMode(
     // Don't fail the write if logging fails
   }
 
-  // Auto-append to coding log (best-effort)
+  // Auto-append to coding log — one entry per segment (best-effort)
   try {
-    const allCodes = segments.flatMap(s => s.codes);
-    const lineRange = segments.length > 0
-      ? `${segments[0].start_line}–${segments[segments.length - 1].end_line}`
-      : undefined;
     const codingLogWriter = new CodingLogWriter();
     const codingLogPath = codingLogWriter.getLogPath(file_path);
-    const entry: CodingLogEntry = {
-      segment_title: logParams.segment_title,
-      line_range: lineRange,
-      researcher_decision: logParams.researcher_decision,
-      codes: allCodes,
-      reflexive_note: logParams.reflexive_note,
-      coding_rationale: logParams.coding_rationale,
-    };
-    await codingLogWriter.append(codingLogPath, entry);
+    for (const seg of segments) {
+      const entry: CodingLogEntry = {
+        line_range: `${seg.start_line}–${seg.end_line}`,
+        researcher_decision: logParams.researcher_decision,
+        codes: seg.codes,
+      };
+      await codingLogWriter.append(codingLogPath, entry);
+    }
+    // Append chunk-level reflexive note and rationale as separate entry (if provided)
+    if (logParams.reflexive_note || logParams.coding_rationale) {
+      const metaEntry: CodingLogEntry = {
+        segment_title: logParams.segment_title || `Reflexion ${segments[0]?.start_line}–${segments[segments.length - 1]?.end_line}`,
+        line_range: `${segments[0]?.start_line}–${segments[segments.length - 1]?.end_line}`,
+        codes: [],
+        reflexive_note: logParams.reflexive_note,
+        coding_rationale: logParams.coding_rationale,
+      };
+      await codingLogWriter.append(codingLogPath, metaEntry);
+    }
   } catch {
     // Don't fail the write if coding log fails
   }
