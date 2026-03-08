@@ -1,6 +1,6 @@
 # RFC-001: Cowork Plugin som komplement till MCP-servern
 
-**Status:** Draft
+**Status:** Accepted
 **Datum:** 2026-03-06
 **Författare:** Niklas Karlsson + Claude (dialogiskt framtaget)
 

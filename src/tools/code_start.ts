@@ -112,7 +112,7 @@ export async function codeStart(args: {
     }
 
     try {
-      codingManual = await loader.loadDocument('../protocols/coding_protocol_disruptive_3rq.md');
+      codingManual = await loader.loadDocument('../protocols/EXAMPLE_coding_protocol_disruptive_3rq.md');
     } catch (error) {
       console.error('[code_start] Failed to load coding manual:', error);
     }

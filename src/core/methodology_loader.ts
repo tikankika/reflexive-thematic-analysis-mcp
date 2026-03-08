@@ -22,7 +22,7 @@ export class MethodologyLoader {
   // General documents loaded at session start
   private readonly GENERAL_FILES = [
     'rta_overview.md',
-    '../protocols/coding_protocol_disruptive_3rq.md',
+    '../protocols/EXAMPLE_coding_protocol_disruptive_3rq.md',
   ];
 
   // Phase-specific documents
@@ -189,7 +189,7 @@ export class MethodologyLoader {
     switch (phase) {
       case 'phase2a':
         return [
-          '../protocols/coding_protocol_disruptive_3rq.md',
+          '../protocols/EXAMPLE_coding_protocol_disruptive_3rq.md',
           'phase2a_initial_coding.md',
         ];
       case 'phase2b':
