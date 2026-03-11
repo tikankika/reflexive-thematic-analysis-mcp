@@ -1,16 +1,16 @@
-import { basename } from 'path';
 import { sessionState } from '../core/session_state.js';
 import { SegmentReader } from '../core/segment_reader.js';
 import { SegmentReviser } from '../core/segment_reviser.js';
-import { NoteManager } from '../core/note_manager.js';
-import { CodeRevision } from '../types/review.js';
+import { CodingLogWriter } from '../core/coding_log_writer.js';
 import { ProcessLogger } from '../core/process_logger.js';
 
 /**
  * review_revise_codes - Revise codes for a segment during review
  *
  * Modifies codes in the transcript file and logs the revision
- * in the review notes file.
+ * to _coding_log.md and _process_log.jsonl.
+ *
+ * Does NOT mark the segment as reviewed — only review_write_note does that.
  *
  * Input:
  *   file_path: string - Path to coded transcript file
@@ -19,7 +19,7 @@ import { ProcessLogger } from '../core/process_logger.js';
  *   codes: string[] - Codes to add/remove/replace with
  *
  * Output:
- *   { success, updated_codes, previous_codes, revision_logged }
+ *   { success, updated_codes, previous_codes }
  */
 export async function reviewReviseCodes(args: {
   file_path: string;
@@ -32,8 +32,11 @@ export async function reviewReviseCodes(args: {
   const { file_path, segment_index, action, codes } = args;
 
   const reviser = new SegmentReviser();
-  const noteManager = new NoteManager();
   const reader = new SegmentReader();
+
+  // Get segment metadata before revision (for logging)
+  const segment = await reader.getSegment(file_path, segment_index);
+  const lineRange = `${segment.startIndex}–${segment.endIndex}`;
 
   // Revise codes in the transcript file
   const { updatedCodes, previousCodes } = await reviser.reviseCodes(
@@ -43,57 +46,27 @@ export async function reviewReviseCodes(args: {
     codes
   );
 
-  // Log revision in review notes
-  const notesPath = noteManager.getNotesPath(file_path);
-  const notesExist = await noteManager.exists(notesPath);
-  const totalSegments = await reader.countSegments(file_path);
+  // Compute added/removed for log
+  const prevSet = new Set(previousCodes);
+  const newSet = new Set(updatedCodes);
+  const codesAdded = updatedCodes.filter((c) => !prevSet.has(c));
+  const codesRemoved = previousCodes.filter((c) => !newSet.has(c));
 
-  let notesFile;
-  if (notesExist) {
-    notesFile = await noteManager.load(notesPath);
-  } else {
-    notesFile = await noteManager.create(
-      notesPath,
-      basename(file_path),
-      'researcher',
-      totalSegments
-    );
-  }
-
-  // Create revision record
-  const revision: CodeRevision = {
-    action,
-    codes,
-    timestamp: new Date().toISOString(),
-  };
-
-  // Update or create the note for this segment
-  const existingNote = noteManager.getNote(notesFile, segment_index);
-
-  if (existingNote) {
-    existingNote.codes_revised = true;
-    existingNote.revision_history.push(revision);
-    existingNote.codes = updatedCodes;
-    noteManager.setNote(notesFile, existingNote);
-  } else {
-    // Get segment metadata for new note
-    const segments = await reader.extractSegments(file_path);
-    const segment = segments[segment_index - 1];
-
-    noteManager.setNote(notesFile, {
-      index: segment_index,
-      line_range: `${segment.startIndex}-${segment.endIndex}`,
-      codes: updatedCodes,
-      reflexive_note: '',
-      reviewed_at: new Date().toISOString(),
-      codes_revised: true,
-      revision_history: [revision],
+  // Log revision to _coding_log.md (best-effort)
+  try {
+    const logWriter = new CodingLogWriter();
+    const logPath = logWriter.getLogPath(file_path);
+    await logWriter.appendReview(logPath, {
+      segmentIndex: segment_index,
+      lineRange,
+      codesAdded,
+      codesRemoved,
     });
+  } catch {
+    // Non-critical — coding log is best-effort
   }
 
-  await noteManager.save(notesPath, notesFile);
-
-  // Auto-log to process log
+  // Auto-log to process log (best-effort)
   try {
     const processLogger = new ProcessLogger();
     await processLogger.log(file_path, 'codes_revised', {
@@ -114,6 +87,5 @@ export async function reviewReviseCodes(args: {
     action,
     updated_codes: updatedCodes,
     previous_codes: previousCodes,
-    revision_logged: true,
   };
 }

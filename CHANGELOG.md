@@ -15,10 +15,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`CodingLogWriter` core module** (`src/core/coding_log_writer.ts`) — append-only markdown writer with `getLogPath()` and `append()`. Follows the same pattern as `ProcessLogger`.
 
 ### Changed
+- **RFC-002: Data layer consolidation** — eliminated `_review.json` entirely. Review progress now tracked via `/reviewed YYYY-MM-DD` marker in transcript file (source of truth). Reflexive notes and code revisions logged to `_coding_log.md` (Phase 2b now writes there alongside 2a). Three files remain: transcript, `_coding_log.md`, `_process_log.jsonl`. Each file has exactly one purpose.
 - **Example protocol files prefixed with `EXAMPLE_`** — `protocols/coding_protocol_disruptive_3rq.md` → `EXAMPLE_coding_protocol_disruptive_3rq.md`, `coding_protocol_sensemaking_v1.md` → `EXAMPLE_coding_protocol_sensemaking_v1.md`. Clarifies that these are format examples; researchers create their own protocols alongside them. Updated references in `methodology_loader.ts`, `code_start.ts`, and `protocols/README.md`.
+
+### Removed
+- **`_review.json` file** — no longer created or read. All data moved to transcript (`/reviewed` marker) and `_coding_log.md` (reflexive notes, revision history).
+- **`NoteManager` class** (`src/core/note_manager.ts`) — replaced by `/reviewed` marker in transcript and `CodingLogWriter.appendReview()`.
+- **Dead types**: `ReviewNote`, `ReviewNotesFile`, `CodeRevision`, `ReviewSession`, `ReviewStatus` from `src/types/review.ts`.
+- **Index shifting logic** — `shiftIndices()` no longer needed. Split/merge naturally produce segments without `/reviewed`.
 
 ### Documentation
 - **RFC-001 status updated to Accepted** — Cowork plugin analysis concluded: plugin rejected, MCP improvements (v0.6.1) implemented instead.
+- **RFC-002: Data Layer Consolidation** (`docs/rfcs/RFC-002-data-layer-consolidation.md`) — design document for eliminating `_review.json` duplication.
 
 ---
 

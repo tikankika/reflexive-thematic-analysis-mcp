@@ -1,13 +1,14 @@
 import { promises as fs } from 'fs';
 import { sessionState } from '../core/session_state.js';
 import { SegmentReader } from '../core/segment_reader.js';
-import { NoteManager } from '../core/note_manager.js';
 
 /**
  * review_merge_segments - Merge two adjacent segments during Phase 2b review
  *
- * Merges two consecutive segments into one, deduplicates codes,
- * and shifts review note indices to keep them in sync.
+ * Merges two consecutive segments into one, deduplicates codes.
+ * The merged segment has no /reviewed marker — it needs fresh review.
+ * This is methodologically correct: if segmentation was wrong,
+ * the merged segment needs review.
  *
  * Input:
  *   file_path: string - Path to coded transcript file
@@ -15,7 +16,7 @@ import { NoteManager } from '../core/note_manager.js';
  *   second_segment_index: number - Must be first_segment_index + 1
  *
  * Output:
- *   { success, merged_from, merged_to, combined_codes, notes_updated }
+ *   { success, merged_from, merged_to, combined_codes }
  */
 export async function reviewMergeSegments(args: {
   file_path: string;
@@ -35,7 +36,6 @@ export async function reviewMergeSegments(args: {
   }
 
   const reader = new SegmentReader();
-  const noteManager = new NoteManager();
 
   // 1. Extract all segments
   const segments = await reader.extractSegments(file_path);
@@ -56,7 +56,7 @@ export async function reviewMergeSegments(args: {
   const codeSet = new Set([...seg1.codes, ...seg2.codes]);
   const combinedCodes = Array.from(codeSet);
 
-  // 4. Read file and build merged block
+  // 4. Read file and build merged block (no /reviewed marker)
   const content = await fs.readFile(file_path, 'utf-8');
   const lines = content.split('\n');
 
@@ -77,29 +77,10 @@ export async function reviewMergeSegments(args: {
   // 6. Write file back
   await fs.writeFile(file_path, lines.join('\n'), 'utf-8');
 
-  // 7. Update review notes
-  const notesPath = noteManager.getNotesPath(file_path);
-  const notesExist = await noteManager.exists(notesPath);
-  let notesUpdated = false;
-
-  if (notesExist) {
-    const notesFile = await noteManager.load(notesPath);
-
-    // Remove note from second segment (first segment note is kept)
-    noteManager.removeNote(notesFile, second_segment_index);
-
-    // Shift all indices after the merged pair down by 1
-    noteManager.shiftIndices(notesFile, second_segment_index, -1);
-
-    notesUpdated = true;
-    await noteManager.save(notesPath, notesFile);
-  }
-
   return {
     success: true,
     merged_from: [first_segment_index, second_segment_index],
     merged_to: first_segment_index,
     combined_codes: combinedCodes,
-    notes_updated: notesUpdated,
   };
 }
