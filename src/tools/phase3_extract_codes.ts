@@ -37,6 +37,7 @@ export async function extractCodes(args: {
   return {
     status: 'success',
     output_file: result.outputFile,
+    summary_file: result.summaryFile,
     project_name: result.projectName,
     transcripts_processed: result.transcriptsProcessed,
     transcripts_skipped: result.transcriptsSkipped,
@@ -45,7 +46,8 @@ export async function extractCodes(args: {
     codes_per_rq: result.codesPerRq,
     uncategorized_codes: result.uncategorizedCodes,
     instructions:
-      'Code extraction complete. The researcher should now load Phase 3 methodology ' +
-      '(methodology_load with phase="phase3") before beginning theme generation work.',
+      'Code extraction complete. Use summary_file for thematisation work (all codes ' +
+      'visible in one read). Full detail with text excerpts in output_file. ' +
+      'Load Phase 3 methodology (methodology_load with phase="phase3") before beginning.',
   };
 }

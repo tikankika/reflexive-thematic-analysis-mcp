@@ -43,6 +43,7 @@ export interface TranscriptInfo {
 
 export interface ExtractionResult {
   outputFile: string;
+  summaryFile: string;
   projectName: string;
   transcriptsProcessed: number;
   transcriptsSkipped: number;
@@ -235,7 +236,7 @@ export class CodeExtractor {
     const codesPerRq = this.aggregateByRq(allCodes);
     const uncategorizedCodes = allCodes.filter((c) => c.rq === null);
 
-    // 5. Generate markdown output
+    // 5. Generate full detail markdown output
     const outputFile = join(projectPath, 'phase3_code_extraction.md');
     const markdown = this.generateMarkdown(
       projectName,
@@ -245,6 +246,11 @@ export class CodeExtractor {
       uncategorizedCodes
     );
     await fs.writeFile(outputFile, markdown, 'utf-8');
+
+    // 5b. Generate condensed summary (all codes visible in one read)
+    const summaryFile = join(projectPath, 'phase3_code_summary.md');
+    const summary = this.generateSummary(projectName, allCodes);
+    await fs.writeFile(summaryFile, summary, 'utf-8');
 
     // 6. Build summary stats
     const stats: Record<
@@ -261,6 +267,7 @@ export class CodeExtractor {
 
     return {
       outputFile,
+      summaryFile,
       projectName,
       transcriptsProcessed: processedTranscripts.length,
       transcriptsSkipped: skippedCount,
@@ -300,6 +307,50 @@ export class CodeExtractor {
     }
 
     return rqMap;
+  }
+
+  /**
+   * Generate a condensed summary with all codes visible in one read.
+   * Each code listed once with occurrence count and line ranges.
+   */
+  private generateSummary(
+    projectName: string,
+    allCodes: ExtractedCode[]
+  ): string {
+    const now = new Date().toISOString().split('T')[0];
+
+    // Group by unique code name → occurrences
+    const codeMap = new Map<string, ExtractedCode[]>();
+    for (const code of allCodes) {
+      if (!codeMap.has(code.raw)) codeMap.set(code.raw, []);
+      codeMap.get(code.raw)!.push(code);
+    }
+
+    const uniqueCount = codeMap.size;
+    const sortedCodes = [...codeMap.entries()].sort((a, b) =>
+      a[0].localeCompare(b[0])
+    );
+
+    const lines: string[] = [];
+    lines.push(`# Code Summary — ${projectName}`);
+    lines.push('');
+    lines.push(
+      `Generated: ${now} | Total occurrences: ${allCodes.length} | Unique codes: ${uniqueCount}`
+    );
+    lines.push('');
+    lines.push('---');
+    lines.push('');
+
+    for (const [codeRaw, occurrences] of sortedCodes) {
+      const lineRanges = occurrences
+        .sort((a, b) => a.startLine.localeCompare(b.startLine))
+        .map((o) => `${o.startLine}–${o.endLine}`)
+        .join(', ');
+      lines.push(`${codeRaw} (${occurrences.length}) — ${lineRanges}`);
+    }
+
+    lines.push('');
+    return lines.join('\n');
   }
 
   /**
