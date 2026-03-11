@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - **Coding log (Tier 2)** — `code_write_segment` now automatically appends a human-readable markdown entry to `[transcript]_coding_log.md`. Each entry includes segment title, line range, codes, researcher decision, reflexive note, and coding rationale. Four new optional parameters: `reflexive_note`, `coding_rationale`, `segment_title`, `researcher_decision`. Fully backwards compatible — works in both legacy and multi-segment modes. Best-effort (never fails the primary write).
-- **`reflexive_note` tool (Tier 3)** — researcher's own voice: thoughts, doubts, insights, bias reflections. Saves timestamped markdown memos to `_process_memos/` directory alongside the transcript. Cross-references in `_process_log.jsonl` (type: `meta_reflexive`). Usable in any phase. Requires `init()` first.
+- **`process_memo` tool (Tier 3)** — researcher's broader analytical insights, methodological decisions, doubts, bias reflections. Saves timestamped markdown memos to `_process_memos/` directory. Cross-references in `_process_log.jsonl` (type: `meta_reflexive`). Usable in any phase. Requires `init()` first.
 - **`CodingLogWriter` core module** (`src/core/coding_log_writer.ts`) — append-only markdown writer with `getLogPath()` and `append()`. Follows the same pattern as `ProcessLogger`.
 
 ### Changed

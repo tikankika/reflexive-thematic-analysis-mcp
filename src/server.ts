@@ -63,7 +63,7 @@ import { processLogSummary } from './tools/process_log_summary.js';
 // Process logging tools
 import { logProcessEvent } from './tools/log_process_event.js';
 import { logSessionEnd } from './tools/log_session_end.js';
-import { reflexiveNote } from './tools/reflexive_note.js';
+import { processMemo } from './tools/process_memo.js';
 
 /**
  * MCP Server for Qualitative Analysis RTA (Braun & Clarke)
@@ -794,12 +794,12 @@ class QualitativeAnalysisRTAServer {
           },
         },
         {
-          name: 'reflexive_note',
+          name: 'process_memo',
           description:
-            'Save a reflexive note from the researcher. For thoughts, doubts, insights, ' +
-            'bias reflections — the researcher\'s own voice. Usable in any phase, at any time. ' +
-            'Saved to _process_memos/ directory alongside the transcript. ' +
-            'Requires init() first.',
+            'Save a process memo from the researcher. For broader analytical insights, ' +
+            'methodological decisions, doubts, bias reflections — the researcher\'s own voice. ' +
+            'Usable in any phase, at any time. Spans across segments, chunks, or transcripts. ' +
+            'Saved to _process_memos/ directory. Requires init() first.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -809,7 +809,7 @@ class QualitativeAnalysisRTAServer {
               },
               note: {
                 type: 'string',
-                description: 'The researcher\'s reflexive note text (markdown supported)',
+                description: 'The researcher\'s process memo text (markdown supported)',
               },
               phase: {
                 type: 'string',
@@ -987,8 +987,8 @@ class QualitativeAnalysisRTAServer {
             break;
 
           // === PROCESS LOGGING TOOLS ===
-          case 'reflexive_note':
-            result = await reflexiveNote(args as any);
+          case 'process_memo':
+            result = await processMemo(args as any);
             break;
 
           case 'log_process_event':
@@ -1052,7 +1052,7 @@ class QualitativeAnalysisRTAServer {
     );
     console.error('Phase 3: extract_codes');
     console.error('Workflow: workflow_status, session_reflection, process_log_summary');
-    console.error('Process Logging: reflexive_note, log_process_event, log_session_end');
+    console.error('Process Logging: process_memo, log_process_event, log_session_end');
   }
 }
 

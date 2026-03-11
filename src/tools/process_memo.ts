@@ -4,9 +4,12 @@ import { sessionState } from '../core/session_state.js';
 import { ProcessLogger } from '../core/process_logger.js';
 
 /**
- * reflexive_note - Save researcher's reflexive note
+ * process_memo - Save researcher's process memo
  *
- * The researcher's own voice: thoughts, doubts, insights, bias reflections.
+ * The researcher's own voice: broader analytical insights, methodological
+ * decisions, doubts, bias reflections. Spans across segments, chunks,
+ * or transcripts.
+ *
  * Generic tool — usable in any phase, at any time.
  *
  * Saves to _process_memos/ at project root (beside rta_config.yaml).
@@ -34,7 +37,7 @@ async function findProjectRoot(startPath: string): Promise<string | null> {
   return null;
 }
 
-export async function reflexiveNote(args: {
+export async function processMemo(args: {
   file_path: string;
   note: string;
   phase?: string;
@@ -45,7 +48,7 @@ export async function reflexiveNote(args: {
   const { file_path, note, phase, context } = args;
 
   if (!note || note.trim().length === 0) {
-    throw new Error('Note text is required');
+    throw new Error('Memo text is required');
   }
 
   // Find project root (where rta_config.yaml lives), fall back to transcript dir
@@ -64,7 +67,7 @@ export async function reflexiveNote(args: {
 
   // Format markdown content
   const lines: string[] = [];
-  lines.push('# Reflexiv not');
+  lines.push('# Processmemo');
   lines.push(`**Datum:** ${timestamp}`);
   if (phase) {
     lines.push(`**Fas:** ${phase}`);
@@ -83,7 +86,7 @@ export async function reflexiveNote(args: {
     const processLogger = new ProcessLogger();
     await processLogger.log(file_path, 'meta_reflexive', {
       phase: phase || undefined,
-      description: `Reflexiv not sparad: ${memoFilename}`,
+      description: `Processmemo sparat: ${memoFilename}`,
       context: context ? { segment: context } : undefined,
     });
   } catch {

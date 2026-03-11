@@ -165,9 +165,9 @@ segments: [
 
 Also set `segment_title` (top-level) with the chunk title, e.g. "Chunk 5 — Riktlinjediskussion."
 
-## REFLEXIVE NOTES
+## PROCESS MEMOS
 
-Use `reflexive_note` to save the researcher's own reflections at any time. Saved to `_process_memos/` at project root. Usable in any phase.
+Use `process_memo` to save the researcher's broader analytical insights, methodological decisions, and reflections. Saved to `_process_memos/` at project root. Usable in any phase. Distinct from segment-level reflexive notes written via `review_write_note`.
 
 ## CRITICAL REMINDERS
 
