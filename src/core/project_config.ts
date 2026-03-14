@@ -92,10 +92,17 @@ export class ProjectConfig {
   }
 
   /**
+   * Get project root directory (where rta_config.yaml lives)
+   */
+  getProjectRoot(): string {
+    return dirname(this.configPath);
+  }
+
+  /**
    * Get path to methodology directory
    */
   getMethodologyPath(): string {
-    return join(dirname(this.configPath), 'methodology');
+    return join(this.getProjectRoot(), 'methodology');
   }
 
   /**
