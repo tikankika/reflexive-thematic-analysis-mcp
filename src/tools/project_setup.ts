@@ -4,6 +4,7 @@
  * Creates project folder with:
  * - rta_config.yaml (from template)
  * - methodology/ (copied from repo)
+ * - protocols/ (copied from repo - example coding protocols)
  * - coding_decisions.md (from template - researcher fills in during coding)
  * - transcripts/ (COPIED from originals - originals are NEVER modified)
  * - project_state.json
@@ -105,7 +106,20 @@ export async function projectSetup(
     filesCreated.push('methodology/ (empty - source not found)');
   }
 
-  // 3. Copy coding_decisions_template.md → coding_decisions.md
+  // 3. Copy protocols/ from repo to project
+  const repoProtocols = join(__dirname, '../../protocols');
+  const projectProtocols = join(projectPath, 'protocols');
+
+  try {
+    await copyDirectory(repoProtocols, projectProtocols);
+    filesCreated.push('protocols/');
+  } catch (error) {
+    console.error('[project_setup] Failed to copy protocols:', error);
+    await fs.mkdir(projectProtocols, { recursive: true });
+    filesCreated.push('protocols/ (empty - source not found)');
+  }
+
+  // 4. Copy coding_decisions_template.md → coding_decisions.md
   const codingDecisionsTemplate = join(__dirname, '../../templates/coding_decisions_template.md');
   const codingDecisionsDest = join(projectPath, 'coding_decisions.md');
 
@@ -117,7 +131,7 @@ export async function projectSetup(
     filesCreated.push('coding_decisions.md (FAILED - template not found)');
   }
 
-  // 4. Load and customize rta_config template
+  // 5. Load and customize rta_config template
   const templatePath = join(__dirname, '../../templates/rta_config.yaml');
   let template: string;
 
@@ -133,7 +147,7 @@ export async function projectSetup(
     .replace(/\{\{RESEARCHER\}\}/g, researcher)
     .replace(/\{\{CREATED\}\}/g, now);
 
-  // 5. Create transcripts/ folder and COPY transcripts (originals never touched)
+  // 6. Create transcripts/ folder and COPY transcripts (originals never touched)
   const transcriptsDir = join(projectPath, 'transcripts');
   await fs.mkdir(transcriptsDir, { recursive: true });
   filesCreated.push('transcripts/');
@@ -159,7 +173,7 @@ export async function projectSetup(
     }
   }
 
-  // 6. Add line indices to all copied transcripts (0001, 0002, ...)
+  // 7. Add line indices to all copied transcripts (0001, 0002, ...)
   const transcriptsIndexed: string[] = [];
 
   for (const t of copiedTranscriptPaths) {
@@ -172,7 +186,7 @@ export async function projectSetup(
     }
   }
 
-  // 7. Parse and add transcripts (pointing to COPIED files, not originals)
+  // 8. Parse and add transcripts (pointing to COPIED files, not originals)
   const configObj = yaml.load(configContent) as any;
   configObj.transcripts = copiedTranscriptPaths.map((t) => ({
     path: t.copied,
@@ -187,7 +201,7 @@ export async function projectSetup(
   await fs.writeFile(configPath, yaml.dump(configObj, { indent: 2 }));
   filesCreated.push('rta_config.yaml');
 
-  // 8. Create project_state.json
+  // 9. Create project_state.json
   const projectState = {
     version: '1.0',
     project_name,
