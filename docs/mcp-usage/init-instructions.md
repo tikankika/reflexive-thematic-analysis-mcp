@@ -87,20 +87,17 @@ Research questions and levels as defined in the project's coding protocol.
 - `review_split_segment` - Split segment into two
 - `review_merge_segments` - Merge two adjacent segments
 
-### Phase 3 Tools (prefix: phase3_)
+### Phase 3–6 Tools
+- `phase_start` - Start Phase 3/4/5/6: loads methodology, lists tool-generated files and transcripts
 - `extract_codes` - Extract all codes from coded transcripts into markdown summary
 
-### Phase 4–6 Workflow
-
-Phases 4 through 6 do not have dedicated tools. They are methodology-driven conversations using existing infrastructure.
-
-**When the researcher is ready for Phase 4, 5, or 6:**
-1. Load the phase methodology: `methodology_load(phase="phase4")` (or phase5, phase6)
+**When the researcher is ready for Phase 3, 4, 5, or 6:**
+1. Call `phase_start(project_path=..., phase="4")` (or "3", "5", "6")
 2. SHOW full methodology content to researcher — do not summarise
-3. Wait for researcher to acknowledge before proceeding
-4. Work through the phase in conversation, using `read_file` to access transcripts, coded data, and the Phase 3 code extraction when needed
+3. Review the list of tool outputs and transcripts returned by the tool
+4. Work through the phase in conversation
 
-**What you do NOT do in Phase 4–6:**
+**What you do NOT do in Phase 3–6:**
 - Do not impose a sequence of steps — the methodology describes the analytical process, follow the researcher's lead
 - Do not propose themes, theme names, or thematic structures unless the researcher asks
 - Do not "confirm" themes — if asked to evaluate, argue against the theme first, then for it

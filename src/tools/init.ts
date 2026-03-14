@@ -105,8 +105,9 @@ export async function init(): Promise<InitResult> {
         ],
       },
       {
-        category: 'Phase 3 - Generating Themes (prefix: phase3_)',
+        category: 'Phase 3–6 (phase_start + phase3_)',
         tools: [
+          'phase_start - Start Phase 3/4/5/6: loads methodology, lists files and transcripts',
           'extract_codes - Extract all codes from coded transcripts into markdown summary',
         ],
       },
