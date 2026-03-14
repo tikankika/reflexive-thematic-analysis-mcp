@@ -1,9 +1,15 @@
+import { promises as fs } from 'fs';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
 import { ChunkReader } from '../core/chunk_reader.js';
 import { StatusManager } from '../core/status_manager.js';
 import { sessionState } from '../core/session_state.js';
 import { MethodologyLoader } from '../core/methodology_loader.js';
 import { ProjectConfig } from '../core/project_config.js';
 import { ProcessLogger } from '../core/process_logger.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 /**
  * code_start - Initialize coding session (Phase 2a: Initial Coding)
@@ -112,7 +118,7 @@ export async function codeStart(args: {
     }
 
     try {
-      codingManual = await loader.loadDocument('../protocols/EXAMPLE_coding_protocol_disruptive_3rq.md');
+      codingManual = await loadProtocolFromProject(file_path);
     } catch (error) {
       console.error('[code_start] Failed to load coding manual:', error);
     }
@@ -139,4 +145,52 @@ CRITICAL: Read methodology and coding_manual before proposing codes.
 - Two levels: semantic (explicit), latent (interpretive)
     `.trim(),
   };
+}
+
+/**
+ * Load coding protocol from project's protocols/ directory.
+ * Falls back to repo's protocols/ if no project config found.
+ * Loads all .md files (excluding README.md) and concatenates them.
+ */
+async function loadProtocolFromProject(transcriptPath: string): Promise<string | undefined> {
+  // 1. Try project's protocols/ directory
+  try {
+    const projectConfig = await ProjectConfig.findFromTranscript(transcriptPath);
+    if (projectConfig) {
+      const protocolsDir = join(projectConfig.getProjectRoot(), 'protocols');
+      const content = await readProtocolsFromDir(protocolsDir);
+      if (content) return content;
+    }
+  } catch {
+    // Fall through to repo fallback
+  }
+
+  // 2. Fall back to repo's protocols/ directory
+  const repoProtocolsDir = join(__dirname, '../../protocols');
+  return readProtocolsFromDir(repoProtocolsDir);
+}
+
+/**
+ * Read all .md protocol files from a directory (excluding README.md).
+ * Returns concatenated content, or undefined if no files found.
+ */
+async function readProtocolsFromDir(dir: string): Promise<string | undefined> {
+  try {
+    const entries = await fs.readdir(dir);
+    const mdFiles = entries
+      .filter((f) => f.endsWith('.md') && f !== 'README.md')
+      .sort();
+
+    if (mdFiles.length === 0) return undefined;
+
+    const contents: string[] = [];
+    for (const file of mdFiles) {
+      const content = await fs.readFile(join(dir, file), 'utf-8');
+      contents.push(content);
+    }
+
+    return contents.join('\n\n---\n\n');
+  } catch {
+    return undefined;
+  }
 }
