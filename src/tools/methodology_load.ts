@@ -129,7 +129,7 @@ export async function methodologyLoad(
  * Return structured work scaffolding for phases 4-6.
  * Phases 1-3 return undefined (no scaffolding needed — they have dedicated tools).
  */
-function getPhaseScaffolding(phase: string): PhaseScaffolding | undefined {
+export function getPhaseScaffolding(phase: string): PhaseScaffolding | undefined {
   switch (phase) {
     case 'phase4':
       return {

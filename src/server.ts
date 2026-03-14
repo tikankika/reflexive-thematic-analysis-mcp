@@ -52,7 +52,8 @@ import { reviewStatus } from './tools/review_status.js';
 import { reviewSplitSegment } from './tools/review_split_segment.js';
 import { reviewMergeSegments } from './tools/review_merge_segments.js';
 
-// Phase 3 tools
+// Phase 3+ tools
+import { phaseStart } from './tools/phase_start.js';
 import { extractCodes } from './tools/phase3_extract_codes.js';
 
 // Workflow tools
@@ -638,7 +639,29 @@ class QualitativeAnalysisRTAServer {
             required: ['file_path', 'first_segment_index', 'second_segment_index'],
           },
         },
-        // === PHASE 3 TOOLS (Generating Themes) ===
+        // === PHASE 3+ TOOLS ===
+        {
+          name: 'phase_start',
+          description:
+            'Start Phase 3, 4, 5, or 6. Loads methodology, lists tool-generated files and transcripts. ' +
+            'Call this when the researcher says "next step", "Phase 4", etc. ' +
+            'For Phase 2a/2b, redirects to dedicated start tools. ' +
+            'CRITICAL: Response includes methodology — SHOW full content to researcher, do NOT summarise.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              project_path: {
+                type: 'string',
+                description: 'Path to project directory (contains rta_config.yaml)',
+              },
+              phase: {
+                type: 'string',
+                description: 'Phase to start: "3", "4", "5", or "6" (also accepts "2a", "2b")',
+              },
+            },
+            required: ['project_path', 'phase'],
+          },
+        },
         {
           name: 'phase3_extract_codes',
           description:
@@ -964,7 +987,11 @@ class QualitativeAnalysisRTAServer {
             result = await reviewMergeSegments(args as any);
             break;
 
-          // === PHASE 3 TOOLS ===
+          // === PHASE 3+ TOOLS ===
+          case 'phase_start':
+            result = await phaseStart(args as any);
+            break;
+
           case 'phase3_extract_codes':
             result = await extractCodes(args as any);
             break;
@@ -1046,7 +1073,7 @@ class QualitativeAnalysisRTAServer {
     console.error(
       'Phase 2b: review_start, review_next, review_read_segment, review_write_note, review_revise_codes, review_status, review_split_segment, review_merge_segments'
     );
-    console.error('Phase 3: extract_codes');
+    console.error('Phase 3+: phase_start, extract_codes');
     console.error('Workflow: workflow_status, session_reflection, process_log_summary');
     console.error('Process Logging: process_memo, log_process_event, log_session_end');
   }
