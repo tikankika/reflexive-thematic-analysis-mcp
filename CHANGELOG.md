@@ -18,6 +18,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - **RFC-002: Data layer consolidation** — eliminated `_review.json` entirely. Review progress now tracked via `/reviewed YYYY-MM-DD` marker in transcript file (source of truth). Reflexive notes and code revisions logged to `_coding_log.md` (Phase 2b now writes there alongside 2a). Three files remain: transcript, `_coding_log.md`, `_process_log.jsonl`. Each file has exactly one purpose.
 - **Example protocol files prefixed with `EXAMPLE_`** — `protocols/coding_protocol_disruptive_3rq.md` → `EXAMPLE_coding_protocol_disruptive_3rq.md`, `coding_protocol_sensemaking_v1.md` → `EXAMPLE_coding_protocol_sensemaking_v1.md`. Clarifies that these are format examples; researchers create their own protocols alongside them. Updated references in `methodology_loader.ts`, `code_start.ts`, and `protocols/README.md`.
+- **`project_setup` copies `protocols/`** — project setup now copies the `protocols/` directory (alongside `methodology/`) so researchers have local protocol files to customize.
+- **`ProjectConfig.getProjectRoot()`** — new public method exposing the project root directory.
+
+### Fixed
+- **`code_start` protocol loading** — was hardcoded to load `EXAMPLE_coding_protocol_disruptive_3rq.md` via `MethodologyLoader`. Now loads all `.md` protocol files from the project's `protocols/` directory (created by `project_setup`), falling back to repo protocols if no project config found.
 
 ### Removed
 - **`_review.json` file** — no longer created or read. All data moved to transcript (`/reviewed` marker) and `_coding_log.md` (reflexive notes, revision history).
