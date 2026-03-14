@@ -40,6 +40,8 @@ export class SegmentReader {
         const codes: string[] = [];
         let startIndex = '';
         let endIndex = '';
+        let reviewed = false;
+        let reviewedAt: string | undefined;
 
         // Move past /segment marker
         i++;
@@ -52,6 +54,15 @@ export class SegmentReader {
           if (trimmed === '/slut_segment') {
             foundEnd = true;
             break;
+          }
+
+          // Recognise /reviewed marker (e.g., "/reviewed 2026-03-11")
+          if (trimmed.startsWith('/reviewed')) {
+            reviewed = true;
+            const datePart = trimmed.slice('/reviewed'.length).trim();
+            if (datePart) reviewedAt = datePart;
+            i++;
+            continue;
           }
 
           if (trimmed.startsWith('#')) {
@@ -89,6 +100,8 @@ export class SegmentReader {
           codes,
           fileStartLine,
           fileEndLine,
+          reviewed,
+          reviewedAt,
         });
       }
 

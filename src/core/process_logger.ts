@@ -8,7 +8,7 @@ import { ProcessEvent } from '../types/process_log.js';
  * Events are appended, never overwritten.
  *
  * File naming: [transcript_name]_process_log.jsonl
- * Location: Same directory as transcript file and _review.json
+ * Location: Same directory as transcript file
  */
 export class ProcessLogger {
   /**

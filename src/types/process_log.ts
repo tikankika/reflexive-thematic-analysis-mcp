@@ -23,6 +23,7 @@ export type EventType =
   | 'meta_reflexive'  // Reflection on the process itself
   | 'codes_written'   // Auto: segment coded
   | 'codes_revised'   // Auto: codes revised in review
+  | 'review_segment_complete'  // Auto: segment reviewed (reflexive note written)
   | 'session_start'   // Auto: coding/review session begun
   | 'session_end'     // Session summary
   | 'other';          // Anything else

@@ -236,7 +236,7 @@ class QualitativeAnalysisRTAServer {
             'Write content to a file. ' +
             'For saving analytical work between sessions: candidate themes, thematic maps, ' +
             'definitions, report drafts. Creates parent directories if needed. ' +
-            'Refuses to overwrite coded transcripts or review notes unless overwrite=true. ' +
+            'Refuses to overwrite coded transcripts unless overwrite=true. ' +
             'Supports ~ for home directory.',
           inputSchema: {
             type: 'object',
@@ -477,17 +477,13 @@ class QualitativeAnalysisRTAServer {
         {
           name: 'phase2b_review_start',
           description:
-            'Start Phase 2b critical review session. Parses coded transcript, creates or resumes review notes file, loads methodology, and returns first segment for review. CRITICAL: Response includes methodology document — you MUST show the FULL methodology to researcher and wait for "Ok" BEFORE reviewing any segments. Do NOT summarize.',
+            'Start Phase 2b critical review session. Parses coded transcript, finds first unreviewed segment (via /reviewed marker), loads methodology, and returns it for review. CRITICAL: Response includes methodology document — you MUST show the FULL methodology to researcher and wait for "Ok" BEFORE reviewing any segments. Do NOT summarize.',
           inputSchema: {
             type: 'object',
             properties: {
               file_path: {
                 type: 'string',
                 description: 'Path to coded transcript file (.md)',
-              },
-              researcher: {
-                type: 'string',
-                description: 'Researcher name (default: "researcher")',
               },
             },
             required: ['file_path'],
@@ -530,7 +526,7 @@ class QualitativeAnalysisRTAServer {
         {
           name: 'phase2b_review_write_note',
           description:
-            'Write a reflexive note for a segment. Creates or updates the researcher\'s analytical observation for the specified segment. This marks the segment as reviewed.',
+            'Write a reflexive note for a segment. Writes /reviewed marker to transcript and appends note to _coding_log.md. This marks the segment as reviewed.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -553,7 +549,7 @@ class QualitativeAnalysisRTAServer {
         {
           name: 'phase2b_review_revise_codes',
           description:
-            'Revise codes for a segment. Modifies codes in the transcript file and logs the revision. Actions: "add" (append codes), "remove" (delete codes), "replace" (replace all codes).',
+            'Revise codes for a segment. Modifies codes in the transcript file, logs revision to _coding_log.md and _process_log.jsonl. Does NOT mark segment as reviewed. Actions: "add" (append codes), "remove" (delete codes), "replace" (replace all codes).',
           inputSchema: {
             type: 'object',
             properties: {
@@ -582,7 +578,7 @@ class QualitativeAnalysisRTAServer {
         {
           name: 'phase2b_review_status',
           description:
-            'Show Phase 2b review progress. Returns total segments, reviewed count, remaining, percentage, and revision statistics.',
+            'Show Phase 2b review progress. Counts /reviewed markers vs total segments. Returns total, reviewed, remaining, and percentage.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -597,7 +593,7 @@ class QualitativeAnalysisRTAServer {
         {
           name: 'phase2b_review_split_segment',
           description:
-            'Split a segment into two during review. Copies all codes to both new segments. Use when a segment contains two distinct meaning units that should be coded separately. After splitting, use review_revise_codes to adjust codes on each half.',
+            'Split a segment into two during review. Copies all codes to both new segments. Neither new segment has /reviewed — both need fresh review. Use when a segment contains two distinct meaning units.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -621,7 +617,7 @@ class QualitativeAnalysisRTAServer {
         {
           name: 'phase2b_review_merge_segments',
           description:
-            'Merge two adjacent segments into one during review. Combines text and deduplicates codes. Use when two consecutive segments belong to the same meaning unit.',
+            'Merge two adjacent segments into one during review. Combines text and deduplicates codes. Merged segment has no /reviewed — needs fresh review. Use when two consecutive segments belong to the same meaning unit.',
           inputSchema: {
             type: 'object',
             properties: {

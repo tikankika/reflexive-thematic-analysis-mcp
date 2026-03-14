@@ -84,4 +84,59 @@ export class CodingLogWriter {
 
     await fs.appendFile(logPath, lines.join('\n'), 'utf-8');
   }
+
+  /**
+   * Append a Phase 2b review entry to the coding log.
+   * Called by review_write_note and review_revise_codes.
+   */
+  async appendReview(
+    logPath: string,
+    params: {
+      segmentIndex: number;
+      lineRange: string;
+      reflexiveNote?: string;
+      codesAdded?: string[];
+      codesRemoved?: string[];
+      revisionRationale?: string;
+    }
+  ): Promise<void> {
+    const timestamp = new Date().toISOString();
+    const lines: string[] = [];
+
+    lines.push(`## Phase 2b Review — Segment ${params.segmentIndex} (${params.lineRange})`);
+    lines.push(`**Tidpunkt:** ${timestamp}`);
+    lines.push('');
+
+    if (params.reflexiveNote) {
+      lines.push('### Reflexive Note');
+      lines.push(params.reflexiveNote);
+      lines.push('');
+    }
+
+    const hasRevision = (params.codesAdded && params.codesAdded.length > 0) ||
+      (params.codesRemoved && params.codesRemoved.length > 0);
+
+    if (hasRevision) {
+      lines.push('### Code Revision');
+      if (params.codesAdded && params.codesAdded.length > 0) {
+        for (const code of params.codesAdded) {
+          lines.push(`- Added: ${code}`);
+        }
+      }
+      if (params.codesRemoved && params.codesRemoved.length > 0) {
+        for (const code of params.codesRemoved) {
+          lines.push(`- Removed: ${code}`);
+        }
+      }
+      if (params.revisionRationale) {
+        lines.push(`- Rationale: ${params.revisionRationale}`);
+      }
+      lines.push('');
+    }
+
+    lines.push('---');
+    lines.push('');
+
+    await fs.appendFile(logPath, lines.join('\n'), 'utf-8');
+  }
 }

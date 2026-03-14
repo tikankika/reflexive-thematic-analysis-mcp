@@ -27,7 +27,6 @@ export interface WriteFileOutput {
 // Files that should not be casually overwritten
 const PROTECTED_PATTERNS = [
   /\/segment\b/, // Coded transcripts (content check)
-  /_review\.json$/, // Review notes
 ];
 
 export async function writeFile(
@@ -48,14 +47,12 @@ export async function writeFile(
   // If overwriting existing file, check protection
   if (exists && overwrite !== true) {
     const existing = await fs.readFile(path, 'utf-8');
-    const isProtected =
-      PROTECTED_PATTERNS[0].test(existing) ||
-      PROTECTED_PATTERNS[1].test(path);
+    const isProtected = PROTECTED_PATTERNS[0].test(existing);
 
     if (isProtected) {
       throw new Error(
         `Refusing to overwrite protected file: ${path}. ` +
-          `This looks like a coded transcript or review notes file. ` +
+          `This looks like a coded transcript. ` +
           `Set overwrite=true to confirm.`
       );
     }

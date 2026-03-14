@@ -1,14 +1,14 @@
 import { promises as fs } from 'fs';
-import { basename } from 'path';
 import { sessionState } from '../core/session_state.js';
 import { SegmentReader } from '../core/segment_reader.js';
-import { NoteManager } from '../core/note_manager.js';
 
 /**
  * review_split_segment - Split a segment into two during Phase 2b review
  *
  * Splits a segment at a specified line, copies all codes to both new
- * segments, and shifts review note indices to keep them in sync.
+ * segments. Neither new segment has /reviewed — both need fresh review.
+ * This is methodologically correct: if segmentation was wrong, both
+ * halves need review.
  *
  * Input:
  *   file_path: string - Path to coded transcript file
@@ -16,7 +16,7 @@ import { NoteManager } from '../core/note_manager.js';
  *   split_at_line: string - 4-digit line index: first line of second half
  *
  * Output:
- *   { success, original_index, new_segments, codes_copied, notes_shifted, hint }
+ *   { success, original_index, new_segments, codes_copied, hint }
  */
 export async function reviewSplitSegment(args: {
   file_path: string;
@@ -28,7 +28,6 @@ export async function reviewSplitSegment(args: {
   const { file_path, segment_index, split_at_line } = args;
 
   const reader = new SegmentReader();
-  const noteManager = new NoteManager();
 
   // 1. Extract all segments
   const segments = await reader.extractSegments(file_path);
@@ -72,6 +71,7 @@ export async function reviewSplitSegment(args: {
   const textLinesSecond = segment.textLines.slice(splitLineIdx);
 
   // 4. Read file and build replacement blocks
+  // Neither block gets /reviewed — both need fresh review
   const content = await fs.readFile(file_path, 'utf-8');
   const lines = content.split('\n');
 
@@ -103,18 +103,6 @@ export async function reviewSplitSegment(args: {
   // 6. Write file back
   await fs.writeFile(file_path, lines.join('\n'), 'utf-8');
 
-  // 7. Update review notes
-  const notesPath = noteManager.getNotesPath(file_path);
-  const notesExist = await noteManager.exists(notesPath);
-  let notesShifted = false;
-
-  if (notesExist) {
-    const notesFile = await noteManager.load(notesPath);
-    noteManager.shiftIndices(notesFile, segment_index + 1, +1);
-    notesShifted = true;
-    await noteManager.save(notesPath, notesFile);
-  }
-
   return {
     success: true,
     original_index: segment_index,
@@ -123,7 +111,6 @@ export async function reviewSplitSegment(args: {
       second: segment_index + 1,
     },
     codes_copied: segment.codes,
-    notes_shifted: notesShifted,
-    hint: 'Use review_revise_codes to adjust codes on each half',
+    hint: 'Both new segments need review. Use review_revise_codes to adjust codes on each half.',
   };
 }

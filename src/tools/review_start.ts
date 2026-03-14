@@ -1,7 +1,5 @@
-import { basename } from 'path';
 import { sessionState } from '../core/session_state.js';
 import { SegmentReader } from '../core/segment_reader.js';
-import { NoteManager } from '../core/note_manager.js';
 import { MethodologyLoader } from '../core/methodology_loader.js';
 import { ProjectConfig } from '../core/project_config.js';
 import { ProcessLogger } from '../core/process_logger.js';
@@ -9,26 +7,23 @@ import { ProcessLogger } from '../core/process_logger.js';
 /**
  * review_start - Initialize Phase 2b critical review session
  *
- * Parses a coded transcript, creates or resumes a review notes file,
- * and returns the first segment with methodology instructions.
+ * Parses a coded transcript, finds the first unreviewed segment
+ * (via /reviewed marker), and returns it with methodology instructions.
  *
  * Input:
  *   file_path: string - Path to coded transcript file
- *   researcher?: string - Researcher name (default: "researcher")
  *
  * Output:
- *   { status, total_segments, segment, existing_notes, methodology, instructions }
+ *   { status, total_segments, segment, progress, methodology, instructions }
  */
 export async function reviewStart(args: {
   file_path: string;
-  researcher?: string;
 }): Promise<any> {
   sessionState.requireInit();
 
-  const { file_path, researcher = 'researcher' } = args;
+  const { file_path } = args;
 
   const reader = new SegmentReader();
-  const noteManager = new NoteManager();
 
   // Extract all segments from coded transcript
   const segments = await reader.extractSegments(file_path);
@@ -39,35 +34,13 @@ export async function reviewStart(args: {
     );
   }
 
-  // Check for existing review notes
-  const notesPath = noteManager.getNotesPath(file_path);
-  const notesExist = await noteManager.exists(notesPath);
+  // Calculate progress from /reviewed markers
+  const reviewedCount = segments.filter((s) => s.reviewed).length;
+  const resuming = reviewedCount > 0;
 
-  let notesFile;
-  let resuming = false;
-
-  if (notesExist) {
-    notesFile = await noteManager.load(notesPath);
-    resuming = true;
-  } else {
-    notesFile = await noteManager.create(
-      notesPath,
-      basename(file_path),
-      researcher,
-      segments.length
-    );
-  }
-
-  // Find first segment to review
-  const nextUnreviewed = noteManager.findNextUnreviewed(notesFile, segments.length);
-  const startIndex = nextUnreviewed === -1 ? 1 : nextUnreviewed;
-  const firstSegment = segments[startIndex - 1];
-
-  // Get existing note for this segment (if resuming)
-  const existingNote = noteManager.getNote(notesFile, startIndex);
-
-  // Get review stats
-  const stats = noteManager.getStats(notesFile, segments.length);
+  // Find first unreviewed segment
+  const nextUnreviewed = segments.find((s) => !s.reviewed);
+  const firstSegment = nextUnreviewed || segments[0];
 
   // Update project config status (best-effort)
   try {
@@ -100,19 +73,18 @@ export async function reviewStart(args: {
   return {
     status: resuming ? 'resumed' : 'started',
     total_segments: segments.length,
-    current_index: startIndex,
+    current_index: firstSegment.index,
     segment: {
       index: firstSegment.index,
       line_range: `${firstSegment.startIndex}-${firstSegment.endIndex}`,
       text: firstSegment.textLines.join('\n'),
       codes: firstSegment.codes,
+      reviewed: firstSegment.reviewed,
     },
-    existing_note: existingNote,
     progress: {
-      reviewed: stats.reviewed,
-      remaining: stats.remaining,
-      percent: stats.progressPercent,
-      revisions: stats.totalRevisions,
+      reviewed: reviewedCount,
+      remaining: segments.length - reviewedCount,
+      percent: segments.length > 0 ? Math.round((reviewedCount / segments.length) * 100) : 0,
     },
     methodology,
     instructions: `

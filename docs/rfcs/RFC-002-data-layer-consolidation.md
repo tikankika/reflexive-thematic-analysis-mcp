@@ -24,8 +24,7 @@ Phase 2a and 2b produce analytical data across **four separate files**. Several 
 1. **`_review.json` contains analytical text in an unreadable format** — reflexive notes, code revisions, all the rich analytical text ends up in JSON that no human wants to read
 2. **`_coding_log.md` tells only half the story** — Phase 2a writes to it, Phase 2b does not. Reviews, splits, new codes never appear
 3. **Reflexive notes stored in two places** — 2a's reflexive notes in `_coding_log.md`, 2b's in `_review.json`. Duplication with different formats
-4. **Progress tracking missing in 2a** — 2b has resume capability via `_review.json`, but 2a has no equivalent. If a 2a session is interrupted (chunk 7 of 13) there is no machine-readable state
-5. **No downstream consumption** — neither `_review.json` nor `_coding_log.md` is read by Phase 3+. All analytical meaning that does not end up in the transcript file is lost to the system
+4. **No downstream consumption** — neither `_review.json` nor `_coding_log.md` is read by Phase 3+. All analytical meaning that does not end up in the transcript file is lost to the system
 
 ---
 
@@ -86,6 +85,9 @@ Review status lives **in the transcript file itself**, physically attached to th
 - **Progress calculation:** `SegmentReader` counts `/segment` blocks (total) and `/reviewed` markers (done). Trivial.
 - **No external state:** The transcript is already the source of truth for codes. Now it is also the source of truth for review status.
 - **`_process_log.jsonl` still logs the event** — `{ type: "review_segment_complete", ... }` — but as an audit trail, NOT as state. Progress is never computed from the log.
+- **Only `review_write_note` writes the marker** — `review_revise_codes` does NOT. A segment is "reviewed" when the researcher writes a reflexive note, not when codes are revised. This matches the current workflow: read → (revise codes) → write note = done.
+- **`SegmentReader` must skip the marker** — `/reviewed` is recognised and excluded from text lines, just like `/koder` and `/slut_segment`. `CodeExtractor` (Phase 3) inherits this behaviour automatically.
+- **Manual code edits preserve the marker** — if a researcher edits codes directly in the transcript, `/reviewed` stays. The researcher can remove it manually to trigger re-review.
 
 ---
 
@@ -107,11 +109,12 @@ _process_log.jsonl        ← process events, audit trail (unchanged role)
 
 ### What Was Removed
 
-| Removed | Why | Where did its data go? |
-|---------|-----|----------------------|
+| Removed | Why | Where does the data go instead? |
+|---------|-----|-------------------------------|
 | `_review.json` progress tracking | Replaced by `/reviewed` marker in transcript | Transcript |
-| `_review.json` reflexive notes | Duplicated `_coding_log.md` | `_coding_log.md` |
-| `_review.json` revision history | Duplicated `_coding_log.md` + `_process_log.jsonl` | Both |
+| `_review.json` reflexive notes | Moved to `_coding_log.md` (Phase 2b now appends there) | `_coding_log.md` |
+| `_review.json` revision history | Moved to `_coding_log.md` + logged as event in `_process_log.jsonl` | Both |
+| `_review.json` code snapshot | Redundant — transcript already has current codes (source of truth) | N/A |
 | `NoteManager` class | No longer needed | Removed |
 | `ReviewNote`, `ReviewNotesFile` types | No longer needed | Removed |
 | Index shifting logic | Problem disappears — no external state to shift | N/A |
